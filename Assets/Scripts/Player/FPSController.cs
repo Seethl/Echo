@@ -10,6 +10,13 @@ public class FPSController : MonoBehaviour
     public float walkSpeed = 6f;
     public float runSpeed = 10f;
     public float mouseSensitivity = 0.1f;
+    public float crouchSpeed = 1.5f;
+
+    public float standingHeight = 1.8f;
+    public float crouchingHeight = 1.0f;
+
+    public float standingCameraY = 0.65f;
+    public float crouchingCameraY = 0.2f;
 
     private CharacterController controller;
     private float verticalVelocity;
@@ -66,7 +73,36 @@ public class FPSController : MonoBehaviour
         input = Vector2.ClampMagnitude(input, 1f);
 
         bool isRunning = Keyboard.current.leftShiftKey.isPressed;
-        float speed = isRunning ? runSpeed : walkSpeed;
+        bool isCrouching = Keyboard.current.leftCtrlKey.isPressed;
+
+        float speed = isCrouching ? crouchSpeed :
+                      isRunning ? runSpeed : walkSpeed;
+
+        float targetHeight = isCrouching
+    ? crouchingHeight
+    : standingHeight;
+
+        controller.height = Mathf.Lerp(
+            controller.height,
+            targetHeight,
+            Time.deltaTime * 8f
+        );
+
+        controller.center = new Vector3(
+            0,
+            (controller.height - standingHeight) / 2f,
+            0
+        );
+
+        Vector3 cameraPosition = playerCamera.localPosition;
+
+        cameraPosition.y = Mathf.Lerp(
+            cameraPosition.y,
+            isCrouching ? crouchingCameraY : standingCameraY,
+            Time.deltaTime * 8f
+        );
+
+        playerCamera.localPosition = cameraPosition;
 
         Vector3 movement =
             transform.right * input.x +
