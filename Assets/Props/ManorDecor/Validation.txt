@@ -1,0 +1,3 @@
+PASS: 18 prefab models imported.
+PASS: dimensions, floor origins, URP material assignments.
+Each prefab has a simple BoxCollider. Static decor; no Rigidbody or interaction.

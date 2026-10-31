@@ -1,0 +1,4 @@
+PASS: two prefab models, UV textures, URP materials.
+PASS: imported width/height/depth and floor-centred origins.
+PASS: compound BoxColliders leave knee spaces open.
+Drawers are static fronts. No animation or interaction attached.

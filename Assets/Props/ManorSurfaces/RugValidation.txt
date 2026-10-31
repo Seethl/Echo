@@ -1,0 +1,4 @@
+PASS: 2x3 metre rug.
+PASS: 3mm underside clearance above floor.
+PASS: URP material assigned.
+No collider: uses supporting floor collision.

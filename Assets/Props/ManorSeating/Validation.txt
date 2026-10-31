@@ -1,0 +1,3 @@
+PASS: three prefabs with URP materials and compound BoxColliders.
+PASS: metre scale, model widths and floor origin.
+Static props: cushions and throw are part of each mesh, no sitting interaction.

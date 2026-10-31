@@ -10,6 +10,7 @@ namespace Echo.Interactions
     [DefaultExecutionOrder(-9500)]
     public sealed class InteractionUI : MonoBehaviour
     {
+        public string controlsText = "WASD — рух · Ctrl — тихо · E — дія · R — радіо · F — живлення · Q — поставити · J — журнал / допомога · Escape — назад/пауза";
         private Canvas canvas;
         private Text prompt;
         private Text toast;
@@ -24,6 +25,7 @@ namespace Echo.Interactions
         private float toastUntil;
         private GameObject customPanel;
         private Text customTitle,customBody,hud;
+        private RawImage panelIllustration;
         private Text completionTitle;
         private Text subtitle;
         private GameObject noisePanel;
@@ -73,7 +75,7 @@ namespace Echo.Interactions
             dot = Label("Aim Dot", root.transform, "•", 24, 0, 30).gameObject;
             prompt = Label("Prompt", root.transform, "", 23, -65, 45);
             toast = Label("Toast", root.transform, "", 22, 180, 100);
-            Label("Controls", root.transform, "WASD — рух · Ctrl — тихо · E — дія · R — радіо · F — живлення · Q — поставити · J — журнал / допомога · Escape — назад/пауза", 15, -320, 38);
+            Label("Controls", root.transform, controlsText, 15, -320, 38);
             hud=Label("Objective and Noise",root.transform,"",19,285,100);
             subtitle=Label("Radio Subtitles",root.transform,"",20,-210,105);
             subtitle.rectTransform.sizeDelta=new Vector2(900,105);
@@ -115,18 +117,27 @@ namespace Echo.Interactions
             if(customPanel.activeSelf && liveBody!=null)customBody.text=liveBody();
         }
 
-        public bool OpenPanel(UnityEngine.Object owner,string title,Func<string> body,IEnumerable<Choice> choices,bool freezeWorld=true,Action closed=null,bool replace=false,bool canEscape=true)
+        public bool OpenPanel(UnityEngine.Object owner,string title,Func<string> body,IEnumerable<Choice> choices,bool freezeWorld=true,Action closed=null,bool replace=false,bool canEscape=true,Texture illustration=null)
         {
             if(!GameMenu.TryOpenModal(this,canEscape?ClosePanel:(Action)null,freezeWorld,replace))return false;
             onCustomClose?.Invoke();onCustomClose=closed;
             notePanel.SetActive(false);finishPanel.SetActive(false);
             foreach(var button in customButtons){button.gameObject.SetActive(false);Destroy(button.gameObject);}customButtons.Clear();
             customOwner=owner;customTitle.text=title;liveBody=body;customBody.text=body!=null?body():"";
+            customBody.fontSize=illustration!=null?18:22;
+            Place(customBody.rectTransform,0,illustration!=null?-110:80,650,illustration!=null?110:160);
+            if(panelIllustration==null)
+            {
+                panelIllustration=new GameObject("Clue Illustration",typeof(RectTransform),typeof(RawImage)).GetComponent<RawImage>();
+                panelIllustration.transform.SetParent(customPanel.transform,false);panelIllustration.raycastTarget=false;
+                Place(panelIllustration.rectTransform,0,60,400,220);
+            }
+            panelIllustration.texture=illustration;panelIllustration.gameObject.SetActive(illustration!=null);
             shade.SetActive(true);customPanel.SetActive(true);
             int index=0;var options=new List<Choice>(choices);bool twoColumns=options.Count>5;
             foreach(var choice in options)
             {
-                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,-35-(twoColumns?index/2:index)*58,()=>action?.Invoke());
+                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,(illustration!=null?-205:-35)-(twoColumns?index/2:index)*58,()=>action?.Invoke());
                 if(twoColumns)
                 {
                     var rect=(RectTransform)button.transform;rect.anchoredPosition=new Vector2(index%2==0?-175:175,rect.anchoredPosition.y);rect.sizeDelta=new Vector2(330,52);

@@ -1,0 +1,6 @@
+PASS: frame and moving leaf are separate meshes.
+PASS: HingedDoor and moving BoxCollider assigned.
+PASS: opening reaches 100 degrees; frame remains stationary.
+PASS: closing returns leaf to original rotation.
+PASS: two prefab variants created.
+Interaction uses existing PlayerInteractor (E). No Animator required.

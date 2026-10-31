@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Echo.Manor
 {
-    public enum ManorArea { Caretaker, Gallery, Hall, Library, Kitchen, Conservatory, Yard }
+    public enum ManorArea { Caretaker, Gallery, Hall, Library, Kitchen, Conservatory, Yard, UpperGallery, Study }
     public sealed class ManorZone : MonoBehaviour
     {
         public ManorArea area;

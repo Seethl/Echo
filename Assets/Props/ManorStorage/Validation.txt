@@ -1,0 +1,4 @@
+PASS: two prefab models, materials, compound colliders.
+PASS: floor origins and heights.
+PASS: both leaf pivots rotate independently of the body, then restore closed.
+Doors are prepared for animation; no E interaction attached.

@@ -15,6 +15,7 @@ namespace Echo.Radio
         public int frequency=820;
         [Range(0,1)] public float volume=.4f;
         public bool powered;
+        public bool allowPlacement = true;
         public float musicSeconds=20,silenceSeconds=6;
         public AudioClip musicClip,whiteNoiseClip,signalClip;
         public Vector3 placementHalfExtents=new Vector3(.32f,.22f,.2f);
@@ -47,7 +48,7 @@ namespace Echo.Radio
             holder=player;Held=true;foreach(var c in colliders)c.enabled=false;
             transform.SetParent(player.viewCamera.transform,false);transform.localPosition=new Vector3(.32f,-.3f,.65f);transform.localRotation=Quaternion.identity;
             ManorProgress.Active.Set("radio.picked");ManorProgress.Active.RefreshCheckpoint();
-            player.ui.ShowToast("Радіо піднято. R — налаштувати; F — увімкнути; Q — поставити. Гучність впливає на те, хто почує передачу.");
+            player.ui.ShowToast(allowPlacement ? "Радіо піднято. R — налаштувати; F — увімкнути; Q — поставити. Гучність впливає на те, хто почує передачу." : "Радіо піднято. R — налаштувати; F — живлення. Передачі чує і мешканець.");
         }
         private void Update()
         {
@@ -74,7 +75,7 @@ namespace Echo.Radio
             else if(channel.mode==RadioChannel.Mode.Music)UpdateMusic();
             else if(channel.mode==RadioChannel.Mode.WhiteNoise)
             {
-                Subtitle="Білий шум — постійне джерело звуку. Можна використати як приманку.";MusicAudible=true;
+                Subtitle=allowPlacement ? "Білий шум — постійне джерело звуку. Можна використати як приманку." : "Білий шум. Гучне радіо може видати твоє місце.";MusicAudible=true;
                 if(!source.isPlaying){source.clip=whiteNoiseClip!=null?whiteNoiseClip:PrototypeAudio.Clip(PrototypeAudio.Cue.Static);source.loop=true;source.Play();}
             }
             else
@@ -138,7 +139,7 @@ namespace Echo.Radio
         private string KnownFrequencies()=>string.Join(", ",channels.Where(c=>c!=null&&(ManorProgress.Active.Has("frequency."+c.frequency)||c.mode!=RadioChannel.Mode.Recording)).Select(c=>c.frequency+" "+(c.mode==RadioChannel.Mode.Recording?"запис":c.channelName)));
         public bool TryPlace()
         {
-            if(!Held)return false;
+            if(!Held || !allowPlacement)return false;
             var camera=holder.viewCamera.transform;
             if(!Physics.Raycast(camera.position,camera.forward,out var hit,2.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||hit.normal.y<.65f)
             {holder.ui.ShowToast("Наведіться на вільну підлогу або стіл не далі 2,5 м.");return false;}
