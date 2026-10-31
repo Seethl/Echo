@@ -1,3 +1,4 @@
+using Echo.Menu;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -31,20 +32,20 @@ public class FPSController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!GameMenu.BlocksPlayerInput)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     void Update()
     {
-        if (Keyboard.current == null || Mouse.current == null)
+        if (GameMenu.BlocksPlayerInput || Time.timeScale == 0f)
             return;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        if (Keyboard.current == null || Mouse.current == null)
+            return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -57,9 +58,9 @@ public class FPSController : MonoBehaviour
         {
             Vector2 mouse = Mouse.current.delta.ReadValue();
 
-            transform.Rotate(Vector3.up * mouse.x * mouseSensitivity);
+            transform.Rotate(Vector3.up * mouse.x * mouseSensitivity * GameSettings.SensitivityMultiplier);
 
-            cameraRotation -= mouse.y * mouseSensitivity;
+            cameraRotation -= mouse.y * mouseSensitivity * GameSettings.SensitivityMultiplier;
             cameraRotation = Mathf.Clamp(cameraRotation, -85f, 85f);
 
             playerCamera.localRotation = Quaternion.Euler(cameraRotation, 0, 0);
