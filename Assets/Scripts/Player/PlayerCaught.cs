@@ -10,14 +10,16 @@ public class PlayerCaught : MonoBehaviour
     public bool allowKeyboardRestart = true;
     public bool IsCaught { get; private set; }
     private bool restarting;
+    private bool ownsMenuModal;
 
     public void Catch()
     {
-        if (IsCaught) return;
+        if (IsCaught || Echo.Menu.GameMenu.BlocksPlayerInput || Time.timeScale <= 0f) return;
         IsCaught = true;
         GetComponent<FPSController>().enabled = false;
         var steps = GetComponent<Footsteps>();
         if (steps != null) steps.enabled = false;
+        ownsMenuModal = Echo.Menu.GameMenu.TryOpenModal(this, null);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Debug.Log("Player caught. Press R to restart.", this);
@@ -36,6 +38,11 @@ public class PlayerCaught : MonoBehaviour
         if (!IsCaught || restarting) return;
         var scene = gameObject.scene;
         restarting = true;
+        if (ownsMenuModal)
+        {
+            Echo.Menu.GameMenu.RestartGameplay();
+            return;
+        }
 #if UNITY_EDITOR
         if (scene.buildIndex < 0)
         {
@@ -51,5 +58,10 @@ public class PlayerCaught : MonoBehaviour
             return;
         }
         SceneManager.LoadSceneAsync(scene.buildIndex, LoadSceneMode.Single);
+    }
+
+    void OnDestroy()
+    {
+        if (ownsMenuModal) Echo.Menu.GameMenu.CloseModal(this);
     }
 }

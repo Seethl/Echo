@@ -11,6 +11,8 @@ namespace Echo.Interactions
             if (completed) return;
             var player = other.GetComponentInParent<PlayerInteractor>();
             if (player == null || player.ui == null) return;
+            var life = player.GetComponent<PlayerCaught>();
+            if (life != null && life.IsCaught) return;
             if (player.ui.ShowCompletion()) completed = true;
         }
     }

@@ -26,7 +26,8 @@ namespace Echo.Interactions
         {
             Target = null;
             if (ui == null || viewCamera == null) return;
-            if (GameMenu.BlocksPlayerInput || Time.timeScale <= 0f)
+            var life = GetComponent<PlayerCaught>();
+            if (GameMenu.BlocksPlayerInput || Time.timeScale <= 0f || (life != null && life.IsCaught))
             {
                 ui.SetPrompt(null);
                 return;

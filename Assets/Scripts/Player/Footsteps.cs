@@ -42,6 +42,11 @@ public class Footsteps : MonoBehaviour
 
     void Update()
     {
+        if (Echo.Menu.GameMenu.BlocksPlayerInput || Time.timeScale <= 0f)
+        {
+            timer = 0f;
+            return;
+        }
         Vector3 velocity = controller.velocity;
         velocity.y = 0f;
         if (!controller.enabled || !controller.isGrounded || velocity.sqrMagnitude <= 0.01f)
