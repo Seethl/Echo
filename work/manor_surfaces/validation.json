@@ -1,0 +1,46 @@
+{
+  "SM_ManorFloor_2x2": {
+    "triangles": 32,
+    "vertices": 18,
+    "size_metres": [
+      2,
+      2,
+      0.12
+    ],
+    "closed_manifold": true,
+    "matching_uv_both_axes": true
+  },
+  "SM_ManorCeiling_2x2": {
+    "triangles": 32,
+    "vertices": 18,
+    "size_metres": [
+      2,
+      2,
+      0.1
+    ],
+    "closed_manifold": true,
+    "matching_uv_both_axes": true
+  },
+  "SM_ManorStoneFloor_2x2": {
+    "triangles": 32,
+    "vertices": 18,
+    "size_metres": [
+      2,
+      2,
+      0.12
+    ],
+    "closed_manifold": true,
+    "matching_uv_both_axes": true
+  },
+  "SM_ManorParquetFloor_2x2": {
+    "triangles": 32,
+    "vertices": 18,
+    "size_metres": [
+      2,
+      2,
+      0.12
+    ],
+    "closed_manifold": true,
+    "matching_uv_both_axes": true
+  }
+}

@@ -1,0 +1,4 @@
+PASS: six URP Lit materials, five sRGB textures.
+PASS: metallic zero, emission disabled, base map tiling 1x1, offset zero.
+PASS: original material sources exist.
+Uses original meshes and UVs; no scene or prefab replaced.

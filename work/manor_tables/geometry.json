@@ -1,0 +1,14 @@
+{
+  "ManorDesk": {
+    "triangles": 2288,
+    "width_m": 1.6,
+    "depth_m": 0.76,
+    "height_m": 0.78
+  },
+  "ManorTable": {
+    "triangles": 704,
+    "width_m": 1.8,
+    "depth_m": 0.85,
+    "height_m": 0.78
+  }
+}

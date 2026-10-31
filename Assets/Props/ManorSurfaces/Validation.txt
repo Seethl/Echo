@@ -1,0 +1,5 @@
+PASS: all four prefab bounds are 2 x 2 metres.
+PASS: thickness and visible surface elevation verified.
+PASS: URP materials and BoxColliders assigned.
+Blender verifies closed meshes and matching UVs on both pairs of edges.
+Snap X/Z by 2 metres. Floor Y=0; ceiling underside Y=3 for 3m walls.
