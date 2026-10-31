@@ -1,0 +1,10 @@
+{
+  "ManorWardrobe": {
+    "triangles": 2024,
+    "doors": 2
+  },
+  "ManorBookcase": {
+    "triangles": 3752,
+    "doors": 2
+  }
+}
