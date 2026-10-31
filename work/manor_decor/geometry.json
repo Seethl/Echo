@@ -1,0 +1,164 @@
+[
+  {
+    "name": "DecorBook",
+    "triangles": 200,
+    "size": [
+      0.1635,
+      0.22,
+      0.039
+    ]
+  },
+  {
+    "name": "DecorBookStack",
+    "triangles": 600,
+    "size": [
+      0.17499,
+      0.22917,
+      0.119
+    ]
+  },
+  {
+    "name": "DecorBookRow",
+    "triangles": 400,
+    "size": [
+      0.222,
+      0.165,
+      0.216
+    ]
+  },
+  {
+    "name": "DecorCrate",
+    "triangles": 1100,
+    "size": [
+      0.497,
+      0.525,
+      0.4805
+    ]
+  },
+  {
+    "name": "DecorParcel",
+    "triangles": 68,
+    "size": [
+      0.43,
+      0.385,
+      0.406
+    ]
+  },
+  {
+    "name": "DecorSuitcase",
+    "triangles": 544,
+    "size": [
+      0.58,
+      0.252,
+      0.4645
+    ]
+  },
+  {
+    "name": "DecorBottle",
+    "triangles": 128,
+    "size": [
+      0.105,
+      0.105,
+      0.36
+    ]
+  },
+  {
+    "name": "DecorJar",
+    "triangles": 136,
+    "size": [
+      0.144,
+      0.144,
+      0.211
+    ]
+  },
+  {
+    "name": "DecorMug",
+    "triangles": 140,
+    "size": [
+      0.14997,
+      0.104,
+      0.12
+    ]
+  },
+  {
+    "name": "DecorPlate",
+    "triangles": 144,
+    "size": [
+      0.29,
+      0.29,
+      0.04
+    ]
+  },
+  {
+    "name": "DecorKettle",
+    "triangles": 308,
+    "size": [
+      0.32938,
+      0.21874,
+      0.341
+    ]
+  },
+  {
+    "name": "DecorVase",
+    "triangles": 192,
+    "size": [
+      0.18,
+      0.18,
+      0.33
+    ]
+  },
+  {
+    "name": "DecorCandle",
+    "triangles": 220,
+    "size": [
+      0.14,
+      0.13315,
+      0.37
+    ]
+  },
+  {
+    "name": "DecorNote",
+    "triangles": 64,
+    "size": [
+      0.17,
+      0.24,
+      0.012
+    ]
+  },
+  {
+    "name": "DecorPortrait",
+    "triangles": 266,
+    "size": [
+      0.395,
+      0.0505,
+      0.551
+    ]
+  },
+  {
+    "name": "DecorRolledRug",
+    "triangles": 1232,
+    "size": [
+      0.80846,
+      0.284,
+      0.284
+    ]
+  },
+  {
+    "name": "DecorCoveredObject",
+    "triangles": 82,
+    "size": [
+      0.78,
+      0.62,
+      0.57506
+    ]
+  },
+  {
+    "name": "DecorBucket",
+    "triangles": 240,
+    "size": [
+      0.28787,
+      0.23586,
+      0.46368
+    ]
+  }
+]
