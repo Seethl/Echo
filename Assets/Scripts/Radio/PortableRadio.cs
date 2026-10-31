@@ -53,7 +53,7 @@ namespace Echo.Radio
             if(Time.timeScale<=0)return;
             var channel=Channel;
             if(channel!=lastChannel){source.Stop();lastChannel=channel;lastRecording=null;lastAudible=false;signalPlayed=false;cycleOrigin=Time.time;}
-            if(!powered||volume<=0){source.Stop();Subtitle="";MusicAudible=false;holder.ui.SetSubtitle("");return;}
+            if(!powered||volume<=0){source.Stop();Subtitle="";MusicAudible=false;lastAudible=false;signalPlayed=false;holder.ui.SetSubtitle("");return;}
             source.volume=volume;
             if(channel==null)
             {
@@ -75,14 +75,14 @@ namespace Echo.Radio
                 if(lastRecording!=text||Time.time>=nextRecordingSignal)
                 {
                     PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,.65f,channel.voiceClip);
-                    nextRecordingSignal=Time.time+8;lastRecording=text;ManorProgress.Active.AddClue("recording."+channel.frequency,frequency+": "+text);
+                    nextRecordingSignal=Time.time+Mathf.Max(8f,channel.voiceClip!=null?channel.voiceClip.length+0.3f:0f);lastRecording=text;ManorProgress.Active.AddClue("recording."+channel.frequency,frequency+": "+text);
                 }
             }
             if(Time.time>=nextPulse)
             {
                 nextPulse=Time.time+.75f;
                 bool audible=channel==null||channel.mode!=RadioChannel.Mode.Music||MusicAudible;
-                if(audible)NoiseSystem.Emit(transform.position,Mathf.Lerp(2,20,volume),gameObject,NoiseSystem.Kind.Radio,Mathf.Lerp(.35f,1,volume));
+                if(audible)NoiseSystem.Emit(transform.position,Mathf.Lerp(2,20,volume),gameObject,Held?NoiseSystem.Kind.Radio:NoiseSystem.Kind.Decoy,Mathf.Lerp(.35f,1,volume));
             }
             bool nearby=Held||Vector3.Distance(transform.position,holder.transform.position)<8;
             holder.ui.SetSubtitle(nearby?Subtitle:"");
@@ -91,7 +91,7 @@ namespace Echo.Radio
         {
             float phase=(Time.time-cycleOrigin)%Mathf.Max(1,musicSeconds+silenceSeconds);
             MusicAudible=phase<musicSeconds;
-            if(MusicAudible&&!lastAudible){source.clip=musicClip!=null?musicClip:PrototypeAudio.Clip(PrototypeAudio.Cue.Music);source.loop=false;source.Play();signalPlayed=false;}
+            if(MusicAudible&&(!lastAudible||!source.isPlaying)){source.clip=musicClip!=null?musicClip:PrototypeAudio.Clip(PrototypeAudio.Cue.Music);source.loop=true;source.Play();signalPlayed=false;}
             if(MusicAudible&&phase>=musicSeconds-.6f&&!signalPlayed){PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,.9f,signalClip);signalPlayed=true;}
             if(!MusicAudible&&lastAudible)source.Stop();lastAudible=MusicAudible;
             Subtitle=MusicAudible?"Музичний канал. Після сигналу буде пауза.":"Музика замовкла. Мешканець ще може перевіряти місце, звідки її чув.";

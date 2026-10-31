@@ -58,6 +58,7 @@ namespace Echo.Manor
             Active=this;serial=runSerial;zones=FindObjectsByType<ManorZone>();
             if(restorePending&&checkpoint!=null)
             {values=new Dictionary<string,int>(checkpoint.values);clues=new Dictionary<string,string>(checkpoint.clues);RestoredEnemyPosition=checkpoint.enemy;}
+            if(GetComponent<ManorGameplayBridge>()==null)gameObject.AddComponent<ManorGameplayBridge>();
         }
         private void Start()
         {

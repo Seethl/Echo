@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(NoiseListener),typeof(NavMeshAgent),typeof(EnemySuspicion))]
+[RequireComponent(typeof(NoiseListener),typeof(NavMeshAgent))]
 public class EnemyInvestigator:MonoBehaviour
 {
     // Keep the original first three enum values for the existing test scenes.

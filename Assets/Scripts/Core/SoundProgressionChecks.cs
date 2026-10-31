@@ -112,5 +112,6 @@ public static class SoundProgressionChecks
         }
         yield return GameplayMechanicsChecks.Run();
         yield return HearingAndSuspicionChecks.Run();
+        yield return ManorIntegrationChecks.Run();
     }
 }
