@@ -2,6 +2,8 @@ using Echo.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
 
 namespace Echo.Interactions
 {
@@ -20,6 +22,23 @@ namespace Echo.Interactions
         private Button repeatButton;
         private Font font;
         private float toastUntil;
+        private GameObject customPanel;
+        private Text customTitle,customBody,hud;
+        private Text completionTitle;
+        private Text subtitle;
+        public string CurrentSubtitle=>subtitle!=null?subtitle.text:"";
+        public void SetSubtitle(string value){if(subtitle!=null)subtitle.text=value;}
+        private readonly List<Button> customButtons=new List<Button>();
+        private UnityEngine.Object customOwner;
+        private Func<string> liveBody;
+        private Action onCustomClose;
+        public bool IsCustomOpen(UnityEngine.Object owner) => customPanel!=null && customPanel.activeSelf && customOwner==owner;
+        public void SetHUD(string value) { if(hud!=null)hud.text=value; }
+        public sealed class Choice
+        {
+            public string Caption; public Action Action;
+            public Choice(string caption,Action action){Caption=caption;Action=action;}
+        }
         public bool ReadingNote => notePanel != null && notePanel.activeSelf;
         public bool Completed => finishPanel != null && finishPanel.activeSelf;
         public string CurrentPrompt => prompt != null ? prompt.text : "";
@@ -41,7 +60,10 @@ namespace Echo.Interactions
             dot = Label("Aim Dot", root.transform, "•", 24, 0, 30).gameObject;
             prompt = Label("Prompt", root.transform, "", 23, -65, 45);
             toast = Label("Toast", root.transform, "", 24, 235, 65);
-            Label("Controls", root.transform, "WASD — рух   ·   Миша — огляд   ·   E — взаємодія   ·   Escape — пауза", 17, -320, 38);
+            Label("Controls", root.transform, "WASD — рух · Ctrl — тихо · E — взаємодія · R — радіо · F — живлення · Q — поставити · J — підказки · Escape — назад/пауза", 15, -320, 38);
+            hud=Label("Objective and Noise",root.transform,"",19,285,100);
+            subtitle=Label("Radio Subtitles",root.transform,"",20,-210,105);
+            subtitle.rectTransform.sizeDelta=new Vector2(900,105);
 
             shade = new GameObject("Modal Shade", typeof(RectTransform), typeof(Image));
             shade.transform.SetParent(root.transform, false);
@@ -54,9 +76,13 @@ namespace Echo.Interactions
             noteText = Label("Note Text", notePanel.transform, "", 25, 15, 140);
             closeButton = Button(notePanel.transform, "Закрити", -115, CloseNote);
             finishPanel = Panel("Completion Panel");
-            Label("Title", finishPanel.transform, "Шлях відкрито", 42, 100, 70);
+            completionTitle=Label("Title", finishPanel.transform, "Шлях відкрито", 42, 100, 70);
             repeatButton = Button(finishPanel.transform, "Повторити", -5, () => GameMenu.RestartGameplay());
             Button(finishPanel.transform, "Головне меню", -85, () => GameMenu.ReturnToMainMenu());
+            customPanel=Panel("Custom Panel");
+            customTitle=Label("Title",customPanel.transform,"",29,200,55);
+            customBody=Label("Body",customPanel.transform,"",22,80,160);
+            customPanel.SetActive(false);
             shade.SetActive(false); notePanel.SetActive(false); finishPanel.SetActive(false);
         }
 
@@ -66,6 +92,31 @@ namespace Echo.Interactions
             dot.SetActive(!blocked);
             if (blocked) prompt.text = "";
             if (Time.unscaledTime >= toastUntil) toast.text = "";
+            if(customPanel.activeSelf && liveBody!=null)customBody.text=liveBody();
+        }
+
+        public bool OpenPanel(UnityEngine.Object owner,string title,Func<string> body,IEnumerable<Choice> choices,bool freezeWorld=true,Action closed=null,bool replace=false,bool canEscape=true)
+        {
+            if(!GameMenu.TryOpenModal(this,canEscape?ClosePanel:(Action)null,freezeWorld,replace))return false;
+            onCustomClose?.Invoke();onCustomClose=closed;
+            notePanel.SetActive(false);finishPanel.SetActive(false);
+            foreach(var button in customButtons){button.gameObject.SetActive(false);Destroy(button.gameObject);}customButtons.Clear();
+            customOwner=owner;customTitle.text=title;liveBody=body;customBody.text=body!=null?body():"";
+            shade.SetActive(true);customPanel.SetActive(true);
+            int index=0;
+            foreach(var choice in choices)
+            {
+                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,-35-index*54,()=>action?.Invoke());
+                customButtons.Add(button);index++;
+            }
+            if(customButtons.Count>0 && EventSystem.current!=null)EventSystem.current.SetSelectedGameObject(customButtons[0].gameObject);
+            return true;
+        }
+        public void ClosePanel()
+        {
+            if(customPanel==null||!customPanel.activeSelf)return;
+            customPanel.SetActive(false);shade.SetActive(false);customOwner=null;liveBody=null;
+            var closed=onCustomClose;onCustomClose=null;closed?.Invoke();GameMenu.CloseModal(this);
         }
 
         public void SetPrompt(string value) => prompt.text = value ?? "";
@@ -90,9 +141,10 @@ namespace Echo.Interactions
             GameMenu.CloseModal(this);
         }
 
-        public bool ShowCompletion()
+        public bool ShowCompletion(string message="Шлях відкрито")
         {
             if (!GameMenu.TryOpenModal(this, null)) return false;
+            completionTitle.text=message;
             shade.SetActive(true); finishPanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(repeatButton.gameObject);
             return true;

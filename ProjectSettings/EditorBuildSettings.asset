@@ -9,11 +9,20 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu/MainMenu.unity
     guid: 024765f0aecf43be9a7c6cb91046d629
   - enabled: 1
+    path: Assets/Scenes/ManorPrototype/ManorPrototype.unity
+    guid: 9b1cb11b061a9314ea51b97e12f2f682
+  - enabled: 1
     path: Assets/Scenes/Testing/ManorInteractionTest/ManorInteractionTest.unity
     guid: 4c4d08a6323a79f44b19b51d6864a576
   - enabled: 1
     path: Assets/Scenes/Testing/PlayerTest/PlayerTest.unity
     guid: 5c128885acebbe543ae2aa257a70ea03
+  - enabled: 1
+    path: Assets/Scenes/Testing/PlayerTest/SurfaceTest.unity
+    guid: e92c38b77d2646ab9437b37c60c6d003
+  - enabled: 1
+    path: Assets/Scenes/Testing/PlayerTest/SoundProgressionTest.unity
+    guid: c82eb9c1f2f04f67a224d84ec0cb3005
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

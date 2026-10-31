@@ -8,17 +8,19 @@ public class PlayerCaught : MonoBehaviour
 {
     public UnityEvent onCaught = new UnityEvent();
     public bool allowKeyboardRestart = true;
+    public bool externalFailureScreen;
     public bool IsCaught { get; private set; }
     private bool restarting;
     private bool ownsMenuModal;
 
     public void Catch()
     {
-        if (IsCaught || Echo.Menu.GameMenu.BlocksPlayerInput || Time.timeScale <= 0f) return;
+        if (IsCaught || Time.timeScale <= 0f) return;
         IsCaught = true;
         GetComponent<FPSController>().enabled = false;
         var steps = GetComponent<Footsteps>();
         if (steps != null) steps.enabled = false;
+        if(externalFailureScreen){onCaught.Invoke();return;}
         ownsMenuModal = Echo.Menu.GameMenu.TryOpenModal(this, null);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

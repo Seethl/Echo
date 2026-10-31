@@ -9,10 +9,10 @@ namespace Echo.Interactions.Editor
 {
     public static class ManorInteractionSceneBuilder
     {
-        [MenuItem("Echo/Створити тестову кімнату взаємодії")]
+        [MenuItem("Echo/РЎС‚РІРѕСЂРёС‚Рё С‚РµСЃС‚РѕРІСѓ РєС–РјРЅР°С‚Сѓ РІР·Р°С”РјРѕРґС–С—")]
         public static void BuildFromMenu()
         {
-            if (File.Exists(GameMenu.GameplayScene))
+            if (File.Exists(GameMenu.InteractionTestScene))
             {
                 Debug.Log("ManorInteractionTest already exists; open it from Assets/Scenes/Testing/ManorInteractionTest.");
                 return;
@@ -23,8 +23,8 @@ namespace Echo.Interactions.Editor
         // Also used in the isolated verification project. Never overwrites a scene.
         public static void Build()
         {
-            if (File.Exists(GameMenu.GameplayScene)) throw new IOException("Scene already exists; refusing to overwrite.");
-            Directory.CreateDirectory(Path.GetDirectoryName(GameMenu.GameplayScene));
+            if (File.Exists(GameMenu.InteractionTestScene)) throw new IOException("Scene already exists; refusing to overwrite.");
+            Directory.CreateDirectory(Path.GetDirectoryName(GameMenu.InteractionTestScene));
             AssetDatabase.Refresh();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var stone = Material("Material_Checkerboard");
@@ -101,9 +101,9 @@ namespace Echo.Interactions.Editor
             var interactor = player.AddComponent<PlayerInteractor>();
             interactor.viewCamera = player.GetComponent<FPSController>().playerCamera.GetComponent<Camera>();
             interactor.ui = ui;
-            EditorSceneManager.SaveScene(scene, GameMenu.GameplayScene);
+            EditorSceneManager.SaveScene(scene, GameMenu.InteractionTestScene);
             AssetDatabase.SaveAssets();
-            Debug.Log("ECHO_MANOR_SCENE_BUILT: " + GameMenu.GameplayScene);
+            Debug.Log("ECHO_MANOR_SCENE_BUILT: " + GameMenu.InteractionTestScene);
         }
 
         private static Material Material(string name) => AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/" + name + ".mat");

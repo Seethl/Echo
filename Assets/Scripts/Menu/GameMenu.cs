@@ -15,28 +15,43 @@ namespace Echo.Menu
         public const string MainMenuScene = "Assets/Scenes/MainMenu/MainMenu.unity";
         // Change this one path back to PlayerTestScene to restore the team's test start.
         public const string PlayerTestScene = "Assets/Scenes/Testing/PlayerTest/PlayerTest.unity";
-        public const string GameplayScene = "Assets/Scenes/Testing/ManorInteractionTest/ManorInteractionTest.unity";
+        public const string InteractionTestScene = "Assets/Scenes/Testing/ManorInteractionTest/ManorInteractionTest.unity";
+        public static string GameplayScene
+        {
+            get
+            {
+                var settings = Resources.Load<GameFlowSettings>("EchoGameFlow");
+                return settings != null && !string.IsNullOrEmpty(settings.gameplayScene) ? settings.gameplayScene : InteractionTestScene;
+            }
+        }
 
         private static GameMenu instance;
         public static bool BlocksPlayerInput => instance != null &&
             (instance.inMainMenu || instance.paused || instance.loading || instance.modalActive || Time.frameCount <= instance.resumeFrame);
 
         public static bool IsPaused => instance != null && instance.paused;
+        public static event System.Action NewGameStarting;
+        public static event System.Action<string> SceneLeaving;
+        public static System.Func<bool> ContinueAvailable;
+        public static System.Action ContinueAction;
+        private bool modalFreezesWorld;
         private bool modalActive;
         private Object modalOwner;
         private System.Action modalEscape;
 
         // Scene-owned panels borrow the existing time/cursor/EventSystem owner.
-        public static bool TryOpenModal(Object owner, System.Action onEscape)
+        public static bool TryOpenModal(Object owner, System.Action onEscape, bool freezeWorld = true, bool replace = false)
         {
-            if (instance == null || owner == null || BlocksPlayerInput || !instance.inGameplay) return false;
+            if (instance == null || owner == null || !instance.inGameplay || instance.paused || instance.loading) return false;
+            if (BlocksPlayerInput && !replace) return false;
+            if (replace) instance.RestoreModal();
             instance.previousTimeScale = Time.timeScale;
             instance.previousAudioPause = AudioListener.pause;
             instance.modalActive = true;
             instance.modalOwner = owner;
             instance.modalEscape = onEscape;
-            Time.timeScale = 0f;
-            AudioListener.pause = true;
+            instance.modalFreezesWorld = freezeWorld;
+            if (freezeWorld) { Time.timeScale = 0f; AudioListener.pause = true; }
             UnlockCursor();
             instance.RefreshPanels();
             return true;
@@ -54,8 +69,7 @@ namespace Echo.Menu
         private void RestoreModal()
         {
             if (!modalActive) return;
-            Time.timeScale = previousTimeScale;
-            AudioListener.pause = previousAudioPause;
+            if (modalFreezesWorld) { Time.timeScale = previousTimeScale; AudioListener.pause = previousAudioPause; }
             modalActive = false;
             modalOwner = null;
             modalEscape = null;
@@ -64,7 +78,22 @@ namespace Echo.Menu
         public static void RestartGameplay()
         {
             if (instance != null && instance.inGameplay)
+            {
+                NewGameStarting?.Invoke();
                 instance.StartCoroutine(instance.LoadScene(SceneManager.GetActiveScene().path));
+            }
+        }
+
+        public static void StartNewGame()
+        {
+            if (instance == null) return;
+            NewGameStarting?.Invoke();
+            instance.StartCoroutine(instance.LoadScene(GameplayScene));
+        }
+
+        public static void ReloadGameplay()
+        {
+            if (instance != null) instance.StartCoroutine(instance.LoadScene(GameplayScene));
         }
 
         public static void ReturnToMainMenu()
@@ -87,6 +116,7 @@ namespace Echo.Menu
         private GameObject pausePanel;
         private GameObject settingsPanel;
         private Button newGameButton;
+        private Button continueButton;
         private Button resumeButton;
         private Slider volumeSlider;
         private Slider sensitivitySlider;
@@ -100,6 +130,7 @@ namespace Echo.Menu
         private static void ResetStatics()
         {
             instance = null;
+            NewGameStarting = null; SceneLeaving=null; ContinueAvailable = null; ContinueAction = null;
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -131,7 +162,7 @@ namespace Echo.Menu
             RestoreModal();
             RestorePause();
             inMainMenu = scene.path == MainMenuScene;
-            inGameplay = scene.path == GameplayScene || scene.path == PlayerTestScene;
+            inGameplay = scene.path == GameplayScene || scene.path == PlayerTestScene || scene.path == InteractionTestScene || scene.name == "SurfaceTest";
             loading = false;
             showingSettings = false;
             statusLabel.text = "";
@@ -219,6 +250,8 @@ namespace Echo.Menu
 
         private void RefreshPanels()
         {
+            continueButton.interactable = ContinueAvailable != null && ContinueAvailable();
+            continueButton.GetComponentInChildren<Text>().color = continueButton.interactable ? new Color(.87f,.86f,.8f) : new Color(.45f,.47f,.44f);
             bool visible = inMainMenu || paused || loading;
             canvas.gameObject.SetActive(visible);
             // Other scenes can keep their own EventSystem without a duplicate active module.
@@ -248,6 +281,7 @@ namespace Echo.Menu
             }
 
             loading = true;
+            SceneLeaving?.Invoke(path);
             showingSettings = false;
             RestoreModal();
             RestorePause();
@@ -315,7 +349,7 @@ namespace Echo.Menu
             var scaler = canvasObject.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1280f, 720f);
-            scaler.matchWidthOrHeight = 0.5f;
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 
             background = MakeImage("Backdrop", canvas.transform, Color.black);
             Stretch(background.rectTransform);
@@ -326,14 +360,14 @@ namespace Echo.Menu
             MakeText("Title", mainPanel.transform, "E C H O", 62, 210f, 80f);
             MakeText("Subtitle", mainPanel.transform, "МАЄТОК ПАМ’ЯТАЄ", 16, 153f, 28f);
             newGameButton = MakeButton(mainPanel.transform, "Нова гра", 83f,
-                () => StartCoroutine(LoadScene(GameplayScene)));
+                StartNewGame);
             // There is no save-game system yet. Settings preferences are not a saved game.
-            var continueButton = MakeButton(mainPanel.transform, "Продовжити", 17f, null);
+            continueButton = MakeButton(mainPanel.transform, "Продовжити", 17f, () => ContinueAction?.Invoke());
             continueButton.interactable = false;
             continueButton.GetComponentInChildren<Text>().color = new Color(0.45f, 0.47f, 0.44f);
             MakeButton(mainPanel.transform, "Налаштування", -49f, OpenSettings);
             MakeButton(mainPanel.transform, "Вихід", -115f, Quit);
-            MakeText("Save Status", mainPanel.transform, "Немає збереженої гри.",
+            MakeText("Save Status", mainPanel.transform, "Продовження — з контрольної точки в поточному запуску гри.",
                 16, -182f, 50f);
 
             pausePanel = MakePanel("Pause Menu");

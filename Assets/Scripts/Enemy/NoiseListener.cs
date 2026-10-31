@@ -29,6 +29,8 @@ public class NoiseListener : MonoBehaviour
     public float LastHeardTime { get; private set; }
     public NoiseSystem.Kind LastHeardCategory { get; private set; }
     public float LastAudibility { get; private set; }
+    public float LastStrength => LastAudibility;
+    public NoiseSystem.Kind LastKind => LastHeardCategory;
     private float attentionUntil;
     private float attentionStrength;
 
@@ -47,16 +49,20 @@ public class NoiseListener : MonoBehaviour
 
     private void Hear(NoiseSystem.Noise noise)
     {
-        if (Echo.Menu.GameMenu.BlocksPlayerInput || Time.timeScale <= 0f) return;
+        if (Time.timeScale <= 0f || noise.Category == NoiseSystem.Kind.Ambient || noise.Category == NoiseSystem.Kind.Enemy) return;
+        var manor = Echo.Manor.ManorProgress.Active;
+        if (manor != null && (!manor.Has("hall.open") || manor.IsTutorialPosition(noise.Position))) return;
         var threat = GetComponent<EnemyThreat>();
         if (threat != null && !threat.CanHear) return;
         if (noise.Source != null &&
             (noise.Source.transform == transform || transform.IsChildOf(noise.Source.transform))) return;
 
         Vector3 earPosition = transform.TransformPoint(earOffset);
-        float radius = noise.Radius * Mathf.Max(0f, hearingSensitivity);
+        float radius = noise.Radius * Mathf.Max(0f, hearingSensitivity) * noise.Intensity;
         radius *= NoiseMaskingSource.GetMultiplier(noise.Position, earPosition, transform,
             useOcclusion ? (int)obstacleLayers : 0, defaultObstacleTransmission);
+        if (Vector3.Distance(noise.Position, earPosition) > 2.2f)
+            radius *= 1f - Echo.Audio.NoiseMaskZone.CoverAt(earPosition) * 0.8f;
         if (useOcclusion)
             radius *= SoundPropagation.Transmission(noise.Position, earPosition,
                 noise.Source != null ? noise.Source.transform : null, transform, obstacleLayers, defaultObstacleTransmission);
