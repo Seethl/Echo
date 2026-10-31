@@ -18,6 +18,9 @@ public class FPSController : MonoBehaviour
     public float standingCameraY = 0.65f;
     public float crouchingCameraY = 0.2f;
 
+    public bool IsCrouching { get; private set; }
+    public bool IsRunning { get; private set; }
+
     private CharacterController controller;
     private float verticalVelocity;
     private float cameraRotation;
@@ -74,6 +77,9 @@ public class FPSController : MonoBehaviour
 
         bool isRunning = Keyboard.current.leftShiftKey.isPressed;
         bool isCrouching = Keyboard.current.leftCtrlKey.isPressed;
+
+        IsCrouching = isCrouching;
+        IsRunning = isRunning && !isCrouching;
 
         float speed = isCrouching ? crouchSpeed :
                       isRunning ? runSpeed : walkSpeed;
