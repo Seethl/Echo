@@ -61,7 +61,8 @@ public static class InteractivePropsChecks
    view.ActivateControl(3,1);Assert(!keypad.IsUnlocked&&view.IsOpen,"Wrong code remains inspectable");
    view.Close();Assert(Time.timeScale==1&&!view.IsOpen,"Close restores time");
    Set(menu,"resumeFrame",-10);keypad.SetDigits(4,1,7);Assert(view.Open(player),"Lock reopens");view.ActivateControl(3,1);
-   Assert(keypad.IsUnlocked&&!view.IsOpen&&camera.fieldOfView==60,"417 unlocks and restores camera");
+   Assert(keypad.IsUnlocked&&view.ShowingSuccess,"417 starts opening feedback");view.AdvanceAnimation(1);
+   Assert(!view.IsOpen&&camera.fieldOfView==60,"Opening feedback restores camera");
    Assert(Vector3.Distance(camera.transform.localPosition,position)<.001f&&Quaternion.Angle(camera.transform.localRotation,rotation)<.01f,"Camera pose restored");
    Object.DestroyImmediate(lockRoot);lockRoot=null;
    Set(menu,"resumeFrame",-10);

@@ -19,6 +19,14 @@ namespace Echo.Interactions
         private float buttonTime;
         private Vector3 buttonPosition;
         private Vector3 closedShacklePosition;
+        private LineRenderer selectionFrame;
+        private Material frameMaterial;
+        private Transform visualBody;
+        private Vector3 bodyPosition;
+        private float failureLeft,successLeft;
+        private static readonly Color ReadyColor=new Color(.85f,.68f,.35f);
+        public bool ShowingSuccess=>IsOpen&&successLeft>0;
+        public bool ShowingFailure=>failureLeft>0;
         public bool IsTurning=>pending[0]!=0||pending[1]!=0||pending[2]!=0;
         private void Initialize()
         {
@@ -27,11 +35,18 @@ namespace Echo.Interactions
             for(int i=0;i<3;i++)if(drums[i]!=null)basis[i]=drums[i].localRotation;
             if(submitButton!=null)buttonPosition=submitButton.localPosition;
             if(shackle!=null)closedShacklePosition=shackle.localPosition;
+            if(drums[0]!=null&&drums[0].parent!=transform&&cameraAnchor!=null&&!cameraAnchor.IsChildOf(drums[0].parent))
+            {visualBody=drums[0].parent;bodyPosition=visualBody.localPosition;}
+            frameMaterial=PropFeedbackVisuals.Material(ReadyColor);
+            selectionFrame=PropFeedbackVisuals.Line(transform,"Selected digit row",frameMaterial,.0012f,
+                new Vector3(-.08f,.054f,.078f),new Vector3(.08f,.054f,.078f),new Vector3(.08f,.076f,.078f),new Vector3(-.08f,.076f,.078f));
+            selectionFrame.loop=true;selectionFrame.enabled=false;
             initialized=true;
         }
         protected override void OnOpened()
         {
             Initialize();
+            failureLeft=successLeft=0;selectionFrame.enabled=true;
             for(int i=0;i<3;i++){target[i]=from[i]=keypad.GetDigit(i)*36;pending[i]=0;SetRotation(i,target[i]);}
             Message("ЛКМ + · ПКМ − · колесо ± · OK");
         }
@@ -39,24 +54,40 @@ namespace Echo.Interactions
         {
             Initialize();
             if(i<0||i>=3||keypad==null||keypad.IsUnlocked||drums[i]==null||pending[i]!=0||direction==0)return false;
+            failureLeft=0;Message("ЛКМ + · ПКМ − · колесо ± · OK");
             pending[i]=direction>0?1:-1;from[i]=target[i];target[i]+=pending[i]*36;timer[i]=0;
             var clickSource=PrototypeAudio.Source(gameObject);clickSource.ignoreListenerPause=true;
             clickSource.PlayOneShot(PrototypeAudio.Clip(PrototypeAudio.Cue.Click),.28f);return true;
         }
         protected override bool CanHoldControl(int id)=>id>=0&&id<3;
         protected override float HoldInterval=>Mathf.Max(.02f,turnSeconds)+.02f;
+        protected override string ControlHint(int id)
+        {
+            if(ShowingSuccess)return "Замок відкрито";
+            if(id>=0&&id<3)return "Цифра "+(id+1)+"\nЛКМ + / ПКМ − · колесо миші";
+            return id==3?(IsTurning?"Зачекай завершення оберту":"Підтвердити код · ЛКМ"):"";
+        }
         public override void ActivateControl(int id,int direction)
         {
             if(!IsOpen)return;
             if(id<3){RotateDrum(id,direction);return;}
             if(id!=3||IsTurning||keypad.IsUnlocked)return;
             buttonTime=.15f;
-            if(keypad.Submit(player)){Message("ВІДКРИТО");Close();}
-            else Message("Код не підходить · ESC назад");
+            if(keypad.Submit(player)){failureLeft=0;successLeft=.65f;Message("ВІДКРИТО");}
+            else {failureLeft=.6f;Message("Код не підходить · спробуй ще раз");}
         }
         public void AdvanceAnimation(float delta)
         {
             Initialize();
+            failureLeft=Mathf.Max(0,failureLeft-delta);
+            if(visualBody!=null)visualBody.localPosition=bodyPosition+Vector3.right*(failureLeft>0?Mathf.Sin(failureLeft*65)*.0025f*(failureLeft/.6f):0);
+            if(frameMaterial!=null)PropFeedbackVisuals.SetColor(frameMaterial,successLeft>0?new Color(.4f,1,.6f):failureLeft>0?new Color(1,.22f,.12f):ReadyColor);
+            if(statusText!=null)statusText.color=successLeft>0?new Color(.5f,1,.65f):failureLeft>0?new Color(1,.4f,.3f):ReadyColor;
+            if(successLeft>0)
+            {
+                successLeft=Mathf.Max(0,successLeft-delta);
+                if(successLeft<=0&&IsOpen){Close();return;}
+            }
             for(int i=0;i<3;i++)
             {
                 if(pending[i]==0)continue;
@@ -74,8 +105,14 @@ namespace Echo.Interactions
             AdvanceAnimation(Time.unscaledDeltaTime);
             if(shackle!=null&&keypad!=null)shackle.localPosition=Vector3.MoveTowards(shackle.localPosition,closedShacklePosition+(keypad.IsUnlocked?Vector3.up*.025f:Vector3.zero),Time.unscaledDeltaTime*.08f);
         }
-        protected override void OnClosed(){AdvanceAnimation(10);}
+        protected override void OnClosed()
+        {
+            AdvanceAnimation(10);failureLeft=successLeft=0;
+            if(selectionFrame!=null)selectionFrame.enabled=false;
+            if(visualBody!=null)visualBody.localPosition=bodyPosition;
+        }
         private void SetRotation(int i,float angle){if(drums[i]!=null)drums[i].localRotation=basis[i]*Quaternion.AngleAxis(angle,Vector3.right);}
         private void Message(string text){if(statusText!=null)statusText.text=text;}
+        protected override void OnDestroy(){base.OnDestroy();if(frameMaterial!=null)Destroy(frameMaterial);}
     }
 }

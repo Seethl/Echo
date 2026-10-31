@@ -80,6 +80,7 @@ public static class MergedManorSmoke
    Assert(keypad.GetDigit(i)==code[i]-'0',"Physical drum enters run digit "+i);
   }
   keypad.physicalView.ActivateControl(3,1);
+  keypad.physicalView.AdvanceAnimation(1);
   Assert(progress.Has("hall.open")&&!keypad.physicalView.IsOpen&&Mathf.Approximately(Time.timeScale,1),"Correct run code opens route and restores gameplay");
   Assert(radio.allowPlacement==false,"Radio placement restriction remains after interaction");
   Directory.CreateDirectory("work/interactive_props");File.WriteAllText("work/interactive_props/merged-manor-smoke.txt",

@@ -1,6 +1,7 @@
 using Echo.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Echo.Interactions
 {
@@ -17,6 +18,10 @@ namespace Echo.Interactions
         private float savedFov,savedNearClip,elapsed;
         private int heldControl=-1,heldDirection;
         private float repeatAt;
+        private PropPhysicalControl hovered;
+        private GameObject hintPanel;
+        private Text hintText;
+        public string CurrentControlHint=>hintPanel!=null&&hintPanel.activeSelf?hintText.text:"";
         public virtual bool Open(PlayerInteractor user)
         {
             if(IsOpen||user==null||user.viewCamera==null||cameraAnchor==null)return false;
@@ -35,6 +40,32 @@ namespace Echo.Interactions
         protected virtual void TickVisuals(){}
         protected virtual bool CanHoldControl(int id)=>false;
         protected virtual float HoldInterval=>.09f;
+        protected virtual string ControlHint(int id)=>"";
+        private void SetHovered(PropPhysicalControl control)
+        {
+            if(hovered!=control)
+            {
+                if(hovered!=null)hovered.SetHighlighted(false);
+                hovered=control;
+                if(hovered!=null)hovered.SetHighlighted(true);
+            }
+            string text=control!=null?ControlHint(control.controlId):"";
+            if(hintPanel==null&&text.Length>0)
+            {
+                var canvas=new GameObject("Prop hover hint",typeof(Canvas),typeof(CanvasScaler));
+                canvas.transform.SetParent(transform,false);
+                canvas.GetComponent<Canvas>().renderMode=RenderMode.ScreenSpaceOverlay;
+                canvas.GetComponent<Canvas>().sortingOrder=950;
+                var scaler=canvas.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(1280,720);
+                hintPanel=new GameObject("Hint",typeof(RectTransform),typeof(Image));hintPanel.transform.SetParent(canvas.transform,false);
+                var rect=(RectTransform)hintPanel.transform;rect.anchorMin=rect.anchorMax=Vector2.zero;rect.pivot=Vector2.zero;rect.anchoredPosition=new Vector2(16,16);rect.sizeDelta=new Vector2(390,58);
+                var background=hintPanel.GetComponent<Image>();background.color=new Color(.025f,.035f,.03f,.94f);background.raycastTarget=false;
+                var label=new GameObject("Text",typeof(RectTransform),typeof(Text));label.transform.SetParent(hintPanel.transform,false);
+                var labelRect=(RectTransform)label.transform;labelRect.anchorMin=Vector2.zero;labelRect.anchorMax=Vector2.one;labelRect.offsetMin=new Vector2(8,4);labelRect.offsetMax=new Vector2(-8,-4);
+                hintText=label.GetComponent<Text>();hintText.font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");hintText.fontSize=18;hintText.alignment=TextAnchor.MiddleCenter;hintText.color=new Color(1,.86f,.63f);hintText.raycastTarget=false;
+            }
+            if(hintPanel!=null){hintText.text=text;hintPanel.SetActive(text.Length>0);}
+        }
         protected virtual void LateUpdate()
         {
             TickVisuals();
@@ -55,6 +86,7 @@ namespace Echo.Interactions
                 var candidate=hit.collider.GetComponent<PropPhysicalControl>();
                 if(candidate!=null&&candidate.owner==this)control=candidate;
             }
+            SetHovered(control);
             int direction=mouse.leftButton.wasPressedThisFrame?1:mouse.rightButton.wasPressedThisFrame?-1:0;
             if(direction!=0)
             {
@@ -84,11 +116,11 @@ namespace Echo.Interactions
         public void Close()
         {
             if(!IsOpen)return;
-            IsOpen=false;heldControl=-1;
+            IsOpen=false;heldControl=-1;SetHovered(null);
             if(viewCamera!=null){viewCamera.transform.localPosition=savedLocalPosition;viewCamera.transform.localRotation=savedLocalRotation;viewCamera.fieldOfView=savedFov;viewCamera.nearClipPlane=savedNearClip;}
             OnClosed();GameMenu.CloseModal(this);player=null;
         }
         private void OnDisable(){Close();}
-        private void OnDestroy(){Close();}
+        protected virtual void OnDestroy(){Close();}
     }
 }

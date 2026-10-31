@@ -8,14 +8,20 @@ namespace Echo.Interactions
         private MeshRenderer meshRenderer;
         private MaterialPropertyBlock properties;
         private string lastText;
+        private Color lastColor;
         private void OnEnable(){Font.textureRebuilt+=OnFontRebuilt;Refresh();}
         private void OnDisable(){Font.textureRebuilt-=OnFontRebuilt;}
-        private void LateUpdate(){if(textMesh!=null&&lastText!=textMesh.text)Refresh();}
+        private void LateUpdate()
+        {
+            if(textMesh==null)return;
+            if(lastText!=textMesh.text)Refresh();
+            else if(lastColor!=textMesh.color){lastColor=textMesh.color;BindAtlas();}
+        }
         public void Refresh()
         {
             textMesh=GetComponent<TextMesh>();meshRenderer=GetComponent<MeshRenderer>();
             if(textMesh.font==null)return;
-            lastText=textMesh.text;textMesh.font.RequestCharactersInTexture(lastText,textMesh.fontSize,textMesh.fontStyle);BindAtlas();
+            lastText=textMesh.text;lastColor=textMesh.color;textMesh.font.RequestCharactersInTexture(lastText,textMesh.fontSize,textMesh.fontStyle);BindAtlas();
         }
         private void OnFontRebuilt(Font font){if(textMesh!=null&&font==textMesh.font)BindAtlas();}
         private void BindAtlas()
