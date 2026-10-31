@@ -4,24 +4,17 @@ using UnityEngine;
 
 namespace Echo.Menu.Editor
 {
-    // Test the open scene by default; starting from the menu is an explicit opt-in.
+    // Make the editor's Play button use the same entry scene as a build.
     [InitializeOnLoad]
     internal static class MenuPlayModeSetup
     {
         private const string StartMenuItem = "Echo/Починати Play з головного меню";
-        // New key deliberately drops the old automatic/default-on behaviour.
-        private static string PreferenceKey => "Echo.StartFromMenu.OptIn." + Application.dataPath;
+        private static string PreferenceKey => "Echo.StartFromMenu." + Application.dataPath;
 
         static MenuPlayModeSetup()
         {
             EditorApplication.delayCall += Configure;
             EditorApplication.projectChanged += Configure;
-            EditorApplication.playModeStateChanged += OnPlayModeChanged;
-        }
-
-        private static void OnPlayModeChanged(PlayModeStateChange state)
-        {
-            if (state == PlayModeStateChange.EnteredEditMode) Configure();
         }
 
         private static void Configure()
@@ -29,7 +22,7 @@ namespace Echo.Menu.Editor
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
 
-            bool enabled = EditorPrefs.GetBool(PreferenceKey, false);
+            bool enabled = EditorPrefs.GetBool(PreferenceKey, true);
             var scene = enabled ? AssetDatabase.LoadAssetAtPath<SceneAsset>(GameMenu.MainMenuScene) : null;
             if (EditorSceneManager.playModeStartScene != scene)
                 EditorSceneManager.playModeStartScene = scene;
@@ -38,14 +31,14 @@ namespace Echo.Menu.Editor
         [MenuItem(StartMenuItem)]
         private static void ToggleStartScene()
         {
-            EditorPrefs.SetBool(PreferenceKey, !EditorPrefs.GetBool(PreferenceKey, false));
+            EditorPrefs.SetBool(PreferenceKey, !EditorPrefs.GetBool(PreferenceKey, true));
             Configure();
         }
 
         [MenuItem(StartMenuItem, true)]
         private static bool ValidateStartScene()
         {
-            UnityEditor.Menu.SetChecked(StartMenuItem, EditorPrefs.GetBool(PreferenceKey, false));
+            UnityEditor.Menu.SetChecked(StartMenuItem, EditorPrefs.GetBool(PreferenceKey, true));
             return !EditorApplication.isPlayingOrWillChangePlaymode;
         }
 

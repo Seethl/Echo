@@ -15,6 +15,7 @@ namespace Echo.Manor
         private static Snapshot checkpoint;
         private static bool restorePending;
         private static int runSerial;
+        private static int previousCode,previousOrder;
         private int serial;
         public PlayerInteractor player;
         public string statusSuffix="";
@@ -22,15 +23,26 @@ namespace Echo.Manor
         private Dictionary<string,int> values=new Dictionary<string,int>();
         private Dictionary<string,string> clues=new Dictionary<string,string>();
         private int journalPage;
+        private int helpStep;
+        private bool showHelp;
+        [Min(0)]public float libraryOrientationSeconds=25;
+        private float libraryEntryTime=-1;
         private bool restoring;
         public ManorArea Area {get;private set;}
         public bool TutorialSafe => Area==ManorArea.Caretaker||Area==ManorArea.Gallery;
         public bool HasCheckpoint => checkpoint!=null;
         public int CheckpointStage => checkpoint!=null?checkpoint.stage:0;
         public Vector3? RestoredEnemyPosition {get;private set;}
-        public string Objective => !player.HasKey("manor.service-passage")&&!Has("hall.open")?"Знайти службовий ключ":
-            !Has("hall.open")?"Почути код і відкрити хол":!player.HasKey("tool.winch")&&!Has("grate.open")?"Пройти до бібліотеки й знайти руків’я":
-            !Has("grate.open")?"Підняти решітку на кухні":!Has("yard.open")?"Відтиснути засув дверей у двір":!Has("gates.open")?"Знайти болторіз і відкрити ворота":"Залишити територію через ворота";
+        public string GalleryCode=>Get(RunSecrets.GalleryKey).ToString("000");
+        public string Objective => !player.HasKey("manor.service-passage")&&!Has("hall.open")?"Знайти службовий ключ у шафці":
+            !Has("hall.open")?(Has("gallery.quiet")?(Has("recording.heard.940")?"Набрати отриманий код на замку біля дверей":"Послухати на радіо службову передачу 940"):"Прибрати гілку й закрити віконницю"):
+            !player.HasKey("tool.winch")&&!Has("grate.open")?(Has("library.cache")?"Забрати руків’я з відкритої схованки":Area==ManorArea.Library?"Відкрити схованку: дослідити панелі й радіозапис":"Знайти бібліотеку — два проходи з холу"):
+            !Has("grate.open")?(Has("winch.installed")?"Підняти решітку: зафіксувати три ступені":"Встановити руків’я в лебідку на кухні"):
+            !Has("yard.open")?(player.HasKey("tool.crowbar")?"Відтиснути засув дверей у двір тричі":"Знайти лом на столі в зимовому саду"):
+            !Has("gates.open")?(!player.HasKey("tool.cutters")?"Знайти болторіз в інструментальному сараї":!Has("gates.braced")?"Підперти ворота ломом, щоб розвантажити ланцюг":"Перерізати дві секції ланцюга: утримувати E"):
+            "Вийти через відкриті зовнішні ворота";
+        public bool LibraryOrientationActive=>libraryEntryTime>=0&&!Has("library.orientation.done");
+        public bool IsLibraryOrientationPosition(Vector3 position)=>LibraryOrientationActive&&zones.Any(z=>z.area==ManorArea.Library&&z.Contains(position));
 
         private sealed class Snapshot
         {
@@ -58,7 +70,8 @@ namespace Echo.Manor
             Active=this;serial=runSerial;zones=FindObjectsByType<ManorZone>();
             if(restorePending&&checkpoint!=null)
             {values=new Dictionary<string,int>(checkpoint.values);clues=new Dictionary<string,string>(checkpoint.clues);RestoredEnemyPosition=checkpoint.enemy;}
-            if(GetComponent<ManorGameplayBridge>()==null)gameObject.AddComponent<ManorGameplayBridge>();
+            if(!Has(RunSecrets.GalleryKey)){previousCode=RunSecrets.NewCode(previousCode);values[RunSecrets.GalleryKey]=previousCode;}
+            if(!Has(RunSecrets.LibraryKey)){previousOrder=RunSecrets.NewOrder(previousOrder);values[RunSecrets.LibraryKey]=previousOrder;}
         }
         private void Start()
         {
@@ -81,9 +94,24 @@ namespace Echo.Manor
             if(player==null)return;
             foreach(var zone in zones)if(zone.Contains(player.transform.position))Area=zone.area;
             if(!Has("area."+Area))Set("area."+Area);
+            if(Area==ManorArea.Library&&libraryEntryTime<0)libraryEntryTime=Time.time;
+            if(LibraryOrientationActive&&Time.time-libraryEntryTime>=libraryOrientationSeconds)Set("library.orientation.done");
+            if(Area==ManorArea.Hall&&!Has("tutorial.noise"))
+            {
+                Set("tutorial.noise");
+                const string lesson="Гучні звуки довкола можуть приховати твої дії. Поруч із ворогом навіть тихий звук небезпечний.";
+                AddClue("tutorial.noise",lesson+" J — журнал і допомога. У холі килим тихіший за скло.");player.ui.ShowToast(lesson,6);
+            }
             player.ui.SetHUD(AreaName()+"\nЦіль: "+Objective+"\n"+statusSuffix);
             if(!GameMenu.BlocksPlayerInput&&Keyboard.current!=null&&Keyboard.current.jKey.wasPressedThisFrame)
-                player.ui.OpenPanel(this,"ЗНАЙДЕНІ ПІДКАЗКИ",CluePage,new[]{new InteractionUI.Choice("Попередня",()=>journalPage=Mathf.Max(0,journalPage-1)),new InteractionUI.Choice("Наступна",()=>journalPage=Mathf.Min(Mathf.Max(0,clues.Count-1),journalPage+1)),new InteractionUI.Choice("Закрити",()=>player.ui.ClosePanel())});
+            {
+                showHelp=false;helpStep=0;
+                player.ui.OpenPanel(this,"ЖУРНАЛ І ДОПОМОГА",()=>showHelp?HelpText(helpStep):CluePage(),new[]{
+                    new InteractionUI.Choice("Попередній запис",()=>{showHelp=false;journalPage=Mathf.Max(0,journalPage-1);}),
+                    new InteractionUI.Choice("Наступний запис",()=>{showHelp=false;journalPage=Mathf.Min(Mathf.Max(0,clues.Count-1),journalPage+1);}),
+                    new InteractionUI.Choice("Потрібна підказка",()=>{showHelp=true;helpStep=Mathf.Min(3,helpStep+1);}),
+                    new InteractionUI.Choice("Закрити",()=>player.ui.ClosePanel())});
+            }
         }
         private string AreaName(){var zone=zones.FirstOrDefault(z=>z.area==Area);return zone!=null?zone.ukrainianName:"Маєток";}
         public bool IsTutorialPosition(Vector3 point)=>zones.Any(z=>z.tutorialSafe&&z.Contains(point));
@@ -94,6 +122,16 @@ namespace Echo.Manor
         public void AddClue(string id,string text){if(clues.TryGetValue(id,out var old)&&old==text)return;clues[id]=text;RefreshCheckpoint();}
         public string Journal=>clues.Count==0?"Поки немає записаних підказок.":string.Join("\n\n",clues.Values);
         private string CluePage(){if(clues.Count==0)return Journal;journalPage=Mathf.Clamp(journalPage,0,clues.Count-1);return (journalPage+1)+" / "+clues.Count+"\n"+clues.Values.ElementAt(journalPage);}
+        public string HelpText(int step)
+        {
+            string direction,connection;
+            if(!Has("hall.open")){direction="Радіо лежить на столі в кімнаті доглядача; частота галереї — на її картці.";connection="Після закривання віконниці налаштуйте радіо на передачу галереї. Код змінюється для кожної нової гри; почутий запис зберігається в J.";}
+            else if(!player.HasKey("tool.winch")&&!Has("grate.open")){direction=Area==ManorArea.Library?"Огляньте звукові панелі на лівій стіні та схованку з такими самими знаками.":"Бібліотека має два проходи з дальньої частини холу. Шукайте вказівники.";connection="Зіставте звуки панелей із послідовністю радіопередачі. Введення — на кнопках схованки, не на демонстраційних панелях.";}
+            else if(!Has("grate.open")){direction="На кухні лебідка стоїть поруч із решіткою. Інструкція — поряд.";connection="Після подвійного клацання потрібно відпустити Space, щоб стопор зафіксував ступінь.";}
+            else if(!Has("yard.open")){direction="Лом лежить на столі ліворуч від входу в зимовий сад; двері у двір — навпроти.";connection="Гуркіт води може прикрити тріск засуву. Прогрес натискань зберігається.";}
+            else{direction="Болторіз — у сараї праворуч; місце підпори — біля петлі воріт.";connection="Підіпри стулку ломом. Тримай E на ланцюгу; відпускай, щоб сховатися. Готові зрізи збережуться. Радіо може відвести мешканця.";}
+            return "Ціль: "+Objective+(step>=3?"\n\n"+connection:step>=2?"\n\n"+direction:"");
+        }
         public void SaveCheckpoint(int stage,Vector3 spawn,Vector3 enemy)
         {
             if(checkpoint!=null&&stage<=checkpoint.stage)return;

@@ -13,7 +13,6 @@ namespace Echo.Audio
         public AudioClip loudClip,warningClip;
         private NoiseMaskZone mask;
         private float nextSound;
-        private float coverUntil;
         public bool Loud {get;private set;}
         public bool Warning {get;private set;}
         private void Awake(){mask=GetComponent<NoiseMaskZone>();PrototypeAudio.Source(gameObject);}
@@ -23,13 +22,12 @@ namespace Echo.Audio
             float phase=Time.time%Mathf.Max(period,warningSeconds+loudSeconds+1);
             Warning=mode==Mode.Water&&phase>=period-loudSeconds-warningSeconds&&phase<period-loudSeconds;
             Loud=mode==Mode.Shutter?(ManorProgress.Active!=null&&!ManorProgress.Active.Has("gallery.quiet")):mode==Mode.Water&&phase>=period-loudSeconds;
-            mask.active=Loud&&Time.time<coverUntil;
+            mask.active=Loud;
             if(movingVisual!=null)movingVisual.localRotation=Quaternion.Euler(0,0,Loud?Mathf.Sin(Time.time*9)*18:Warning?8:0);
             if(Time.time<nextSound)return;
-            if(mode==Mode.Shutter&&Loud){var clip=loudClip!=null?loudClip:PrototypeAudio.Clip(PrototypeAudio.Cue.Thud);PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Thud,.75f,clip);coverUntil=Time.time+clip.length;mask.active=true;nextSound=Time.time+2.5f;}
-            else if(mode==Mode.Water){var cue=Loud?PrototypeAudio.Cue.Water:PrototypeAudio.Cue.Click;var clip=Loud?loudClip:warningClip;clip=clip!=null?clip:PrototypeAudio.Clip(cue);PrototypeAudio.Play(gameObject,cue,Loud?.8f:Warning?.35f:.12f,clip);if(Loud){coverUntil=Time.time+clip.length;mask.active=true;}nextSound=Time.time+(Loud?1.7f:Warning?.3f:1.1f);}
+            if(mode==Mode.Shutter&&Loud){PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Thud,.75f,loudClip);nextSound=Time.time+2.5f;}
+            else if(mode==Mode.Water){PrototypeAudio.Play(gameObject,Loud?PrototypeAudio.Cue.Water:PrototypeAudio.Cue.Click,Loud?.8f:Warning?.35f:.12f,Loud?loudClip:warningClip);nextSound=Time.time+(Loud?1.7f:Warning?.3f:1.1f);}
             else if(mode==Mode.Clock){PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Click,.22f,warningClip);nextSound=Time.time+1;}
         }
-        private void OnDisable(){if(mask!=null)mask.active=false;coverUntil=0;var source=GetComponent<AudioSource>();if(source!=null)source.Stop();}
     }
 }

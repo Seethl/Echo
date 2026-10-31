@@ -6,6 +6,8 @@ namespace Echo.Manor
     public sealed class KeypadLock:Interactable
     {
         public string code="417";
+        public bool useRunCode;
+        public string EffectiveCode=>useRunCode?ManorProgress.Active.GalleryCode:code;
         public string unlockFlag="hall.open";
         private readonly int[] digits=new int[3];
         private string feedback="Три механічні коліщатка. Код міститься в службовому записі.";
@@ -20,7 +22,7 @@ namespace Echo.Manor
         }
         public bool Submit(PlayerInteractor player)
         {
-            if(string.Concat(digits)!=code){feedback="Код не підходить. Можна спробувати знову.";return false;}
+            if(string.Concat(digits)!=EffectiveCode){feedback="Код не підходить. Послухайте поточну службову передачу; записки містять її частоту.";return false;}
             ManorProgress.Active.Set(unlockFlag);player.ui.ClosePanel();player.ui.ShowToast("Замок відкрито. У холі хтось ходить. Рухайтеся тихо й тримайтеся укриттів.");return true;
         }
         public void SetDigits(int a,int b,int c){digits[0]=Mathf.Clamp(a,0,9);digits[1]=Mathf.Clamp(b,0,9);digits[2]=Mathf.Clamp(c,0,9);}
