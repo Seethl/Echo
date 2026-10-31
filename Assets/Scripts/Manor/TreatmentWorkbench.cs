@@ -17,7 +17,7 @@ namespace Echo.Manor
         public override void Interact(PlayerInteractor player)
         {
             if (Time.time < nextAction) return;
-            if (!ManorProgress.Active.Has(recipeFlag)) { player.ui.ShowToast("Спершу знайди рецепт у бібліотечній схованці."); return; }
+            if (!ManorProgress.Active.Has(recipeFlag)) { player.ui.ShowToast("Спершу прочитай рецепт біля картини в кімнаті нагорі."); return; }
             int step = Step;
             if (!player.HasKey(itemIds[step])) { player.ui.ShowToast(missingMessages[step]); return; }
             nextAction = Time.time + .65f;

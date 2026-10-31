@@ -47,6 +47,9 @@ namespace Echo.Manor
                 if (Time.time >= nextRequest) { nextRequest = Time.time + 4; resident.Investigate(goal); }
                 return;
             }
+            // Stay by the cup while drinking, rather than starting the investigator search loop.
+            // A brief renewal lets sight or leaving the interaction release movement.
+            resident.HoldForInteraction(.2f);
             drinking += Time.deltaTime;
             if (drinking < drinkingSeconds) return;
             if (!player.ui.ShowCompletion("Мешканець заспокоївся. Ліки подіяли.")) return;

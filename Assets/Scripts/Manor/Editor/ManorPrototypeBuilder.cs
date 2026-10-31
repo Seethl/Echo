@@ -153,6 +153,10 @@ namespace Echo.Manor.Editor
             if(!routeOnly)ManorTreatmentUpgrade.ApplyToScene();
             if(!routeOnly)ManorVisualRepair.Apply();
             if(!routeOnly)ManorConceptUpgrade.Apply();
+            if(!routeOnly)ManorFirstRoomsPolish.Apply();
+            if(!routeOnly)ManorUpperLibraryPolish.Apply();
+            if(!routeOnly)ManorLivedInPass.Apply();
+            if(!routeOnly)ManorVinylTablePolish.Apply();
             var flow=AssetDatabase.LoadAssetAtPath<GameFlowSettings>("Assets/Resources/EchoGameFlow.asset");
             if(flow==null) {flow=ScriptableObject.CreateInstance<GameFlowSettings>();AssetDatabase.CreateAsset(flow,"Assets/Resources/EchoGameFlow.asset");}
             flow.gameplayScene=ScenePath; EditorUtility.SetDirty(flow);

@@ -18,6 +18,7 @@ public class EnemyInvestigator:MonoBehaviour
     public float sightRange=12,fieldOfView=100,suspicionSeconds=1.1f;
     public float patrolSpeed=1.6f,chaseSpeed=3.6f,patrolWait=1.4f;
     public AudioClip footstepsClip,suspicionClip,chaseClip;
+    [Range(0f,1f)]public float footstepPlaybackVolume=.8f;
     [Header("Readable reactions")]
     [Min(0)] public float heardReactionSeconds=.45f;
     [Min(0)] public float reactionTurnSpeed=180f;
@@ -34,7 +35,9 @@ public class EnemyInvestigator:MonoBehaviour
     private float deadline,nextSense,lastSeen,suspicion,nextRepath,lastNoiseTime=-100,currentNoiseStrength,nextStep,waitUntil,nextSearchMove;
     private int patrolIndex=-1,searchIndex;
     private Vector3 searchCenter;
-    private float reactUntil;
+    private float reactUntil,interactionHoldUntil;
+    // A short, renewable locomotion hold; sight and pursuit remain active.
+    public void HoldForInteraction(float seconds)=>interactionHoldUntil=Mathf.Max(interactionHoldUntil,Time.time+Mathf.Max(0,seconds));
     private EnemyPresentation presentation;
     private static readonly Vector3[] searchOffsets={Vector3.right*2,Vector3.left*2,Vector3.forward*2,Vector3.back*1.5f};
     private void Awake()
@@ -115,6 +118,8 @@ public class EnemyInvestigator:MonoBehaviour
             else if(CurrentState==State.Suspicious&&Time.time-lastSeen>.45f)
             {if(Go(LastKnownPosition)){Change(State.Investigating);deadline=Time.time+investigationTimeout;}else BeginSearch();}
         }
+        if(Time.time<interactionHoldUntil&&!SeesPlayer&&CurrentState!=State.Chasing)
+        {agent.isStopped=true;return;}
         if(CurrentState==State.Investigating&&Time.time<reactUntil)
         {
             agent.isStopped=true;FaceRememberedPoint(LastSoundGoal);return;
@@ -152,7 +157,7 @@ public class EnemyInvestigator:MonoBehaviour
     {
         if(Time.timeScale<=0||!isActiveAndEnabled||!Usable()||agent.velocity.sqrMagnitude<=.05f)return;
         if(presentation!=null&&presentation.isActiveAndEnabled&&presentation.TryPlayFootstep())return;
-        PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Footstep,.8f,footstepsClip);
+        PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Footstep,footstepPlaybackVolume,footstepsClip);
     }
     private void FaceRememberedPoint(Vector3 point)
     {
@@ -193,5 +198,5 @@ public class EnemyInvestigator:MonoBehaviour
         }
         Stop();
     }
-    private void Stop(){if(Usable())agent.ResetPath();Change(State.Idle);SeesPlayer=false;suspicion=0;reactUntil=0;}
+    private void Stop(){if(Usable())agent.ResetPath();Change(State.Idle);SeesPlayer=false;suspicion=0;reactUntil=0;interactionHoldUntil=0;}
 }
