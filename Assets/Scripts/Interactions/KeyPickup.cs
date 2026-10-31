@@ -6,7 +6,13 @@ namespace Echo.Interactions
     {
         public string keyId = "manor.service-passage";
         public string displayName = "службовий ключ";
-        public override string Prompt => "E — забрати ключ";
+        public string pickupPrompt = "E — забрати ключ";
+        public override string Prompt => pickupPrompt;
+        private void Start()
+        {
+            var player = FindAnyObjectByType<PlayerInteractor>();
+            if(player != null && player.HasKey(keyId)) gameObject.SetActive(false);
+        }
         public override bool CanInteract(PlayerInteractor player) => base.CanInteract(player) &&
             !string.IsNullOrWhiteSpace(keyId);
 

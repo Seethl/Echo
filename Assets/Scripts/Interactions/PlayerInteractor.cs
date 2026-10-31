@@ -15,7 +15,14 @@ namespace Echo.Interactions
         private readonly HashSet<string> keys = new HashSet<string>();
         public Interactable Target { get; private set; }
         public bool HasKey(string id) => !string.IsNullOrWhiteSpace(id) && keys.Contains(id);
-        public bool AddKey(string id) => !string.IsNullOrWhiteSpace(id) && keys.Add(id);
+        public event System.Action InventoryChanged;
+        public bool AddKey(string id)
+        {
+            if(string.IsNullOrWhiteSpace(id)||!keys.Add(id))return false;
+            InventoryChanged?.Invoke();return true;
+        }
+        public string[] GetKeys() { var result = new string[keys.Count]; keys.CopyTo(result); return result; }
+        public void RestoreKeys(IEnumerable<string> saved) { keys.Clear(); if(saved!=null)foreach(var id in saved)AddKey(id); }
 
         private void Awake()
         {
@@ -26,7 +33,8 @@ namespace Echo.Interactions
         {
             Target = null;
             if (ui == null || viewCamera == null) return;
-            if (GameMenu.BlocksPlayerInput || Time.timeScale <= 0f)
+            var life = GetComponent<PlayerCaught>();
+            if (GameMenu.BlocksPlayerInput || Time.timeScale <= 0f || (life != null && life.IsCaught))
             {
                 ui.SetPrompt(null);
                 return;
