@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,11 +6,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(AudioSource))]
 public class Footsteps : MonoBehaviour
 {
-    public AudioClip footstepSound;
+    public AudioClip defaultFootstepSound;
 
     public float walkInterval = 0.5f;
     public float runInterval = 0.3f;
     public float crouchInterval = 0.8f;
+
+    public float raycastDistance = 2f;
 
     private CharacterController controller;
     private AudioSource audioSource;
@@ -36,7 +39,7 @@ public class Footsteps : MonoBehaviour
 
         if (!isMoving || !controller.isGrounded)
         {
-            timer = 0;
+            timer = 0f;
             return;
         }
 
@@ -46,17 +49,40 @@ public class Footsteps : MonoBehaviour
         float interval = isCrouching ? crouchInterval :
                          isRunning ? runInterval : walkInterval;
 
-        audioSource.volume = isCrouching ? 0.2f :
-                             isRunning ? 1f : 0.5f;
-
         timer += Time.deltaTime;
 
-        if (timer >= interval)
-        {
-            timer = 0;
+        if (timer < interval)
+            return;
 
-            if (footstepSound != null)
-                audioSource.PlayOneShot(footstepSound);
+        timer = 0f;
+
+        AudioClip clip = defaultFootstepSound;
+        float surfaceMultiplier = 1f;
+
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.3f;
+
+        if (Physics.Raycast(rayOrigin, Vector3.down,
+            out RaycastHit hit, raycastDistance))
+        {
+            SurfaceType surface =
+                hit.collider.GetComponentInParent<SurfaceType>();
+
+            if (surface != null)
+            {
+                if (surface.footstepSound != null)
+                    clip = surface.footstepSound;
+
+                surfaceMultiplier = surface.loudnessMultiplier;
+            }
         }
+
+        float movementVolume = isCrouching ? 0.2f :
+                               isRunning ? 1f : 0.5f;
+
+        float finalVolume =
+            Mathf.Clamp01(movementVolume * surfaceMultiplier);
+
+        if (clip != null)
+            audioSource.PlayOneShot(clip, finalVolume);
     }
 }
