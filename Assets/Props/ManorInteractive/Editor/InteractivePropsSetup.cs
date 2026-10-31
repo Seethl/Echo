@@ -110,6 +110,32 @@ public static class InteractivePropsSetup
   Text(root.transform,"PowerLabel","PWR",new Vector3(-.195f,.14f,.125f),.008f,Color.white);
   Text(root.transform,"ReplayLabel","RPT",new Vector3(-.10f,.14f,.125f),.008f,Color.white);
  }
+ [MenuItem("Tools/Echo/Finish Radio Dial Markings")]
+ public static void UpgradeRadioDials()
+ {
+  foreach(string name in new[]{"PF_ManorRadio","PF_ManorRadio_Stationary"})
+  {
+   string path=Folder+"/"+name+".prefab";var root=PrefabUtility.LoadPrefabContents(path);
+   try
+   {
+    var readout=root.GetComponent<PhysicalRadioView>().readout;
+    readout.transform.localPosition=new Vector3(-.108f,.033f,.124f);readout.characterSize=.010f/6;
+    var old=root.transform.Find("FrequencyScale");if(old!=null)Object.DestroyImmediate(old.gameObject);
+    var scale=new GameObject("FrequencyScale");scale.transform.SetParent(root.transform,false);
+    for(int i=0;i<=8;i++)
+    {
+     float x=Mathf.Lerp(-.033f,-.183f,i/8f);
+     var mark=GameObject.CreatePrimitive(PrimitiveType.Cube);mark.name="Scale tick";Object.DestroyImmediate(mark.GetComponent<Collider>());
+     mark.transform.SetParent(scale.transform,false);mark.transform.localPosition=new Vector3(x,.065f,.123f);mark.transform.localScale=new Vector3(.0009f,i%2==0?.009f:.005f,.0008f);
+     mark.GetComponent<Renderer>().sharedMaterial=AssetDatabase.LoadAssetAtPath<Material>(Folder+"/M_Interactive_Iron.mat");
+     if(i%2==0)Text(scale.transform,"Frequency_"+i,(760+i*65).ToString(),new Vector3(x,.080f,.124f),.0055f,new Color(.15f,.06f,.015f));
+    }
+    PrefabUtility.SaveAsPrefabAsset(root,path);
+   }
+   finally{PrefabUtility.UnloadPrefabContents(root);}
+  }
+  AssetDatabase.SaveAssets();Debug.Log("RADIO_DIAL_MARKINGS_OK");
+ }
  public static void CreateTestScene()
  {
   var old=SceneManager.GetActiveScene();
@@ -137,11 +163,13 @@ public static class InteractivePropsSetup
  {var o=(GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(Folder+"/PF_"+name+".prefab"));o.transform.SetPositionAndRotation(pos,rot);}
  public static void RenderPreviews()
  {
+  if(!Application.isBatchMode)throw new Exception("Render previews in the isolated batch validation project.");
+  UnityEngine.Rendering.GraphicsSettings.defaultRenderPipeline=null;QualitySettings.renderPipeline=null;
   EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
   Directory.CreateDirectory("work/interactive_props");
   var camera=new GameObject("Preview camera").AddComponent<Camera>();camera.backgroundColor=new Color(.08f,.09f,.10f);camera.clearFlags=CameraClearFlags.SolidColor;camera.orthographic=true;
   var light=new GameObject("Preview light").AddComponent<Light>();light.type=LightType.Directional;light.transform.rotation=Quaternion.Euler(35,150,0);light.intensity=1.5f;RenderSettings.ambientLight=new Color(.45f,.45f,.45f);
-  foreach(string name in new[]{"ManorCombinationLock","ManorRadio"})
+  foreach(string name in new[]{"ManorCombinationLock","ManorRadio","ManorWindow_Shutters","ManorBed"})
   {
    var root=(GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(Folder+"/PF_"+name+".prefab"));
    // This isolated project has no URP renderer asset. Use equivalent Standard
@@ -154,10 +182,11 @@ public static class InteractivePropsSetup
     {var m=new Material(Shader.Find("Standard"));m.color=source[i].GetColor("_BaseColor");m.mainTexture=source[i].GetTexture("_BaseMap");m.SetFloat("_Metallic",source[i].GetFloat("_Metallic"));m.SetFloat("_Glossiness",source[i].GetFloat("_Smoothness"));replacement[i]=m;}
     renderer.sharedMaterials=replacement;
    }
-   bool small=name=="ManorCombinationLock";camera.orthographicSize=small?.145f:.36f;
+   bool small=name=="ManorCombinationLock",window=name=="ManorWindow_Shutters",bed=name=="ManorBed";
+   camera.orthographicSize=small?.145f:window?1.25f:bed?1.5f:.36f;
    foreach(var binding in root.GetComponentsInChildren<WorldPropTextBinding>())binding.Refresh();
-   camera.transform.position=small?new Vector3(.025f,.12f,.5f):new Vector3(.05f,.17f,.9f);
-   camera.transform.LookAt(small?new Vector3(0,.09f,0):new Vector3(0,.15f,0));
+   camera.transform.position=small?new Vector3(.025f,.12f,.5f):window?new Vector3(.7f,1.1f,3):bed?new Vector3(2.6f,2,3.3f):new Vector3(.05f,.17f,.9f);
+   camera.transform.LookAt(small?new Vector3(0,.09f,0):window?new Vector3(0,.76f,0):bed?new Vector3(0,.45f,0):new Vector3(0,.15f,0));
    var rt=new RenderTexture(1100,1100,24);camera.targetTexture=rt;camera.Render();
    var previous=RenderTexture.active;RenderTexture.active=rt;var image=new Texture2D(1100,1100,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1100,1100),0,0);image.Apply();
    File.WriteAllBytes("work/interactive_props/"+name+"_UnityPreview.png",image.EncodeToPNG());RenderTexture.active=previous;camera.targetTexture=null;Object.DestroyImmediate(image);Object.DestroyImmediate(rt);Object.DestroyImmediate(root);

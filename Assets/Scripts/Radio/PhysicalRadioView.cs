@@ -27,7 +27,7 @@ namespace Echo.Radio
         public override bool Open(PlayerInteractor user)
         {
             Initialize();
-            if(IsOpen)return false;
+            if(IsOpen||radio==null)return false;
             if(radio.Held)
             {
                 savedParent=radio.transform.parent;savedPosition=radio.transform.localPosition;savedRotation=radio.transform.localRotation;
@@ -38,8 +38,14 @@ namespace Echo.Radio
         }
         protected override void OnOpened()
         {
+            if(player!=null&&player.ui!=null)player.ui.ShowToast("ЛКМ + · ПКМ − на ручках · кнопки PWR / RPT · ESC назад");
             controls=radio.GetComponentsInChildren<Collider>();colliderStates=new bool[controls.Length];
-            for(int i=0;i<controls.Length;i++){colliderStates[i]=controls[i].enabled;controls[i].enabled=true;}
+            for(int i=0;i<controls.Length;i++)
+            {
+                colliderStates[i]=controls[i].enabled;
+                var control=controls[i].GetComponent<PropPhysicalControl>();
+                if(control!=null&&control.owner==this)controls[i].enabled=true;
+            }
         }
         protected override void OnClosed()
         {
