@@ -1,0 +1,26 @@
+{
+  "ManorChair": {
+    "triangles": 724,
+    "dimensions_m": [
+      0.47,
+      0.48,
+      1.02
+    ]
+  },
+  "ManorArmchair": {
+    "triangles": 684,
+    "dimensions_m": [
+      0.862,
+      0.8,
+      1.006
+    ]
+  },
+  "ManorSofa": {
+    "triangles": 996,
+    "dimensions_m": [
+      1.91,
+      0.89,
+      1.006
+    ]
+  }
+}
