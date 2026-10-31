@@ -16,6 +16,7 @@ namespace Echo.Radio
         [Range(0,1)] public float volume=.4f;
         public bool powered;
         public bool allowPickup=true;
+        public bool allowPlacement=true;
         public Vector3 heldLocalEulerAngles;
         public PhysicalRadioView physicalView;
         public float musicSeconds=20,silenceSeconds=6;
@@ -51,7 +52,7 @@ namespace Echo.Radio
             holder=player;Held=true;foreach(var c in colliders)c.enabled=false;
             transform.SetParent(player.viewCamera.transform,false);transform.localPosition=new Vector3(.32f,-.3f,.65f);transform.localRotation=Quaternion.Euler(heldLocalEulerAngles);
             if(ManorProgress.Active!=null){ManorProgress.Active.Set("radio.picked");ManorProgress.Active.RefreshCheckpoint();}
-            player.ui.ShowToast("Радіо піднято. R — налаштувати; F — увімкнути; Q — поставити. Гучність впливає на те, хто почує передачу.");
+            player.ui.ShowToast(allowPlacement?"Радіо піднято. R — налаштувати; F — увімкнути; Q — поставити. Гучність впливає на те, хто почує передачу.":"Радіо піднято. R — налаштувати; F — живлення. Передачі чує і мешканець.");
         }
         private void Update()
         {
@@ -143,7 +144,7 @@ namespace Echo.Radio
         private string KnownFrequencies()=>string.Join(", ",channels.Where(c=>c!=null&&(ManorProgress.Active.Has("frequency."+c.frequency)||c.mode!=RadioChannel.Mode.Recording)).Select(c=>c.frequency+" "+(c.mode==RadioChannel.Mode.Recording?"запис":c.channelName)));
         public bool TryPlace()
         {
-            if(!Held)return false;
+            if(!Held||!allowPlacement)return false;
             var camera=holder.viewCamera.transform;
             if(!Physics.Raycast(camera.position,camera.forward,out var hit,2.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||hit.normal.y<.65f)
             {holder.ui.ShowToast("Наведіться на вільну підлогу або стіл не далі 2,5 м.");return false;}

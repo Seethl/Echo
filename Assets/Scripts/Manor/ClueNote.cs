@@ -11,6 +11,8 @@ namespace Echo.Manor
         [TextArea(3,8)] public string fullText;
         public int frequency;
         public Echo.Radio.RadioChannel radioChannel;
+        public Texture2D illustration;
+        public string onReadFlag;
         public override string Prompt=>"E — прочитати";
         public override void Interact(PlayerInteractor player)
         {
@@ -19,8 +21,9 @@ namespace Echo.Manor
             int tunedFrequency=radioChannel!=null?radioChannel.frequency:frequency;
             content=content.Replace("{frequency}",tunedFrequency.ToString());
             progress.AddClue(clueId,content);
+            if(!string.IsNullOrEmpty(onReadFlag))progress.Set(onReadFlag);
             if(tunedFrequency>0)progress.Set("frequency."+tunedFrequency);
-            player.ui.OpenPanel(this,title,()=>content,new[]{new InteractionUI.Choice("Закрити",()=>player.ui.ClosePanel())});
+            player.ui.OpenPanel(this,title,()=>content,new[]{new InteractionUI.Choice("Закрити",()=>player.ui.ClosePanel())},illustration:illustration);
         }
     }
 }
