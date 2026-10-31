@@ -110,5 +110,6 @@ public static class SoundProgressionChecks
             UnityEngine.Object.Destroy(clock);
             if (clip != null) UnityEngine.Object.Destroy(clip);
         }
+        yield return GameplayMechanicsChecks.Run();
     }
 }
