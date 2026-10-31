@@ -178,6 +178,8 @@ namespace Echo.Manor.Editor
             var branch=Cube("Jammed Branch",null,anchors["branch"].position,new Vector3(.8f,.12f,.12f),wood).AddComponent<FlagInteraction>();
             branch.prompt="E — вийняти гілку";branch.setFlag="gallery.branch";branch.hideWhenDone=true;branch.doneMessage="Гілку прибрано. Тепер віконницю можна зафіксувати.";
             var latch=Cube("Shutter Latch",null,anchors["shutter"].position,new Vector3(.55f,.55f,.15f),dark).AddComponent<FlagInteraction>();
+            // The full visible window forwards ray hits to the existing latch through its parent.
+            GameObject.Find("Window Outline").transform.SetParent(latch.transform,true);
             latch.prompt="E — закрити й зафіксувати віконницю";latch.setFlag="gallery.quiet";latch.requiredFlag="gallery.branch";latch.missingMessage="Гілка не дає закрити віконницю.";latch.doneMessage="Гуркіт стих. Повторіть передачу 940. Тепер чути кроки з холу.";
 
             var cache=Door("Library Cache Door",anchors["Library Cache.hinge"].position+Vector3.right*.85f,false,"cache.library",true,1.7f,2.1f);cache.initiallyLocked=true;cache.missingKeyMessage="Три символи керують схованкою.";Bind(cache,"library.cache");
