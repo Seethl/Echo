@@ -162,7 +162,7 @@ namespace Echo.Menu
             RestoreModal();
             RestorePause();
             inMainMenu = scene.path == MainMenuScene;
-            inGameplay = scene.path == GameplayScene || scene.path == PlayerTestScene || scene.path == InteractionTestScene || scene.name == "SurfaceTest";
+            inGameplay = scene.path == GameplayScene || scene.path == PlayerTestScene || scene.path == InteractionTestScene || scene.name == "SurfaceTest" || scene.name == "InteractivePropsTest";
             loading = false;
             showingSettings = false;
             statusLabel.text = "";

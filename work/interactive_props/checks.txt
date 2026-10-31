@@ -1,0 +1,1 @@
+PASS: physical drum ray targets, animated turns, reverse/wrap, busy input, wrong/correct code, modal/time/camera cleanup, tuning/volume/power, portable/stationary radio.

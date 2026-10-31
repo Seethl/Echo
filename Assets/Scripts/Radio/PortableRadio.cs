@@ -15,6 +15,9 @@ namespace Echo.Radio
         public int frequency=820;
         [Range(0,1)] public float volume=.4f;
         public bool powered;
+        public bool allowPickup=true;
+        public Vector3 heldLocalEulerAngles;
+        public PhysicalRadioView physicalView;
         public float musicSeconds=20,silenceSeconds=6;
         public AudioClip musicClip,whiteNoiseClip,signalClip;
         public Vector3 placementHalfExtents=new Vector3(.32f,.22f,.2f);
@@ -44,9 +47,10 @@ namespace Echo.Radio
         public override bool CanInteract(PlayerInteractor player)=>base.CanInteract(player)&&!Held;
         public override void Interact(PlayerInteractor player)
         {
+            if(!allowPickup){holder=player;OpenControls();return;}
             holder=player;Held=true;foreach(var c in colliders)c.enabled=false;
-            transform.SetParent(player.viewCamera.transform,false);transform.localPosition=new Vector3(.32f,-.3f,.65f);transform.localRotation=Quaternion.identity;
-            ManorProgress.Active.Set("radio.picked");ManorProgress.Active.RefreshCheckpoint();
+            transform.SetParent(player.viewCamera.transform,false);transform.localPosition=new Vector3(.32f,-.3f,.65f);transform.localRotation=Quaternion.Euler(heldLocalEulerAngles);
+            if(ManorProgress.Active!=null){ManorProgress.Active.Set("radio.picked");ManorProgress.Active.RefreshCheckpoint();}
             player.ui.ShowToast("Радіо піднято. R — налаштувати; F — увімкнути; Q — поставити. Гучність впливає на те, хто почує передачу.");
         }
         private void Update()
@@ -80,11 +84,11 @@ namespace Echo.Radio
             else
             {
                 MusicAudible=true;
-                bool interrupted=!string.IsNullOrEmpty(channel.clearAfterFlag)&&!ManorProgress.Active.Has(channel.clearAfterFlag);
+                bool interrupted=!string.IsNullOrEmpty(channel.clearAfterFlag)&&ManorProgress.Active!=null&&!ManorProgress.Active.Has(channel.clearAfterFlag);
                 string text=interrupted?channel.interruptedTranscript:channel.transcript;
                 if(!interrupted)
                 {
-                    if(channel.payload==RadioChannel.Payload.GalleryCode)text=text.Replace("{code}",RunSecrets.SpokenCode(ManorProgress.Active.GalleryCode));
+                    if(channel.payload==RadioChannel.Payload.GalleryCode&&ManorProgress.Active!=null)text=text.Replace("{code}",RunSecrets.SpokenCode(ManorProgress.Active.GalleryCode));
                     else if(channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)text=text.Replace("{sounds}",libraryPuzzle.TransmissionText);
                 }
                 Subtitle="Запис "+frequency+": "+text;
@@ -96,7 +100,7 @@ namespace Echo.Radio
                     nextRecordingSignal=Time.time+Mathf.Max(8,clip!=null?clip.length+.5f:0);lastRecording=text;
                 }
                 // A radio left behind must not remotely fill the player's journal with answers.
-                if(nearby)
+                if(nearby&&ManorProgress.Active!=null)
                 {
                     ManorProgress.Active.AddClue("recording."+channel.frequency,frequency+": "+text);
                     if(!interrupted&&!ManorProgress.Active.Has("recording.heard."+channel.frequency))ManorProgress.Active.Set("recording.heard."+channel.frequency);
@@ -119,17 +123,18 @@ namespace Echo.Radio
             if(!MusicAudible&&lastAudible)source.Stop();lastAudible=MusicAudible;
             Subtitle=MusicAudible?"Музичний канал. Після сигналу буде пауза.":"Музика замовкла. Мешканець ще може перевіряти місце, звідки її чув.";
         }
-        public void TogglePower(){powered=!powered;lastRecording=null;ManorProgress.Active.RefreshCheckpoint();}
-        public void Tune(int value){frequency=Mathf.Clamp(value,760,1280);lastRecording=null;ManorProgress.Active.RefreshCheckpoint();}
-        public void SetVolume(float value){volume=Mathf.Clamp01(value);ManorProgress.Active.RefreshCheckpoint();}
+        public void TogglePower(){powered=!powered;lastRecording=null;ManorProgress.Active?.RefreshCheckpoint();}
+        public void Tune(int value){frequency=Mathf.Clamp(value,760,1280);lastRecording=null;ManorProgress.Active?.RefreshCheckpoint();}
+        public void SetVolume(float value){volume=Mathf.Clamp01(value);ManorProgress.Active?.RefreshCheckpoint();}
         public void ReplayRecording()
         {
             if(Channel==null||Channel.mode!=RadioChannel.Mode.Recording){holder.ui.ShowToast("Для повтору виберіть частоту службового запису.");return;}
-            powered=true;lastRecording=null;nextRecordingSignal=0;source.Stop();ManorProgress.Active.RefreshCheckpoint();
+            powered=true;lastRecording=null;nextRecordingSignal=0;source.Stop();ManorProgress.Active?.RefreshCheckpoint();
         }
         public void OpenControls()
         {
-            if(!Held)return;
+            if(physicalView!=null){physicalView.Open(holder);return;}
+            if(!Held&&!(!allowPickup&&holder!=null))return;
             holder.ui.OpenPanel(this,"БАТАРЕЙНЕ РАДІО",()=>frequency+" · Гучність "+Mathf.RoundToInt(volume*100)+"% · "+(powered?"УВІМКНЕНО":"ВИМКНЕНО")+"\n"+Subtitle+"\nЗнайдені частоти: "+KnownFrequencies()+"\nСвіт не зупинено. Escape — повернутися.",new[]{
                 new InteractionUI.Choice("Частота −20",()=>Tune(frequency-20)),new InteractionUI.Choice("Частота +20",()=>Tune(frequency+20)),
                 new InteractionUI.Choice("Гучність −10%",()=>SetVolume(volume-.1f)),new InteractionUI.Choice("Гучність +10%",()=>SetVolume(volume+.1f)),
@@ -143,7 +148,8 @@ namespace Echo.Radio
             if(!Physics.Raycast(camera.position,camera.forward,out var hit,2.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||hit.normal.y<.65f)
             {holder.ui.ShowToast("Наведіться на вільну підлогу або стіл не далі 2,5 м.");return false;}
             var size=placementHalfExtents;var p=hit.point+Vector3.up*(size.y+.02f);
-            if(!FindObjectsByType<ManorZone>().Any(z=>z.Contains(p))||Physics.CheckBox(p,size*.95f,Quaternion.identity,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))
+            var placementZones=FindObjectsByType<ManorZone>();
+            if((placementZones.Length>0&&!placementZones.Any(z=>z.Contains(p)))||Physics.CheckBox(p,size*.95f,Quaternion.identity,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))
             {holder.ui.ShowToast("Тут немає вільного доступного місця для радіо.");return false;}
             Held=false;transform.SetParent(null);transform.SetPositionAndRotation(p,Quaternion.identity);foreach(var c in colliders)c.enabled=true;
             ManorProgress.Active.RefreshCheckpoint();holder.ui.ShowToast("Радіо поставлено. Його можна знову підняти клавішею E.");return true;
