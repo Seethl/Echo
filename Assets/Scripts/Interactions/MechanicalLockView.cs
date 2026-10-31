@@ -33,7 +33,7 @@ namespace Echo.Interactions
         {
             Initialize();
             for(int i=0;i<3;i++){target[i]=from[i]=keypad.GetDigit(i)*36;pending[i]=0;SetRotation(i,target[i]);}
-            Message("ЛКМ + · ПКМ − · ESC назад");
+            Message("ЛКМ + · ПКМ − · колесо ± · OK");
         }
         public bool RotateDrum(int i,int direction)
         {
@@ -43,6 +43,8 @@ namespace Echo.Interactions
             var clickSource=PrototypeAudio.Source(gameObject);clickSource.ignoreListenerPause=true;
             clickSource.PlayOneShot(PrototypeAudio.Clip(PrototypeAudio.Cue.Click),.28f);return true;
         }
+        protected override bool CanHoldControl(int id)=>id>=0&&id<3;
+        protected override float HoldInterval=>Mathf.Max(.02f,turnSeconds)+.02f;
         public override void ActivateControl(int id,int direction)
         {
             if(!IsOpen)return;

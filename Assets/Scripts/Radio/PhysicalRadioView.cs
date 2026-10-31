@@ -38,7 +38,7 @@ namespace Echo.Radio
         }
         protected override void OnOpened()
         {
-            if(player!=null&&player.ui!=null)player.ui.ShowToast("ЛКМ + · ПКМ − на ручках · кнопки PWR / RPT · ESC назад");
+            if(player!=null&&player.ui!=null)player.ui.ShowToast("На ручці: затисни ЛКМ + / ПКМ − або крути колесо миші · ESC назад",6);
             controls=radio.GetComponentsInChildren<Collider>();colliderStates=new bool[controls.Length];
             for(int i=0;i<controls.Length;i++)
             {
@@ -57,6 +57,7 @@ namespace Echo.Radio
             if(!detached||radio==null)return;
             radio.transform.SetParent(savedParent,false);radio.transform.localPosition=savedPosition;radio.transform.localRotation=savedRotation;detached=false;
         }
+        protected override bool CanHoldControl(int id)=>id==0||id==1;
         public override void ActivateControl(int id,int direction)
         {
             if(!IsOpen||radio==null)return;
