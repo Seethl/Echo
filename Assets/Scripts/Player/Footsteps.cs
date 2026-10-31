@@ -19,6 +19,11 @@ public class Footsteps : MonoBehaviour
     public float raycastDistance = 2f;
     public LayerMask surfaceLayers = Physics.DefaultRaycastLayers;
 
+    [Header("Gameplay noise radius (metres)")]
+    [Min(0f)] public float walkNoiseRadius = 6f;
+    [Min(0f)] public float runNoiseRadius = 12f;
+    [Min(0f)] public float crouchNoiseRadius = 2f;
+
     private CharacterController controller;
     private FPSController movement;
     private AudioSource audioSource;
@@ -57,6 +62,7 @@ public class Footsteps : MonoBehaviour
 
         AudioClip clip = defaultFootstepSound;
         float surfaceMultiplier = 1f;
+        float noiseMultiplier = 1f;
         // Start just above the feet, including while crouching or on a scaled player.
         Vector3 rayOrigin = controller.bounds.center;
         rayOrigin.y = controller.bounds.min.y + controller.skinWidth + 0.1f;
@@ -78,11 +84,16 @@ public class Footsteps : MonoBehaviour
                 }
                 if (surfaceClip != null) clip = surfaceClip;
                 surfaceMultiplier = surface.loudnessMultiplier;
+                noiseMultiplier = surface.noiseMultiplier;
             }
         }
 
         float movementVolume = isCrouching ? 0.2f : isRunning ? 1f : 0.5f;
         if (clip != null)
             audioSource.PlayOneShot(clip, Mathf.Clamp01(movementVolume * surfaceMultiplier));
+
+        // AI hearing still works when a clip is missing or the player mutes audio.
+        float noiseRadius = isCrouching ? crouchNoiseRadius : isRunning ? runNoiseRadius : walkNoiseRadius;
+        NoiseSystem.Emit(transform.position, noiseRadius * Mathf.Max(0f, noiseMultiplier), gameObject);
     }
 }

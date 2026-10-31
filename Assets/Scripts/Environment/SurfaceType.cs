@@ -10,4 +10,7 @@ public class SurfaceType : MonoBehaviour
 
     [Range(0f, 2f)]
     public float loudnessMultiplier = 1f;
+
+    [Min(0f), Tooltip("Gameplay hearing radius multiplier, independent of audio volume.")]
+    public float noiseMultiplier = 1f;
 }
