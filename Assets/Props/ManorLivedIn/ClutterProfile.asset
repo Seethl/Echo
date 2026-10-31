@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47ea7c8e1e1427891b31a1c7d389d3e, type: 3}
+  m_Name: ClutterProfile
+  m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorClutterProfile
+  seed: 7421
+  propsPerShelf: 3
+  papersPerRoom: 10
+  clusterSpread: 0.7
+  minimumPropGap: 0.1

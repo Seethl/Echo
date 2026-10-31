@@ -93,7 +93,8 @@ namespace Echo.Radio
                 {
                     AudioClip clip=channel.voiceClip;
                     if(clip==null&&!interrupted&&channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)clip=libraryPuzzle.TransmissionClip;
-                    PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,.65f,clip);
+                    float playback=channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null?libraryPuzzle.radioPlaybackVolume:.65f;
+                    PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,playback,clip);
                     nextRecordingSignal=Time.time+Mathf.Max(8,clip!=null?clip.length+.5f:0);lastRecording=text;
                 }
                 // A radio left behind must not remotely fill the player's journal with answers.

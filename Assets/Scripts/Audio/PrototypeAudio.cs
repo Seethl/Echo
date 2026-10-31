@@ -50,6 +50,20 @@ namespace Echo.Audio
             }
             var clip=AudioClip.Create("TEMP_Echo_"+cue,samples.Length,1,sampleRate,false);clip.SetData(samples,0);cache[cue]=clip;return clip;
         }
+        // Playback-only matching: gameplay noise events retain their original intensity and range.
+        public static AudioClip LevelledClip(AudioClip original,float peak)
+        {
+            if(original==null||peak<=0)return original;
+            string key="level:"+original.GetEntityId()+":"+peak;
+            if(sequences.TryGetValue(key,out var found)&&found!=null)return found;
+            var samples=new float[original.samples*original.channels];
+            if(!original.GetData(samples,0))return original;
+            float current=0;foreach(float value in samples)current=Mathf.Max(current,Mathf.Abs(value));
+            if(current<.0001f)return original;
+            float gain=Mathf.Min(8,Mathf.Clamp01(peak)/current);
+            for(int i=0;i<samples.Length;i++)samples[i]=Mathf.Clamp(samples[i]*gain,-.98f,.98f);
+            var clip=AudioClip.Create(original.name+"_matched",original.samples,original.channels,original.frequency,false);clip.SetData(samples,0);sequences[key]=clip;return clip;
+        }
         public static AudioClip Sequence(string key,AudioClip[] parts,float gapSeconds)
         {
             if(sequences.TryGetValue(key,out var existing)&&existing!=null)return existing;
@@ -59,10 +73,10 @@ namespace Echo.Audio
                 if(part==null)continue;
                 var samples=new float[part.samples*part.channels];
                 if(!part.GetData(samples,0)){Debug.LogWarning("Radio sequence needs readable clips (Decompress On Load).");return null;}
-                int count=Mathf.CeilToInt(part.length*rate);
+                int count=part.frequency==rate?part.samples:(int)System.Math.Round((double)part.samples*rate/part.frequency);
                 for(int i=0;i<count;i++)
                 {
-                    int frame=Mathf.Min(part.samples-1,Mathf.FloorToInt((float)i*part.frequency/rate));float mono=0;
+                    int frame=Mathf.Min(part.samples-1,(int)((long)i*part.frequency/rate));float mono=0;
                     for(int c=0;c<part.channels;c++)mono+=samples[frame*part.channels+c];result.Add(mono/part.channels);
                 }
                 for(int i=0;i<Mathf.CeilToInt(gapSeconds*rate);i++)result.Add(0);

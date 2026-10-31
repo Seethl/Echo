@@ -16,7 +16,12 @@ namespace Echo.Manor
         public string solvedFlag="library.cache";
         public TextMesh inputDisplay;
         public float feedbackSeconds=3;
+        public bool compactWorldDisplay;
+        [Range(0,1)]public float cuePeak;
+        [Range(0,1)]public float cuePlaybackVolume=.8f,radioPlaybackVolume=.65f;
+        [Min(.1f)]public float sequenceGapSeconds=.45f;
         public int EnteredCount=>ManorProgress.Active.Get("library.sequence");
+        public bool CuePlaying=>Time.time<busyUntil;
         public bool Solved=>ManorProgress.Active.Has(solvedFlag);
         public string Feedback {get;private set;}="Почуй послідовність. Повтори її символами.";
         private float busyUntil,feedbackUntil;
@@ -24,7 +29,7 @@ namespace Echo.Manor
         private AudioClip transmission;
         private string transmissionKey;
         private void Awake()=>buttons=FindObjectsByType<SymbolButton>();
-        private SymbolButton Panel(string id)=>Array.Find(buttons,b=>b.puzzle==this&&b.demonstration&&b.symbolId==id);
+        private SymbolButton Panel(string id)=>Array.Find(buttons,b=>b.puzzle==this&&b.demonstration&&b.symbolId==id)??Array.Find(buttons,b=>b.puzzle==this&&b.symbolId==id);
         public string TransmissionText
         {
             get
@@ -38,11 +43,11 @@ namespace Echo.Manor
         {
             get
             {
-                string key=string.Join(".",ActiveSolution);
+                string key=string.Join(".",ActiveSolution)+":"+sequenceGapSeconds+":"+cuePeak;
                 if(transmission!=null&&transmissionKey==key)return transmission;
                 var clips=new AudioClip[ActiveSolution.Length];
                 for(int i=0;i<clips.Length;i++){var panel=Panel(ActiveSolution[i]);clips[i]=panel!=null?panel.SoundClip:PrototypeAudio.Clip(PrototypeAudio.Cue.Click);}
-                transmissionKey=key;transmission=PrototypeAudio.Sequence("library."+key,clips,.45f);return transmission;
+                transmissionKey=key;transmission=PrototypeAudio.Sequence("library."+key,clips,sequenceGapSeconds);return transmission;
             }
         }
 
@@ -62,7 +67,7 @@ namespace Echo.Manor
         private void Update()
         {
             if(inputDisplay==null||ManorProgress.Active==null)return;
-            inputDisplay.text=Solved?"ВІДЧИНЕНО\nЗаберіть руків’я зі схованки":Slots+"\n"+(Time.time<feedbackUntil?Feedback:"Введіть усі символи. «Скинути» — очистити спробу.");
+            inputDisplay.text=compactWorldDisplay?(Solved?"ВІДЧИНЕНО":Slots):Solved?"ВІДЧИНЕНО\nЗаберіть руків’я зі схованки":Slots+"\n"+(Time.time<feedbackUntil?Feedback:"Введіть усі символи. «Скинути» — очистити спробу.");
             inputDisplay.color=Solved?new Color(.55f,1,.72f):Color.white;
         }
         public bool TryDemonstrate(SymbolButton button,PlayerInteractor player)
@@ -71,25 +76,32 @@ namespace Echo.Manor
             var clip=button.SoundClip;
             busyUntil=Time.time+clip.length+.15f;
             QuietRadio(clip.length+.2f);
-            PrototypeAudio.Play(button.gameObject,PrototypeAudio.Cue.Click,.8f,clip);
+            PrototypeAudio.Play(button.gameObject,PrototypeAudio.Cue.Click,cuePlaybackVolume,clip);
             NoiseSystem.Emit(button.transform.position,10,button.gameObject,NoiseSystem.Kind.Mechanism,1,player.gameObject);
             bool first=!ManorProgress.Active.Has("library.panels.learned");
             ManorProgress.Active.Set("library.panels.learned");
             player.ui.ShowToast(button.symbolName+": "+button.rhythm+(first?". Зістав ці звуки з радіозаписом.":"."),4);
             return true;
         }
-        public void Submit(string symbol,PlayerInteractor player)
+        public bool Submit(string symbol,PlayerInteractor player,SymbolButton record=null)
         {
-            if(Solved)return;
-            if(Time.time<busyUntil){player.ui.ShowToast("Дочекайтеся кінця звуку.");return;}
+            if(Solved)return false;
+            if(Time.time<busyUntil){player.ui.ShowToast(record!=null?"Дослухай платівку до кінця.":"Дочекайтеся кінця звуку.");return false;}
             int value=Array.IndexOf(symbolIds,symbol);
-            if(value<0)return;
+            if(value<0)return false;
+            if(record!=null)
+            {
+                foreach(var other in buttons)if(other!=null&&other.puzzle==this){var audio=other.GetComponent<AudioSource>();if(audio!=null)audio.Stop();}
+                var clip=record.SoundClip;QuietRadio(clip.length+.2f);busyUntil=Time.time+clip.length+.15f;
+                PrototypeAudio.Play(record.gameObject,PrototypeAudio.Cue.Click,cuePlaybackVolume,clip);
+                NoiseSystem.Emit(record.transform.position,10,record.gameObject,NoiseSystem.Kind.Mechanism,1,player.gameObject);
+            }
             QuietRadio(.3f);
             var progress=ManorProgress.Active;
             int count=Mathf.Clamp(EnteredCount,0,solution.Length-1);
             progress.Set("library.input."+count,value+1);
             progress.Set("library.sequence",count+1);
-            Feedback="Символ додано: "+(count+1)+" / "+solution.Length;feedbackUntil=Time.time+feedbackSeconds;
+            Feedback="Додано: "+symbolNames[value]+" ("+(count+1)+" / "+solution.Length+")";feedbackUntil=Time.time+feedbackSeconds;
             if(count+1<solution.Length)
             {
                 PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Click,.5f);
@@ -114,6 +126,7 @@ namespace Echo.Manor
                 feedbackUntil=Time.time+feedbackSeconds;player.ui.ShowToast(Feedback,4);
             }
             NoiseSystem.Emit(player.transform.position,4,player.gameObject,NoiseSystem.Kind.Interaction);
+            return true;
         }
         private void ClearInput()
         {
@@ -123,6 +136,7 @@ namespace Echo.Manor
         public void ResetInput(PlayerInteractor player)
         {
             if(Solved)return;
+            busyUntil=0;foreach(var button in buttons){var audio=button.GetComponent<AudioSource>();if(audio!=null)audio.Stop();}
             ClearInput();Feedback="Введення скинуто. Можна повторити передачу 1060.";
             feedbackUntil=Time.time+feedbackSeconds;player.ui.ShowToast(Feedback);
         }

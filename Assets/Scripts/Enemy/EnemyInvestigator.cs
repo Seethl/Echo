@@ -18,6 +18,7 @@ public class EnemyInvestigator:MonoBehaviour
     public float sightRange=12,fieldOfView=100,suspicionSeconds=1.1f;
     public float patrolSpeed=1.6f,chaseSpeed=3.6f,patrolWait=1.4f;
     public AudioClip footstepsClip,suspicionClip,chaseClip;
+    [Range(0f,1f)]public float footstepPlaybackVolume=.8f;
     public State CurrentState {get;private set;}
     public bool SeesPlayer {get;private set;}
     public Vector3 LastKnownPosition {get;private set;}
@@ -120,7 +121,7 @@ public class EnemyInvestigator:MonoBehaviour
             else if(Time.time>=nextSearchMove){Go(searchCenter+searchOffsets[searchIndex++%searchOffsets.Length]);nextSearchMove=Time.time+2.2f;}
         }
         if(agent.velocity.sqrMagnitude>.05f&&Time.time>=nextStep)
-        {nextStep=Time.time+(CurrentState==State.Chasing?.42f:.7f);PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Footstep,.8f,footstepsClip);}
+        {nextStep=Time.time+(CurrentState==State.Chasing?.42f:.7f);PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Footstep,footstepPlaybackVolume,footstepsClip);}
     }
     private void Change(State state)
     {
