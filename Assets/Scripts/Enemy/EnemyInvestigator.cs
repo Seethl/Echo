@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(NoiseListener), typeof(NavMeshAgent))]
+[RequireComponent(typeof(NoiseListener), typeof(NavMeshAgent), typeof(EnemySuspicion))]
 public class EnemyInvestigator : MonoBehaviour
 {
     public enum State { Idle, Investigating, Searching, Returning }
@@ -34,11 +34,18 @@ public class EnemyInvestigator : MonoBehaviour
         HomePosition = transform.position;
     }
 
-    void OnEnable() { ears.onNoiseHeard.AddListener(Investigate); }
+    void OnEnable() { ears.onNoiseHeard.AddListener(OnHeard); }
     void OnDisable()
     {
-        ears.onNoiseHeard.RemoveListener(Investigate);
+        ears.onNoiseHeard.RemoveListener(OnHeard);
         Stop();
+    }
+
+    private void OnHeard(Vector3 position)
+    {
+        // Legacy enemies without an active memory retain the original direct response.
+        var suspicion = GetComponent<EnemySuspicion>();
+        if (suspicion == null || !suspicion.isActiveAndEnabled) Investigate(position);
     }
 
     public void Investigate(Vector3 position)

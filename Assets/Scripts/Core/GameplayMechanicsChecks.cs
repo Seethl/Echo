@@ -192,6 +192,18 @@ public static class GameplayMechanicsChecks
             investigator.onStateChanged.AddListener(state => { if (state == EnemyInvestigator.State.Searching) searched = true; });
             investigator.Investigate(center + Vector3.right * 100f);
             check(investigator.CurrentState == EnemyInvestigator.State.Idle, "unreachable noise does not create a partial pursuit");
+            var ears = actor.GetComponent<NoiseListener>();
+            ears.earOffset = Vector3.zero;
+            ears.useOcclusion = false;
+            var memory = actor.GetComponent<EnemySuspicion>();
+            memory.investigationThreshold = 0.35f;
+            Vector3 faintPosition = actor.transform.position + Vector3.right * 1.5f;
+            NoiseSystem.Emit(faintPosition, 2f, null, NoiseSystem.Kind.Footstep);
+            check(investigator.CurrentState == EnemyInvestigator.State.Idle && memory.CurrentState == EnemySuspicion.State.Wary,
+                "navigation does not bypass suspicion on the first faint footstep");
+            for (int i = 0; i < 3; i++) NoiseSystem.Emit(faintPosition, 2f, null, NoiseSystem.Kind.Footstep);
+            check(investigator.CurrentState == EnemyInvestigator.State.Investigating,
+                "accumulated suspicion requests a real navigation path");
             investigator.Investigate(center + Vector3.right * 1.5f);
             check(investigator.CurrentState == EnemyInvestigator.State.Investigating, "reachable noise starts investigation");
             Time.timeScale = 0f;

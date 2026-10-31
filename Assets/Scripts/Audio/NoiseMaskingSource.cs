@@ -21,7 +21,8 @@ public class NoiseMaskingSource : MonoBehaviour
         if (isActiveAndEnabled && source.clip != null) source.Play();
     }
 
-    public static float GetMultiplier(Vector3 noisePosition, Vector3 listenerPosition)
+    public static float GetMultiplier(Vector3 noisePosition, Vector3 listenerPosition,
+        Transform listenerRoot = null, int obstacleLayers = 0, float defaultTransmission = 0.45f)
     {
         float multiplier = 1f;
         foreach (var cover in FindObjectsByType<NoiseMaskingSource>())
@@ -31,6 +32,11 @@ public class NoiseMaskingSource : MonoBehaviour
             // Both participants must hear the cover. Never provide global protection.
             if ((noisePosition - cover.transform.position).sqrMagnitude > range * range ||
                 (listenerPosition - cover.transform.position).sqrMagnitude > range * range) continue;
+            float reachingListener = range * SoundPropagation.Transmission(cover.transform.position,
+                listenerPosition, cover.transform, listenerRoot, obstacleLayers, defaultTransmission);
+            // A clock behind a blocking wall cannot magically protect the listener from other sounds.
+            if (reachingListener <= 0f || (listenerPosition - cover.transform.position).sqrMagnitude >
+                reachingListener * reachingListener) continue;
             // Overlapping clocks use the strongest cover, not infinitely stacked silence.
             multiplier = Mathf.Min(multiplier, Mathf.Clamp01(cover.hearingRadiusMultiplier));
         }

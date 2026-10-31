@@ -30,6 +30,8 @@ public static class NoiseSystem
     public static void Emit(Vector3 position, float radius, GameObject source, Kind category = Kind.General)
     {
         if (radius <= 0f || float.IsNaN(radius) || float.IsInfinity(radius)) return;
+        if (float.IsNaN(position.x) || float.IsNaN(position.y) || float.IsNaN(position.z) ||
+            float.IsInfinity(position.x) || float.IsInfinity(position.y) || float.IsInfinity(position.z)) return;
         Emitted?.Invoke(new Noise(position, radius, source, category));
     }
 }

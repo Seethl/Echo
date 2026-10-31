@@ -111,5 +111,6 @@ public static class SoundProgressionChecks
             if (clip != null) UnityEngine.Object.Destroy(clip);
         }
         yield return GameplayMechanicsChecks.Run();
+        yield return HearingAndSuspicionChecks.Run();
     }
 }

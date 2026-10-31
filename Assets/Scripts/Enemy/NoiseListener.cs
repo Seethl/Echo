@@ -4,21 +4,46 @@ using UnityEngine.Events;
 /// <summary>Attach to an enemy; connect onNoiseHeard to its investigation behaviour.</summary>
 public class NoiseListener : MonoBehaviour
 {
+    public readonly struct Hearing
+    {
+        public readonly NoiseSystem.Noise Noise;
+        public readonly float Audibility;
+        public readonly float Strength;
+        public Hearing(NoiseSystem.Noise noise, float audibility, float strength)
+        { Noise = noise; Audibility = audibility; Strength = strength; }
+    }
+
+    public event System.Action<Hearing> SoundPerceived;
     [Min(0f), Tooltip("1 = normal hearing; 2 = twice the emitted radius.")]
     public float hearingSensitivity = 1f;
     public UnityEvent<Vector3> onNoiseHeard = new UnityEvent<Vector3>();
     public bool logHeardNoise;
     [Min(0f)] public float decoyAttentionSeconds = 2f;
+    public bool useOcclusion = true;
+    public LayerMask obstacleLayers = Physics.DefaultRaycastLayers;
+    [Range(0f, 1f)] public float defaultObstacleTransmission = 0.45f;
+    public Vector3 earOffset = new Vector3(0f, 0.9f, 0f);
 
     public bool HasHeardNoise { get; private set; }
     public Vector3 LastHeardPosition { get; private set; }
     public float LastHeardTime { get; private set; }
     public NoiseSystem.Kind LastHeardCategory { get; private set; }
+    public float LastAudibility { get; private set; }
     private float attentionUntil;
     private float attentionStrength;
 
     void OnEnable() { NoiseSystem.Emitted += Hear; }
-    void OnDisable() { NoiseSystem.Emitted -= Hear; }
+    void OnDisable()
+    {
+        NoiseSystem.Emitted -= Hear;
+        ClearAttention();
+    }
+
+    public void ClearAttention()
+    {
+        attentionUntil = 0f;
+        attentionStrength = 0f;
+    }
 
     private void Hear(NoiseSystem.Noise noise)
     {
@@ -28,11 +53,17 @@ public class NoiseListener : MonoBehaviour
         if (noise.Source != null &&
             (noise.Source.transform == transform || transform.IsChildOf(noise.Source.transform))) return;
 
+        Vector3 earPosition = transform.TransformPoint(earOffset);
         float radius = noise.Radius * Mathf.Max(0f, hearingSensitivity);
-        radius *= NoiseMaskingSource.GetMultiplier(noise.Position, transform.position);
-        if (radius <= 0f || (noise.Position - transform.position).sqrMagnitude > radius * radius) return;
+        radius *= NoiseMaskingSource.GetMultiplier(noise.Position, earPosition, transform,
+            useOcclusion ? (int)obstacleLayers : 0, defaultObstacleTransmission);
+        if (useOcclusion)
+            radius *= SoundPropagation.Transmission(noise.Position, earPosition,
+                noise.Source != null ? noise.Source.transform : null, transform, obstacleLayers, defaultObstacleTransmission);
+        float distance = Vector3.Distance(noise.Position, earPosition);
+        if (radius <= 0f || distance > radius) return;
 
-        float strength = radius / Mathf.Max(0.5f, Vector3.Distance(noise.Position, transform.position));
+        float strength = radius / Mathf.Max(0.5f, distance);
         // A quiet step must not instantly cancel a ringing distraction. Nearby loud
         // actions still break attention, so the clock never makes the player invulnerable.
         if (Time.time < attentionUntil && noise.Category != NoiseSystem.Kind.Decoy &&
@@ -42,9 +73,11 @@ public class NoiseListener : MonoBehaviour
         LastHeardPosition = noise.Position;
         LastHeardTime = Time.time;
         LastHeardCategory = noise.Category;
+        LastAudibility = Mathf.Clamp(1f - distance / radius, 0.05f, 1f);
         attentionUntil = noise.Category == NoiseSystem.Kind.Decoy ? Time.time + decoyAttentionSeconds : 0f;
         attentionStrength = strength;
         if (logHeardNoise) Debug.Log($"{name} heard noise at {noise.Position}", this);
+        SoundPerceived?.Invoke(new Hearing(noise, LastAudibility, strength));
         onNoiseHeard.Invoke(noise.Position);
     }
 
