@@ -99,6 +99,6 @@ public class Footsteps : MonoBehaviour
 
         // AI hearing still works when a clip is missing or the player mutes audio.
         float noiseRadius = isCrouching ? crouchNoiseRadius : isRunning ? runNoiseRadius : walkNoiseRadius;
-        NoiseSystem.Emit(transform.position, noiseRadius * Mathf.Max(0f, noiseMultiplier), gameObject);
+        NoiseSystem.Emit(transform.position, noiseRadius * Mathf.Max(0f, noiseMultiplier), gameObject, NoiseSystem.Kind.Footstep);
     }
 }

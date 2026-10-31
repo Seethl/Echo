@@ -16,6 +16,8 @@ public class EnemyCatchPlayer : MonoBehaviour
     void Update()
     {
         if (Echo.Menu.GameMenu.BlocksPlayerInput || Time.timeScale <= 0f) return;
+        var threat = GetComponent<EnemyThreat>();
+        if (threat != null && !threat.CanCatch) return;
         if (target == null || target.IsCaught || !target.isActiveAndEnabled) return;
         var controller = target.GetComponent<CharacterController>();
         Vector3 targetPosition = controller != null ? controller.bounds.center : target.transform.position;

@@ -4,17 +4,20 @@ using UnityEngine;
 /// <summary>Gameplay sound events. Radius is measured in world metres, not audio volume.</summary>
 public static class NoiseSystem
 {
+    public enum Kind { General, Footstep, Decoy }
     public readonly struct Noise
     {
         public readonly Vector3 Position;
         public readonly float Radius;
         public readonly GameObject Source;
+        public readonly Kind Category;
 
-        public Noise(Vector3 position, float radius, GameObject source)
+        public Noise(Vector3 position, float radius, GameObject source, Kind category = Kind.General)
         {
             Position = position;
             Radius = radius;
             Source = source;
+            Category = category;
         }
     }
 
@@ -24,9 +27,9 @@ public static class NoiseSystem
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void Reset() { Emitted = null; }
 
-    public static void Emit(Vector3 position, float radius, GameObject source)
+    public static void Emit(Vector3 position, float radius, GameObject source, Kind category = Kind.General)
     {
         if (radius <= 0f || float.IsNaN(radius) || float.IsInfinity(radius)) return;
-        Emitted?.Invoke(new Noise(position, radius, source));
+        Emitted?.Invoke(new Noise(position, radius, source, category));
     }
 }

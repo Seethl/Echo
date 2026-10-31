@@ -29,6 +29,8 @@ public class EnemyInvestigator : MonoBehaviour
 
     public void Investigate(Vector3 position)
     {
+        var threat = GetComponent<EnemyThreat>();
+        if (threat != null && !threat.CanHear) return;
         if (!agent.enabled || !agent.isOnNavMesh) return;
         if (!NavMesh.SamplePosition(position, out NavMeshHit hit, destinationSampleRadius, agent.areaMask)) return;
 
@@ -43,6 +45,8 @@ public class EnemyInvestigator : MonoBehaviour
 
     void Update()
     {
+        var threat = GetComponent<EnemyThreat>();
+        if (threat != null && !threat.CanHear) { Stop(); return; }
         if (CurrentState == State.Idle) return;
         if (!agent.enabled || !agent.isOnNavMesh) { CurrentState = State.Idle; return; }
         if (CurrentState == State.Searching)
