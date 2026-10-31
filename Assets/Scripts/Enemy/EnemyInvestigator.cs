@@ -18,6 +18,14 @@ public class EnemyInvestigator:MonoBehaviour
     public float sightRange=12,fieldOfView=100,suspicionSeconds=1.1f;
     public float patrolSpeed=1.6f,chaseSpeed=3.6f,patrolWait=1.4f;
     public AudioClip footstepsClip,suspicionClip,chaseClip;
+    [Header("Readable reactions")]
+    [Min(0)] public float heardReactionSeconds=.45f;
+    [Min(0)] public float reactionTurnSpeed=180f;
+    [Min(.1f)] public float walkStepInterval=.7f,chaseStepInterval=.42f;
+    public event System.Action<State> StateChanged;
+    public event System.Action<Vector3> NoiseReacted;
+    public float Suspicion01 => CurrentState==State.Chasing?1f:CurrentState==State.Suspicious?Mathf.Clamp01(suspicion/Mathf.Max(.01f,suspicionSeconds)):0f;
+    public float Movement01 => Usable()?Mathf.Clamp01(agent.velocity.magnitude/Mathf.Max(.1f,chaseSpeed)):0f;
     public State CurrentState {get;private set;}
     public bool SeesPlayer {get;private set;}
     public Vector3 LastKnownPosition {get;private set;}
@@ -26,8 +34,15 @@ public class EnemyInvestigator:MonoBehaviour
     private float deadline,nextSense,lastSeen,suspicion,nextRepath,lastNoiseTime=-100,currentNoiseStrength,nextStep,waitUntil,nextSearchMove;
     private int patrolIndex=-1,searchIndex;
     private Vector3 searchCenter;
+    private float reactUntil;
+    private EnemyPresentation presentation;
     private static readonly Vector3[] searchOffsets={Vector3.right*2,Vector3.left*2,Vector3.forward*2,Vector3.back*1.5f};
-    private void Awake(){ears=GetComponent<NoiseListener>();agent=GetComponent<NavMeshAgent>();PrototypeAudio.Source(gameObject);}
+    private void Awake()
+    {
+        ears=GetComponent<NoiseListener>();agent=GetComponent<NavMeshAgent>();PrototypeAudio.Source(gameObject);
+        presentation=GetComponent<EnemyPresentation>();
+        if(presentation==null)presentation=gameObject.AddComponent<EnemyPresentation>();
+    }
     private void OnEnable(){ears.onNoiseHeard.AddListener(Investigate);}
     private void OnDisable(){ears.onNoiseHeard.RemoveListener(Investigate);Stop();}
     private void Start()
@@ -59,7 +74,9 @@ public class EnemyInvestigator:MonoBehaviour
             (Vector3.Distance(position,LastSoundGoal)<1.5f||ears.LastStrength<=currentNoiseStrength+.18f))return;
         if(!Go(position))return;
         LastSoundGoal=position;LastKnownPosition=position;lastNoiseTime=Time.time;currentNoiseStrength=ears.LastStrength;
+        bool firstReaction=CurrentState!=State.Investigating&&CurrentState!=State.Searching;
         Change(State.Investigating);deadline=Time.time+investigationTimeout;agent.speed=patrolSpeed*1.2f;
+        if(firstReaction){reactUntil=Time.time+heardReactionSeconds;NoiseReacted?.Invoke(position);}
     }
     private bool Usable()=>agent!=null&&agent.enabled&&agent.isOnNavMesh;
     private bool Go(Vector3 point)
@@ -98,6 +115,11 @@ public class EnemyInvestigator:MonoBehaviour
             else if(CurrentState==State.Suspicious&&Time.time-lastSeen>.45f)
             {if(Go(LastKnownPosition)){Change(State.Investigating);deadline=Time.time+investigationTimeout;}else BeginSearch();}
         }
+        if(CurrentState==State.Investigating&&Time.time<reactUntil)
+        {
+            agent.isStopped=true;FaceRememberedPoint(LastSoundGoal);return;
+        }
+        if(CurrentState==State.Suspicious)FaceRememberedPoint(LastKnownPosition);
         if(CurrentState==State.Chasing)
         {
             agent.speed=chaseSpeed;
@@ -120,11 +142,30 @@ public class EnemyInvestigator:MonoBehaviour
             else if(Time.time>=nextSearchMove){Go(searchCenter+searchOffsets[searchIndex++%searchOffsets.Length]);nextSearchMove=Time.time+2.2f;}
         }
         if(agent.velocity.sqrMagnitude>.05f&&Time.time>=nextStep)
-        {nextStep=Time.time+(CurrentState==State.Chasing?.42f:.7f);PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Footstep,.8f,footstepsClip);}
+        {
+            nextStep=Time.time+(CurrentState==State.Chasing?chaseStepInterval:walkStepInterval);
+            if(presentation==null||!presentation.isActiveAndEnabled||!presentation.useAnimationFootsteps)PlayFootstep();
+        }
+    }
+    // Can also be called through an animation-event relay on the visual model.
+    public void PlayFootstep()
+    {
+        if(Time.timeScale<=0||!isActiveAndEnabled||!Usable()||agent.velocity.sqrMagnitude<=.05f)return;
+        if(presentation!=null&&presentation.isActiveAndEnabled&&presentation.TryPlayFootstep())return;
+        PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Footstep,.8f,footstepsClip);
+    }
+    private void FaceRememberedPoint(Vector3 point)
+    {
+        Vector3 direction=point-transform.position;direction.y=0;
+        if(direction.sqrMagnitude>.01f)transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(direction),reactionTurnSpeed*Time.deltaTime);
     }
     private void Change(State state)
     {
         if(CurrentState==state)return;CurrentState=state;
+        reactUntil=0;
+        if(agent!=null)
+            agent.speed=state==State.Chasing?chaseSpeed:state==State.Investigating?patrolSpeed*1.2f:patrolSpeed;
+        StateChanged?.Invoke(state);
         if(state==State.Suspicious)PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Click,.85f,suspicionClip);
         if(state==State.Chasing)PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.Alert,1,chaseClip);
     }
@@ -152,5 +193,5 @@ public class EnemyInvestigator:MonoBehaviour
         }
         Stop();
     }
-    private void Stop(){if(Usable())agent.ResetPath();CurrentState=State.Idle;SeesPlayer=false;}
+    private void Stop(){if(Usable())agent.ResetPath();Change(State.Idle);SeesPlayer=false;suspicion=0;reactUntil=0;}
 }

@@ -1,0 +1,1 @@
+PASS: investigation reaction, pulse suppression, chase priority, speed transitions, awareness values, optional presentation and audio fallback.
