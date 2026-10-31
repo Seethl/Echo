@@ -21,7 +21,7 @@ namespace Echo.Manor.Editor
         {
             if(EditorSceneManager.GetActiveScene().path!=ManorPrototypeBuilder.ScenePath)throw new InvalidOperationException("Open ManorPrototype first.");
             Apply();ConfigureCamera();ConfigurePickupTarget();RefineRecordPositions();foreach(var png in System.IO.Directory.GetFiles(Folder,"*.png")){string name=System.IO.Path.GetFileNameWithoutExtension(png);TextureMaterial(name,name.StartsWith("Vinyl_"));}
-            EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());AssetDatabase.SaveAssets();
+            ManorVinylTablePolish.Apply();EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());AssetDatabase.SaveAssets();
         }
         [MenuItem("Echo/Перерозкласти декоративний безлад (Undo)")]
         public static void RegenerateDecorations()

@@ -19,7 +19,7 @@ namespace Echo.Manor.Editor
         public static void ApplyAndSave()
         {
             if(EditorSceneManager.GetActiveScene().path!=ManorPrototypeBuilder.ScenePath)throw new InvalidOperationException("Open ManorPrototype first.");
-            Apply();RefineInputPlaque();EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());AssetDatabase.SaveAssets();
+            Apply();RefineInputPlaque();ManorVinylTablePolish.Apply();EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());AssetDatabase.SaveAssets();
         }
         public static void Apply()
         {
@@ -31,7 +31,7 @@ namespace Echo.Manor.Editor
         {
             var puzzle=Object.FindAnyObjectByType<SymbolPuzzle>();puzzle.inputDisplay.transform.position=new Vector3(9.05f,1.86f,19.65f);puzzle.inputDisplay.characterSize=.014f;
             var plaque=GameObject.Find("Compact library input plaque");plaque.transform.position=new Vector3(9.05f,1.86f,19.71f);plaque.transform.localScale=new Vector3(2.4f,.25f,.045f);
-            var board=GameObject.Find("Cache Input Board");board.transform.position=new Vector3(9.2f,1.4f,20.13f);board.transform.localScale=new Vector3(3.1f,1.15f,.15f);
+            var board=GameObject.Find("Cache Input Board");if(board!=null){board.transform.position=new Vector3(9.2f,1.4f,20.13f);board.transform.localScale=new Vector3(3.1f,1.15f,.15f);}
         }
         private static Material Load(string name)=>AssetDatabase.LoadAssetAtPath<Material>(MaterialsFolder+"/"+name+".mat");
         private static GameObject LocalBox(string name,Transform parent,Vector3 p,Vector3 size,Material mat,bool solid=false)
