@@ -1,0 +1,83 @@
+{
+  "materials": [
+    {
+      "name": "M_ManorLight_Iron",
+      "color": [
+        0.045,
+        0.052,
+        0.048
+      ],
+      "metallic": 0.65,
+      "smoothness": 0.30000000000000004,
+      "emission": false
+    },
+    {
+      "name": "M_ManorLight_Brass",
+      "color": [
+        0.33,
+        0.21,
+        0.075
+      ],
+      "metallic": 0.8,
+      "smoothness": 0.52,
+      "emission": false
+    },
+    {
+      "name": "M_ManorLight_Wax",
+      "color": [
+        0.64,
+        0.53,
+        0.32
+      ],
+      "metallic": 0,
+      "smoothness": 0.15000000000000002,
+      "emission": false
+    },
+    {
+      "name": "M_ManorLight_Flame",
+      "color": [
+        1,
+        0.4,
+        0.065
+      ],
+      "metallic": 0,
+      "smoothness": 0.5,
+      "emission": true
+    }
+  ],
+  "items": [
+    {
+      "name": "ManorLantern",
+      "light": [
+        0,
+        0.22,
+        0
+      ],
+      "range": 3.5,
+      "intensity": 1.5,
+      "triangles": 746
+    },
+    {
+      "name": "ManorCandelabrum",
+      "light": [
+        0,
+        0.46,
+        0
+      ],
+      "range": 4.2,
+      "intensity": 1.9,
+      "triangles": 806
+    },
+    {
+      "name": "ManorWallSconce",
+      "light": [
+        0,
+        0.41,
+        0.16
+      ],
+      "range": 3.2,
+      "intensity": 1.35,
+      "triangles": 374
+    }
+  ]
+}
