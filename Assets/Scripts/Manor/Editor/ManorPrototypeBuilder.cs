@@ -148,6 +148,8 @@ namespace Echo.Manor.Editor
             new GameObject("Manor Navigation",typeof(ManorNavigation));
             if(!routeOnly) ConfigureGameplay();
             foreach(var item in Object.FindObjectsByType<Interactable>())SeparateVisual(item.gameObject);
+            if(!routeOnly)ManorUsabilityUpgrade.ApplyToScene();
+            if(!routeOnly)ManorRadioPuzzleUpgrade.ApplyToScene();
             var flow=AssetDatabase.LoadAssetAtPath<GameFlowSettings>("Assets/Resources/EchoGameFlow.asset");
             if(flow==null) {flow=ScriptableObject.CreateInstance<GameFlowSettings>();AssetDatabase.CreateAsset(flow,"Assets/Resources/EchoGameFlow.asset");}
             flow.gameplayScene=ScenePath; EditorUtility.SetDirty(flow);

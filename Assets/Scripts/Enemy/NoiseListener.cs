@@ -10,6 +10,8 @@ public class NoiseListener : MonoBehaviour
     public bool logHeardNoise;
     [Range(0,1)] public float wallAttenuation=.25f;
     [Range(.01f,.5f)] public float detectionThreshold=.06f;
+    [Tooltip("Use the prototype's shared source/cover power scale. Legacy test scenes retain their original hearing by default.")]
+    public bool usePowerScale;
     public float LastStrength {get;private set;}
     public NoiseSystem.Kind LastKind {get;private set;}
 
@@ -43,7 +45,7 @@ public class NoiseListener : MonoBehaviour
         Vector3 origin=transform.position+Vector3.up*1.4f;
         float distance=Vector3.Distance(origin,noise.Position);
         if(radius<=0||distance>=radius)return 0;
-        float strength=(1-distance/radius)*noise.Intensity;
+        float strength=(1-distance/radius)*(usePowerScale?NoiseSystem.Level(noise):noise.Intensity);
         if(Physics.Linecast(origin,noise.Position,out var hit,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))
         {
             bool source= noise.Source!=null&&(hit.transform==noise.Source.transform||hit.transform.IsChildOf(noise.Source.transform));

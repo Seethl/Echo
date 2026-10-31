@@ -10,13 +10,16 @@ namespace Echo.Manor
         public bool demonstration;
         public int shortPulses=1;
         public AudioClip rhythmClip;
-        public override string Prompt=>"E — "+(demonstration?"послухати: ":"натиснути: ")+symbolName;
+        public bool useAssociationSound;
+        public Echo.Audio.PrototypeAudio.Cue soundCue;
+        public AudioClip SoundClip=>rhythmClip!=null?rhythmClip:Echo.Audio.PrototypeAudio.Clip(useAssociationSound?soundCue:shortPulses==1?Echo.Audio.PrototypeAudio.Cue.LongBell:shortPulses==2?Echo.Audio.PrototypeAudio.Cue.TwoBell:Echo.Audio.PrototypeAudio.Cue.ThreeBell);
+        public override string Prompt=>"E — "+(demonstration?(useAssociationSound?"послухати панель: ":"послухати дзвіночок: "):"додати символ: ")+symbolName;
+        public override bool CanInteract(PlayerInteractor player)=>base.CanInteract(player)&&(demonstration||!puzzle.Solved);
         public override void Interact(PlayerInteractor player)
         {
-            Echo.Audio.PrototypeAudio.Play(gameObject,shortPulses==1?Echo.Audio.PrototypeAudio.Cue.LongBell:shortPulses==2?Echo.Audio.PrototypeAudio.Cue.TwoBell:Echo.Audio.PrototypeAudio.Cue.ThreeBell,.7f,rhythmClip);
-            NoiseSystem.Emit(transform.position,10,gameObject,NoiseSystem.Kind.Mechanism);
-            if(demonstration)player.ui.ShowToast(symbolName+": "+rhythm);
+            if(demonstration){if(!puzzle.TryDemonstrate(this,player))return;}
             else puzzle.Submit(symbolId,player);
+            var feedback=GetComponent<SymbolFeedback>();if(feedback!=null)feedback.Pulse();
         }
     }
 }

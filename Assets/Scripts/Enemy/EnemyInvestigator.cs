@@ -52,7 +52,7 @@ public class EnemyInvestigator:MonoBehaviour
     {
         if(Time.timeScale<=0||!Usable())return;
         var progress=ManorProgress.Active;
-        if(progress!=null&&(!progress.Has("hall.open")||progress.IsTutorialPosition(position)))return;
+        if(progress!=null&&(!progress.Has("hall.open")||progress.IsTutorialPosition(position)||progress.IsLibraryOrientationPosition(position)))return;
         // Never replace visual pursuit with a radio pulse or read a hidden player's transform.
         if(CurrentState==State.Chasing||CanSeeTarget())return;
         if((CurrentState==State.Investigating||CurrentState==State.Searching)&&Time.time-lastNoiseTime<2&&

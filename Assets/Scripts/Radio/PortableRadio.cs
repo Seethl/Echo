@@ -30,9 +30,17 @@ namespace Echo.Radio
         private bool lastAudible,signalPlayed;
         private RadioChannel lastChannel;
         private string lastRecording;
+        private SymbolPuzzle libraryPuzzle;
+        private float cueSilenceUntil;
+        public bool CueSilenced=>Time.time<cueSilenceUntil;
+        public void SuspendForCue(float seconds)
+        {
+            cueSilenceUntil=Mathf.Max(cueSilenceUntil,Time.time+seconds);
+            source.Stop();lastRecording=null;lastAudible=false;MusicAudible=false;
+        }
         public RadioChannel Channel=>channels!=null?channels.Where(c=>c!=null&&Mathf.Abs(c.frequency-frequency)<=c.receptionHalfWidth).OrderBy(c=>Mathf.Abs(c.frequency-frequency)).FirstOrDefault():null;
 
-        private void Awake(){colliders=GetComponentsInChildren<Collider>();source=PrototypeAudio.Source(gameObject);cycleOrigin=Time.time;holder=FindAnyObjectByType<PlayerInteractor>();}
+        private void Awake(){colliders=GetComponentsInChildren<Collider>();source=PrototypeAudio.Source(gameObject);cycleOrigin=Time.time;holder=FindAnyObjectByType<PlayerInteractor>();libraryPuzzle=FindAnyObjectByType<SymbolPuzzle>();}
         public override bool CanInteract(PlayerInteractor player)=>base.CanInteract(player)&&!Held;
         public override void Interact(PlayerInteractor player)
         {
@@ -51,10 +59,12 @@ namespace Echo.Radio
                 else if(Keyboard.current.fKey.wasPressedThisFrame)TogglePower();
             }
             if(Time.timeScale<=0)return;
+            if(CueSilenced){holder.ui.SetSubtitle("");return;}
             var channel=Channel;
             if(channel!=lastChannel){source.Stop();lastChannel=channel;lastRecording=null;lastAudible=false;signalPlayed=false;cycleOrigin=Time.time;}
             if(!powered||volume<=0){source.Stop();Subtitle="";MusicAudible=false;holder.ui.SetSubtitle("");return;}
             source.volume=volume;
+            bool nearby=Held||Vector3.Distance(transform.position,holder.transform.position)<8;
             if(channel==null)
             {
                 Subtitle="Радіо "+frequency+": статичний шум. Підказки частот — на картках і в журналі J.";
@@ -70,12 +80,26 @@ namespace Echo.Radio
             else
             {
                 MusicAudible=true;
-                string text=!string.IsNullOrEmpty(channel.clearAfterFlag)&&!ManorProgress.Active.Has(channel.clearAfterFlag)?channel.interruptedTranscript:channel.transcript;
+                bool interrupted=!string.IsNullOrEmpty(channel.clearAfterFlag)&&!ManorProgress.Active.Has(channel.clearAfterFlag);
+                string text=interrupted?channel.interruptedTranscript:channel.transcript;
+                if(!interrupted)
+                {
+                    if(channel.payload==RadioChannel.Payload.GalleryCode)text=text.Replace("{code}",RunSecrets.SpokenCode(ManorProgress.Active.GalleryCode));
+                    else if(channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)text=text.Replace("{sounds}",libraryPuzzle.TransmissionText);
+                }
                 Subtitle="Запис "+frequency+": "+text;
                 if(lastRecording!=text||Time.time>=nextRecordingSignal)
                 {
-                    PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,.65f,channel.voiceClip);
-                    nextRecordingSignal=Time.time+8;lastRecording=text;ManorProgress.Active.AddClue("recording."+channel.frequency,frequency+": "+text);
+                    AudioClip clip=channel.voiceClip;
+                    if(clip==null&&!interrupted&&channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)clip=libraryPuzzle.TransmissionClip;
+                    PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,.65f,clip);
+                    nextRecordingSignal=Time.time+Mathf.Max(8,clip!=null?clip.length+.5f:0);lastRecording=text;
+                }
+                // A radio left behind must not remotely fill the player's journal with answers.
+                if(nearby)
+                {
+                    ManorProgress.Active.AddClue("recording."+channel.frequency,frequency+": "+text);
+                    if(!interrupted&&!ManorProgress.Active.Has("recording.heard."+channel.frequency))ManorProgress.Active.Set("recording.heard."+channel.frequency);
                 }
             }
             if(Time.time>=nextPulse)
@@ -84,7 +108,6 @@ namespace Echo.Radio
                 bool audible=channel==null||channel.mode!=RadioChannel.Mode.Music||MusicAudible;
                 if(audible)NoiseSystem.Emit(transform.position,Mathf.Lerp(2,20,volume),gameObject,NoiseSystem.Kind.Radio,Mathf.Lerp(.35f,1,volume));
             }
-            bool nearby=Held||Vector3.Distance(transform.position,holder.transform.position)<8;
             holder.ui.SetSubtitle(nearby?Subtitle:"");
         }
         private void UpdateMusic()
@@ -99,13 +122,18 @@ namespace Echo.Radio
         public void TogglePower(){powered=!powered;lastRecording=null;ManorProgress.Active.RefreshCheckpoint();}
         public void Tune(int value){frequency=Mathf.Clamp(value,760,1280);lastRecording=null;ManorProgress.Active.RefreshCheckpoint();}
         public void SetVolume(float value){volume=Mathf.Clamp01(value);ManorProgress.Active.RefreshCheckpoint();}
+        public void ReplayRecording()
+        {
+            if(Channel==null||Channel.mode!=RadioChannel.Mode.Recording){holder.ui.ShowToast("Для повтору виберіть частоту службового запису.");return;}
+            powered=true;lastRecording=null;nextRecordingSignal=0;source.Stop();ManorProgress.Active.RefreshCheckpoint();
+        }
         public void OpenControls()
         {
             if(!Held)return;
-            holder.ui.OpenPanel(this,"БАТАРЕЙНЕ РАДІО",()=>frequency+" · Гучність "+Mathf.RoundToInt(volume*100)+"% · "+(powered?"УВІМКНЕНО":"ВИМКНЕНО")+"\n"+Subtitle+"\nЗнайдені частоти: "+KnownFrequencies(),new[]{
+            holder.ui.OpenPanel(this,"БАТАРЕЙНЕ РАДІО",()=>frequency+" · Гучність "+Mathf.RoundToInt(volume*100)+"% · "+(powered?"УВІМКНЕНО":"ВИМКНЕНО")+"\n"+Subtitle+"\nЗнайдені частоти: "+KnownFrequencies()+"\nСвіт не зупинено. Escape — повернутися.",new[]{
                 new InteractionUI.Choice("Частота −20",()=>Tune(frequency-20)),new InteractionUI.Choice("Частота +20",()=>Tune(frequency+20)),
                 new InteractionUI.Choice("Гучність −10%",()=>SetVolume(volume-.1f)),new InteractionUI.Choice("Гучність +10%",()=>SetVolume(volume+.1f)),
-                new InteractionUI.Choice("Увімкнути / вимкнути",TogglePower),new InteractionUI.Choice("Назад",()=>holder.ui.ClosePanel())},false);
+                new InteractionUI.Choice("Увімкнути / вимкнути",TogglePower),new InteractionUI.Choice("Повторити запис",ReplayRecording),new InteractionUI.Choice("Назад",()=>holder.ui.ClosePanel())},false);
         }
         private string KnownFrequencies()=>string.Join(", ",channels.Where(c=>c!=null&&(ManorProgress.Active.Has("frequency."+c.frequency)||c.mode!=RadioChannel.Mode.Recording)).Select(c=>c.frequency+" "+(c.mode==RadioChannel.Mode.Recording?"запис":c.channelName)));
         public bool TryPlace()

@@ -43,7 +43,7 @@ namespace Echo.Interactions
             }
             IsLocked = false;
             IsOpen = stayOpen || !IsOpen;
-            NoiseSystem.Emit(transform.position+Vector3.up,4,gameObject,NoiseSystem.Kind.Interaction);
+            NoiseSystem.Emit(transform.position+Vector3.up,4,gameObject,NoiseSystem.Kind.Interaction,1,player.gameObject);
             Echo.Audio.PrototypeAudio.Play(gameObject,Echo.Audio.PrototypeAudio.Cue.Creak,.5f);
             if(IsOpen)onOpened.Invoke();
         }
