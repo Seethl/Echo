@@ -1,0 +1,5 @@
+Prefab generated successfully.
+Bounds metres: (2.0000, 3.0000, 0.2700)
+Collider: BoxCollider
+Snap: 2 metres along local X
+UV seams: mirrored U=0 at both ends

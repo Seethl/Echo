@@ -1,0 +1,9 @@
+{
+  "width_m": 2,
+  "height_m": 3,
+  "depth_m": 0.27,
+  "vertices": 57,
+  "triangles": 110,
+  "manifold": true,
+  "matching_boundary_uv": true
+}
