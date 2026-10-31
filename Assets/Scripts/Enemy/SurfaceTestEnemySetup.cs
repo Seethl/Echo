@@ -15,7 +15,10 @@ public class SurfaceTestEnemySetup : MonoBehaviour
         var sources = new List<NavMeshBuildSource>();
         var exclusions = new List<NavMeshBuildMarkup>();
         foreach (var player in FindObjectsByType<FPSController>())
+        {
             exclusions.Add(new NavMeshBuildMarkup { root = player.transform, ignoreFromBuild = true });
+            if (player.GetComponent<PlayerCaught>() == null) player.gameObject.AddComponent<PlayerCaught>();
+        }
         exclusions.Add(new NavMeshBuildMarkup { root = transform, ignoreFromBuild = true });
         var bounds = new Bounds(Vector3.zero, new Vector3(60f, 20f, 60f));
         NavMeshBuilder.CollectSources(bounds, ~0, NavMeshCollectGeometry.PhysicsColliders, 0, exclusions, sources);
@@ -39,6 +42,7 @@ public class SurfaceTestEnemySetup : MonoBehaviour
         agent.angularSpeed = 240f;
         agent.stoppingDistance = 0.7f;
         gameObject.AddComponent<EnemyInvestigator>();
+        gameObject.AddComponent<EnemyCatchPlayer>();
 
         var body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         body.name = "EnemyPlaceholder";
