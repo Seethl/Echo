@@ -1,0 +1,32 @@
+{
+  "DoorOpen": {
+    "seconds": 0.9,
+    "peak": 0.82,
+    "rms": 0.10613367064937923
+  },
+  "DoorClose": {
+    "seconds": 0.7,
+    "peak": 0.82,
+    "rms": 0.08988349279470531
+  },
+  "DoorLatch": {
+    "seconds": 0.54,
+    "peak": 0.82,
+    "rms": 0.07280890503489446
+  },
+  "CupboardOpen": {
+    "seconds": 1.1500226757369614,
+    "peak": 0.7942213391569845,
+    "rms": 0.06991123447952943
+  },
+  "CupboardClose": {
+    "seconds": 0.8,
+    "peak": 0.82,
+    "rms": 0.1558489218485547
+  },
+  "CupboardLatch": {
+    "seconds": 0.34,
+    "peak": 0.82,
+    "rms": 0.09175391993640178
+  }
+}

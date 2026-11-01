@@ -22,7 +22,7 @@ namespace Echo.Audio
         public bool Warning {get;private set;}
         private void Awake(){mask=GetComponent<NoiseMaskZone>();PrototypeAudio.Source(gameObject);nextSound=Time.time+initialDelay;
             window=GetComponent<GalleryWindowShutter>();
-            if(mode==Mode.Shutter&&windClip!=null){var child=new GameObject("Window wind audio");child.transform.SetParent(transform,false);wind=child.AddComponent<AudioSource>();wind.clip=windClip;wind.loop=true;wind.playOnAwake=false;wind.spatialBlend=1;wind.rolloffMode=AudioRolloffMode.Linear;wind.minDistance=1;wind.maxDistance=8;wind.volume=0;wind.Play();}
+            if(mode==Mode.Shutter&&windClip!=null){var child=new GameObject("Window wind audio");child.transform.SetParent(transform,false);wind=child.AddComponent<AudioSource>();wind.clip=windClip;wind.loop=true;wind.playOnAwake=false;wind.spatialBlend=1;wind.rolloffMode=AudioRolloffMode.Linear;wind.minDistance=2.5f;wind.maxDistance=11;wind.dopplerLevel=0;wind.volume=0;wind.time=Mathf.Repeat(Mathf.Abs(transform.position.x)*2.13f,windClip.length);wind.Play();}
         }
         private void OnDisable(){if(wind!=null)wind.Stop();}
         private void Update()

@@ -12,15 +12,19 @@ namespace Echo.Manor
         public Transform approachPoint;
         public GameObject filledCup;
         public string potionId = "remedy.potion", servedFlag = "remedy.served";
+        public bool requiresBottle;
+        public string bottleId="remedy.bottle";
         public float approachDistance = 1.6f, drinkingSeconds = 2.5f;
         private float nextRequest, drinking;
         private bool completed;
         private PlayerInteractor player;
-        public override string Prompt => "E — залишити мікстуру в чашці";
+        public override string Prompt => requiresBottle?"E — перелити ліки з пляшечки":"E — залишити мікстуру в чашці";
         public override bool CanInteract(PlayerInteractor p) => base.CanInteract(p) && !ManorProgress.Active.Has(servedFlag);
         private void Start() { player = FindAnyObjectByType<PlayerInteractor>(); }
         public override void Interact(PlayerInteractor p)
         {
+            if(requiresBottle&&(!p.HasKey(bottleId)||!ManorProgress.Active.Has("remedy.bottled")))
+            {p.ui.ShowToast("Ліки потрібно принести в пляшечці. Набери готову мікстуру з миски на кухні.",5);return;}
             if (!p.HasKey(potionId))
             {
                 p.ui.ShowToast("Його чашка. Тут можна залишити готову мікстуру.");

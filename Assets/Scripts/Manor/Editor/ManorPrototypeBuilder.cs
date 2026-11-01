@@ -161,6 +161,8 @@ namespace Echo.Manor.Editor
             if(!routeOnly)ManorFirstRoomsAtmosphere.Apply();
             if(!routeOnly)ManorWholeAtmosphere.Apply();
             if(!routeOnly)ManorMechanismModels.Apply();
+            if(!routeOnly)ManorRadioVoice.Apply();
+            if(!routeOnly)ManorNextDetails.Apply();
             var flow=AssetDatabase.LoadAssetAtPath<GameFlowSettings>("Assets/Resources/EchoGameFlow.asset");
             if(flow==null) {flow=ScriptableObject.CreateInstance<GameFlowSettings>();AssetDatabase.CreateAsset(flow,"Assets/Resources/EchoGameFlow.asset");}
             flow.gameplayScene=ScenePath; EditorUtility.SetDirty(flow);

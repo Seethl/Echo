@@ -20,6 +20,7 @@ namespace Echo.Manor
         [Range(0,1)]public float cuePeak;
         [Range(0,1)]public float cuePlaybackVolume=.8f,radioPlaybackVolume=.65f;
         [Min(.1f)]public float sequenceGapSeconds=.45f;
+        [Min(1)] public float animalNoiseRadius=10f;
         public int EnteredCount=>ManorProgress.Active.Get("library.sequence");
         public bool CuePlaying=>Time.time<busyUntil;
         public bool Solved=>ManorProgress.Active.Has(solvedFlag);
@@ -77,7 +78,7 @@ namespace Echo.Manor
             busyUntil=Time.time+clip.length+.15f;
             QuietRadio(clip.length+.2f);
             PrototypeAudio.Play(button.gameObject,PrototypeAudio.Cue.Click,cuePlaybackVolume,clip);
-            NoiseSystem.Emit(button.transform.position,10,button.gameObject,NoiseSystem.Kind.Mechanism,1,player.gameObject);
+            EmitAnimalNoise(button.gameObject,player.gameObject,cuePlaybackVolume);
             bool first=!ManorProgress.Active.Has("library.panels.learned");
             ManorProgress.Active.Set("library.panels.learned");
             player.ui.ShowToast(button.symbolName+": "+button.rhythm+(first?". Зістав ці звуки з радіозаписом.":"."),4);
@@ -94,7 +95,7 @@ namespace Echo.Manor
                 foreach(var other in buttons)if(other!=null&&other.puzzle==this){var audio=other.GetComponent<AudioSource>();if(audio!=null)audio.Stop();}
                 var clip=record.SoundClip;QuietRadio(clip.length+.2f);busyUntil=Time.time+clip.length+.15f;
                 PrototypeAudio.Play(record.gameObject,PrototypeAudio.Cue.Click,cuePlaybackVolume,clip);
-                NoiseSystem.Emit(record.transform.position,10,record.gameObject,NoiseSystem.Kind.Mechanism,1,player.gameObject);
+                EmitAnimalNoise(record.gameObject,player.gameObject,cuePlaybackVolume);
             }
             QuietRadio(.3f);
             var progress=ManorProgress.Active;
@@ -139,6 +140,15 @@ namespace Echo.Manor
             busyUntil=0;foreach(var button in buttons){var audio=button.GetComponent<AudioSource>();if(audio!=null)audio.Stop();}
             ClearInput();Feedback="Введення скинуто. Можна повторити передачу 1060.";
             feedbackUntil=Time.time+feedbackSeconds;player.ui.ShowToast(Feedback);
+        }
+        public float AnimalClipLength(int index)=>Panel(ActiveSolution[index]).SoundClip.length;
+        public int AnimalClipCount=>ActiveSolution.Length;
+        public void EmitAnimalNoise(GameObject source,GameObject instigator,float volume)
+        {
+            if(Time.timeScale<=0||volume<=.001f)return;
+            var progress=ManorProgress.Active;
+            if(progress!=null&&progress.IsLibraryOrientationPosition(source.transform.position))progress.Set("library.orientation.done");
+            NoiseSystem.Emit(source.transform.position,animalNoiseRadius*Mathf.Pow(Mathf.Clamp01(volume),.25f),source,NoiseSystem.Kind.Mechanism,1,instigator);
         }
         private void QuietRadio(float seconds)
         {

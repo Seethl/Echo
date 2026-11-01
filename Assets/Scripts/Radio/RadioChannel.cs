@@ -16,6 +16,14 @@ namespace Echo.Radio
         public string clearAfterFlag;
         [TextArea(3,8)] public string interruptedTranscript;
         public AudioClip voiceClip;
+        public AudioClip interruptedVoiceClip,voicePrefix,voiceSuffix;
+        [Range(0,1)] public float voicePlaybackVolume=.85f;
+        public AudioClip WithVoice(AudioClip body)
+        {
+            if(body==null||(voicePrefix==null&&voiceSuffix==null))return body;
+            string key="radio-voice."+GetEntityId()+"."+body.GetEntityId()+"."+(voicePrefix!=null?voicePrefix.GetEntityId().ToString():"-")+"."+(voiceSuffix!=null?voiceSuffix.GetEntityId().ToString():"-");
+            return Echo.Audio.PrototypeAudio.Sequence(key,new[]{voicePrefix,body,voiceSuffix},.45f);
+        }
         [Tooltip("Optional digit recordings 0..9 for a randomized code. Empty keeps legacy behavior.")]
         public AudioClip[] digitClips = System.Array.Empty<AudioClip>();
         private AudioClip cachedCodeClip;private string cachedCode;
@@ -25,7 +33,7 @@ namespace Echo.Radio
             if(cachedCodeClip!=null&&cachedCode==code)return cachedCodeClip;
             var parts=new AudioClip[code.Length];for(int i=0;i<code.Length;i++){int digit=code[i]-'0';if(digit<0||digit>9||digitClips[digit]==null)return null;parts[i]=digitClips[digit];}
             if(cachedCodeClip!=null)Object.Destroy(cachedCodeClip);
-            cachedCode=code;return cachedCodeClip=Echo.Audio.PrototypeAudio.Sequence("gallery-code."+code,parts,.55f);
+            cachedCode=code;return cachedCodeClip=WithVoice(Echo.Audio.PrototypeAudio.Sequence("gallery-code."+code,parts,.55f));
         }
     }
 }

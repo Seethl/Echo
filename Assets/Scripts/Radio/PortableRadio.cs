@@ -14,6 +14,8 @@ namespace Echo.Radio
         public RadioChannel[] channels=Array.Empty<RadioChannel>();
         public int frequency=820;
         [Range(0,1)] public float volume=.4f;
+        [Tooltip("Playback gain only; does not change gameplay hearing.")]
+        [Range(0,3)] public float recordingPlaybackGain=1.6f;
         public bool powered;
         public bool allowPickup=true;
         public bool allowPlacement=true;
@@ -34,6 +36,7 @@ namespace Echo.Radio
         private bool lastAudible,signalPlayed;
         private RadioChannel lastChannel;
         private string lastRecording;
+        private int nextAnimalCue;
         private SymbolPuzzle libraryPuzzle;
         private float cueSilenceUntil;
         public bool CueSilenced=>Time.time<cueSilenceUntil;
@@ -68,7 +71,8 @@ namespace Echo.Radio
             var channel=Channel;
             if(channel!=lastChannel){source.Stop();lastChannel=channel;lastRecording=null;lastAudible=false;signalPlayed=false;cycleOrigin=Time.time;}
             if(!powered||volume<=0){source.Stop();Subtitle="";MusicAudible=false;holder.ui.SetSubtitle("");return;}
-            source.volume=volume;
+            float recordingLevel=channel!=null&&channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null?libraryPuzzle.radioPlaybackVolume:channel!=null?channel.voicePlaybackVolume:1;
+            source.volume=volume*(channel!=null&&channel.mode==RadioChannel.Mode.Recording?recordingLevel*recordingPlaybackGain:1);
             bool nearby=Held||Vector3.Distance(transform.position,holder.transform.position)<8;
             if(channel==null)
             {
@@ -95,13 +99,14 @@ namespace Echo.Radio
                 Subtitle="Запис "+frequency+": "+text;
                 if(lastRecording!=text||Time.time>=nextRecordingSignal)
                 {
-                    AudioClip clip=channel.voiceClip;
-                    if(clip==null&&!interrupted&&channel.payload==RadioChannel.Payload.GalleryCode&&ManorProgress.Active!=null)clip=channel.CodeRecording(ManorProgress.Active.GalleryCode);
-                    if(clip==null&&!interrupted&&channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)clip=libraryPuzzle.TransmissionClip;
-                    float playback=channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null?libraryPuzzle.radioPlaybackVolume:.65f;
-                    PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,playback,clip);
+                    AudioClip clip=interrupted?channel.interruptedVoiceClip:channel.voiceClip;
+                    if(!interrupted&&channel.payload==RadioChannel.Payload.GalleryCode&&ManorProgress.Active!=null)clip=channel.CodeRecording(ManorProgress.Active.GalleryCode)??clip;
+                    if(!interrupted&&channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)clip=channel.WithVoice(libraryPuzzle.TransmissionClip)??clip;
+                    // A new state replaces the previous sentence instead of overlapping PlayOneShot voices.
+                    nextAnimalCue=0;source.Stop();source.clip=clip!=null?clip:PrototypeAudio.Clip(PrototypeAudio.Cue.DoubleClick);source.loop=false;source.Play();
                     nextRecordingSignal=Time.time+Mathf.Max(8,clip!=null?clip.length+.5f:0);lastRecording=text;
                 }
+                if(!interrupted&&channel.payload==RadioChannel.Payload.LibrarySounds)EmitLibrarySounds(channel);
                 // A radio left behind must not remotely fill the player's journal with answers.
                 if(nearby&&ManorProgress.Active!=null)
                 {
@@ -116,6 +121,16 @@ namespace Echo.Radio
                 if(audible)NoiseSystem.Emit(transform.position,Mathf.Lerp(2,20,volume),gameObject,NoiseSystem.Kind.Radio,Mathf.Lerp(.35f,1,volume));
             }
             holder.ui.SetSubtitle(nearby?Subtitle:"");
+        }
+        private void EmitLibrarySounds(RadioChannel channel)
+        {
+            if(libraryPuzzle==null||!source.isPlaying)return;
+            float start=channel.voicePrefix!=null?channel.voicePrefix.length+.45f:0;
+            for(int i=0;i<libraryPuzzle.AnimalClipCount;i++)
+            {
+                if(i==nextAnimalCue&&source.time>=start){libraryPuzzle.EmitAnimalNoise(gameObject,holder!=null?holder.gameObject:null,volume);nextAnimalCue++;}
+                start+=libraryPuzzle.AnimalClipLength(i)+libraryPuzzle.sequenceGapSeconds;
+            }
         }
         private void UpdateMusic()
         {

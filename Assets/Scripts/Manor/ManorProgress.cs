@@ -53,6 +53,7 @@ namespace Echo.Manor
             !Has("yard.open") ? "Відчинити заклинені двері до зовнішнього саду" :
             !player.HasKey("remedy.flower") ? "Знайти квітку з рецепта" :
             !player.HasKey("remedy.spoon") ? "Знайти срібну ложечку серед посуду" :
+            Get("remedy.steps")>=3&&!Has("remedy.bottled")&&!player.HasKey("remedy.potion") ? (player.HasKey("remedy.bottle")?"Набрати ліки в пляшечку на кухні":"Знайти порожню пляшечку для ліків") :
             !player.HasKey("remedy.potion") ? "Приготувати мікстуру на кухні" :
             !Has("remedy.served") ? "Залишити ліки в чашці мешканця у холі" : "Відійти за укриття й дочекатися мешканця";
         public bool LibraryOrientationActive=>libraryEntryTime>=0&&!Has("library.orientation.done");
