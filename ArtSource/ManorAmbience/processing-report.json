@@ -1,14 +1,47 @@
 {
-  "source": "igor ambient.wav",
-  "sourceSHA256": "723288895a58a02a0f7ebeb497cc425a534d8981c05290dc221f981c6a628231",
-  "runtimeSHA256": "41dfb11fc5f8fa1722bb30898b172f33a85a95b7c78322429a787b241efb28c8",
-  "rate": 48000,
-  "channels": 2,
-  "sourceSeconds": 159.20033333333333,
-  "loopSeconds": 157.70033333333333,
-  "crossfadeSeconds": 1.5,
-  "gain": 1.3895867690712906,
-  "rms": 0.0788227042408998,
-  "peak": 0.9,
-  "boundaryStep": 0.00046647505065259415
+  "source": "C:\\Users\\Ігор\\Echo\\ArtSource\\ManorAmbience\\igor ambient.wav",
+  "source_sha256": "723288895a58a02a0f7ebeb497cc425a534d8981c05290dc221f981c6a628231",
+  "output_path": "C:\\Users\\Ігор\\Echo\\Assets\\Audio\\ManorAmbience\\ManorAmbientLoop.wav",
+  "output_sha256": "08a4f27cdb3c43f14c7e6481022a4d489249a43b37c8a1e98695aa122484b1a8",
+  "trim_start_seconds": 20.33,
+  "trim_end_seconds": 147.5,
+  "discarded_tail_seconds": 11.7,
+  "loop_crossfade_seconds": 2.0,
+  "loop_seam_source_correlation": -0.0006,
+  "boundary_step": 0.00103759765625,
+  "source_gain": 1.3895867690712906,
+  "reverb_wet_mix": 0.12,
+  "reverb_rt60_seconds": [
+    1.85,
+    1.97
+  ],
+  "reverb_added_tail_seconds": 0.0,
+  "max_compression_db": 2.852,
+  "final_gain_db": 0.0,
+  "input": {
+    "seconds": 159.2003,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.773,
+    "rms_dbfs": -24.915,
+    "clipped_samples": 0,
+    "stereo_correlation": 1.0
+  },
+  "output": {
+    "seconds": 125.17,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -8.115,
+    "rms_dbfs": -24.549,
+    "clipped_samples": 0,
+    "stereo_correlation": 0.9887
+  },
+  "checks": {
+    "original_unchanged": true,
+    "finite_samples": true,
+    "no_clipping": true,
+    "no_long_silent_intro": true,
+    "stereo_and_sample_rate_preserved": true
+  },
+  "audition": "Signal-level checks only. No subjective listening or Unity playback check."
 }

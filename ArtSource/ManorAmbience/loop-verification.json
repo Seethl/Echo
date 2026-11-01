@@ -1,0 +1,13 @@
+{
+  "seconds": 125.17,
+  "seam_sample_step": 0.00103759765625,
+  "near_seam_99_percentile_sample_step": 0.0037841796875,
+  "seam_vs_nearby_step_ratio": 0.27419354838709675,
+  "first_second_rms_dbfs": -28.231529235839844,
+  "last_second_rms_dbfs": -29.756553649902344,
+  "minimum_100ms_rms_dbfs": -46.400489807128906,
+  "runtime_and_preview_identical": true,
+  "scene_clip_guid_preserved": true,
+  "loop_enabled_in_code": true,
+  "unity_playback_retested": false
+}
