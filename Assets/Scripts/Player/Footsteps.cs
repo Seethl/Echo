@@ -13,6 +13,8 @@ public class Footsteps : MonoBehaviour
     public AudioClip carpetFootstepSound;
     public AudioClip glassFootstepSound;
 
+    [Range(0f,1f)] public float playbackVolume=1f;
+
     public float walkInterval = 0.5f;
     public float runInterval = 0.3f;
     public float crouchInterval = 0.8f;
@@ -120,7 +122,7 @@ public class Footsteps : MonoBehaviour
 
         float movementVolume = isCrouching ? 0.2f : isRunning ? 1f : 0.5f;
         if (clip != null)
-            audioSource.PlayOneShot(clip, Mathf.Clamp01(movementVolume * surfaceMultiplier));
+            audioSource.PlayOneShot(clip, Mathf.Clamp01(movementVolume * surfaceMultiplier * playbackVolume));
 
         // AI hearing still works when a clip is missing or the player mutes audio.
         float noiseRadius = isCrouching ? crouchNoiseRadius : isRunning ? runNoiseRadius : walkNoiseRadius;

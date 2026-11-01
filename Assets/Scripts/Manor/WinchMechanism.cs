@@ -20,6 +20,7 @@ namespace Echo.Manor
         private bool doublePlayed;
         private float nextClick;
         public AudioClip singleClickClip,doubleClickClip,failureClip;
+        public bool IsCranking=>started>=0&&heldLast;
         public int Steps=>ManorProgress.Active.Get("winch.steps");
         public bool InReleaseWindow=>started>=0&&Time.time-started>=clickLeadTime&&Time.time-started<=clickLeadTime+releaseWindow;
         public override string Prompt=>"E — "+(ManorProgress.Active.Has("winch.installed")?"працювати з лебідкою":"встановити руків’я");

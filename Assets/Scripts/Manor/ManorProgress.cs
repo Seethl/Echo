@@ -21,6 +21,7 @@ namespace Echo.Manor
         public bool treatmentRoute;
         public string statusSuffix="";
         private ManorZone[] zones;
+        private GalleryWindowShutter[] galleryWindows;
         private Dictionary<string,int> values=new Dictionary<string,int>();
         private Dictionary<string,string> clues=new Dictionary<string,string>();
         private int journalPage;
@@ -36,21 +37,23 @@ namespace Echo.Manor
         public Vector3? RestoredEnemyPosition {get;private set;}
         public string GalleryCode=>Get(RunSecrets.GalleryKey).ToString("000");
         public string Objective => treatmentRoute ? TreatmentObjective : !player.HasKey("manor.service-passage")&&!Has("hall.open")?"Знайти службовий ключ у шафці":
-            !Has("hall.open")?(Has("gallery.quiet")?(Has("recording.heard.940")?"Набрати отриманий код на замку біля дверей":"Послухати на радіо службову передачу 940"):"Прибрати гілку й закрити віконницю"):
+            !Has("hall.open")?(Has("gallery.quiet")?(Has("recording.heard.940")?"Набрати отриманий код на замку біля дверей":"Послухати на радіо службову передачу 940"):GalleryWindowObjective):
             !player.HasKey("tool.winch")&&!Has("grate.open")?(Has("library.cache")?"Забрати руків’я з відкритої схованки":Area==ManorArea.Library?"Відкрити схованку: дослідити панелі й радіозапис":"Знайти бібліотеку — два проходи з холу"):
             !Has("grate.open")?(Has("winch.installed")?"Підняти решітку: зафіксувати три ступені":"Встановити руків’я в лебідку на кухні"):
             !Has("yard.open")?(player.HasKey("tool.crowbar")?"Відтиснути засув дверей у двір тричі":"Знайти лом на столі в зимовому саду"):
             !Has("gates.open")?(!player.HasKey("tool.cutters")?"Знайти болторіз в інструментальному сараї":!Has("gates.braced")?"Підперти ворота ломом, щоб розвантажити ланцюг":"Перерізати дві секції ланцюга: утримувати E"):
             "Вийти через відкриті зовнішні ворота";
-        private string TreatmentObjective => !Has("hall.open") ? (!player.HasKey("manor.service-passage") ? "Знайти службовий ключ" : !Has("gallery.quiet") ? "Прибрати гілку й закрити віконницю" : !Has("recording.heard.940") ? "Послухати передачу 940" : "Відімкнути прохід до холу") :
+        private string GalleryWindowObjective => galleryWindows!=null&&galleryWindows.Length>0 ? $"Зачинити всі віконниці ({galleryWindows.Count(w=>w.Closed)}/{galleryWindows.Length})" : "Прибрати гілку й закрити віконницю";
+        private string TreatmentObjective => !Has("hall.open") ? (!player.HasKey("manor.service-passage") ? "Знайти службовий ключ" : !Has("gallery.quiet") ? GalleryWindowObjective : !Has("recording.heard.940") ? "Послухати передачу 940" : "Відімкнути прохід до холу") :
             !Has("library.cache") ? "Дослідити бібліотечну схованку" :
-            !Has("remedy.recipe.read") ? "Прочитати рецепт у відкритій схованці" :
+            !Has("remedy.recipe.read") ? "Знайти рецепт біля картини нагорі" :
             !player.HasKey("remedy.study-key") && !player.HasKey("remedy.base") ? "Оглянути житлову кімнату нагорі" :
             !player.HasKey("remedy.base") ? "Відкрити аптечну шафку на кухні" :
             !Has("grate.open") ? "Відкрити прохід до саду лебідкою" :
             !Has("yard.open") ? "Відчинити заклинені двері до зовнішнього саду" :
             !player.HasKey("remedy.flower") ? "Знайти квітку з рецепта" :
             !player.HasKey("remedy.spoon") ? "Знайти срібну ложечку серед посуду" :
+            Get("remedy.steps")>=3&&!Has("remedy.bottled")&&!player.HasKey("remedy.potion") ? (player.HasKey("remedy.bottle")?"Набрати ліки в пляшечку на кухні":"Знайти порожню пляшечку для ліків") :
             !player.HasKey("remedy.potion") ? "Приготувати мікстуру на кухні" :
             !Has("remedy.served") ? "Залишити ліки в чашці мешканця у холі" : "Відійти за укриття й дочекатися мешканця";
         public bool LibraryOrientationActive=>libraryEntryTime>=0&&!Has("library.orientation.done");
@@ -79,7 +82,7 @@ namespace Echo.Manor
         }
         private void Awake()
         {
-            Active=this;serial=runSerial;zones=FindObjectsByType<ManorZone>();
+            Active=this;serial=runSerial;zones=FindObjectsByType<ManorZone>();galleryWindows=FindObjectsByType<GalleryWindowShutter>();
             if(restorePending&&checkpoint!=null)
             {values=new Dictionary<string,int>(checkpoint.values);clues=new Dictionary<string,string>(checkpoint.clues);RestoredEnemyPosition=checkpoint.enemy;}
             if(!Has(RunSecrets.GalleryKey)){previousCode=RunSecrets.NewCode(previousCode);values[RunSecrets.GalleryKey]=previousCode;}
@@ -136,9 +139,9 @@ namespace Echo.Manor
         private string CluePage(){if(clues.Count==0)return Journal;journalPage=Mathf.Clamp(journalPage,0,clues.Count-1);return (journalPage+1)+" / "+clues.Count+"\n"+clues.Values.ElementAt(journalPage);}
         public string HelpText(int step)
         {
-            if(treatmentRoute) return "Ціль: "+Objective+(step>=2 ? "\n\nСходи — біля західної стіни холу. Бібліотека — за двома північними проходами. Рецепт лежить у схованці. Аптечна шафка та миска — на кухні. Зовнішній сад — за зимовим садом. J зберігає прочитане." : "");
+            if(treatmentRoute) return "Ціль: "+Objective+(step>=2 ? "\n\nСходи — біля західної стіни холу. Бібліотека — за двома північними проходами. Рецепт прикріплений біля картини у житловій кімнаті нагорі. Аптечна шафка та миска — на кухні. Зовнішній сад — за зимовим садом. J зберігає прочитане." : "");
             string direction,connection;
-            if(!Has("hall.open")){direction="Радіо лежить на столі в кімнаті доглядача; частота галереї — на її картці.";connection="Після закривання віконниці налаштуйте радіо на передачу галереї. Код змінюється для кожної нової гри; почутий запис зберігається в J.";}
+            if(!Has("hall.open")){direction="Радіо лежить на столі в кімнаті доглядача; частота галереї — на її картці.";connection="Після закривання всіх віконниць налаштуйте радіо на передачу галереї. Код змінюється для кожної нової гри; почутий запис зберігається в J.";}
             else if(!player.HasKey("tool.winch")&&!Has("grate.open")){direction=Area==ManorArea.Library?"Огляньте звукові панелі на лівій стіні та схованку з такими самими знаками.":"Бібліотека має два проходи з дальньої частини холу. Шукайте вказівники.";connection="Зіставте звуки панелей із послідовністю радіопередачі. Введення — на кнопках схованки, не на демонстраційних панелях.";}
             else if(!Has("grate.open")){direction="На кухні лебідка стоїть поруч із решіткою. Інструкція — поряд.";connection="Після подвійного клацання потрібно відпустити Space, щоб стопор зафіксував ступінь.";}
             else if(!Has("yard.open")){direction="Лом лежить на столі ліворуч від входу в зимовий сад; двері у двір — навпроти.";connection="Гуркіт води може прикрити тріск засуву. Прогрес натискань зберігається.";}

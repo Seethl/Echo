@@ -26,6 +26,7 @@ namespace Echo.Interactions
         {
             if(IsOpen||user==null||user.viewCamera==null||cameraAnchor==null)return false;
             if(!GameMenu.TryOpenModal(this,Close,freezeWorld))return false;
+            user.ui.ShowToast("",0);
             player=user;viewCamera=user.viewCamera;savedLocalPosition=viewCamera.transform.localPosition;
             savedLocalRotation=viewCamera.transform.localRotation;startPosition=viewCamera.transform.position;
             startRotation=viewCamera.transform.rotation;savedFov=viewCamera.fieldOfView;savedNearClip=viewCamera.nearClipPlane;
@@ -58,11 +59,11 @@ namespace Echo.Interactions
                 canvas.GetComponent<Canvas>().sortingOrder=950;
                 var scaler=canvas.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(1280,720);
                 hintPanel=new GameObject("Hint",typeof(RectTransform),typeof(Image));hintPanel.transform.SetParent(canvas.transform,false);
-                var rect=(RectTransform)hintPanel.transform;rect.anchorMin=rect.anchorMax=Vector2.zero;rect.pivot=Vector2.zero;rect.anchoredPosition=new Vector2(16,16);rect.sizeDelta=new Vector2(390,58);
-                var background=hintPanel.GetComponent<Image>();background.color=new Color(.025f,.035f,.03f,.94f);background.raycastTarget=false;
+                var rect=(RectTransform)hintPanel.transform;rect.anchorMin=rect.anchorMax=new Vector2(.5f,1);rect.pivot=new Vector2(.5f,1);rect.anchoredPosition=new Vector2(0,-28);rect.sizeDelta=new Vector2(660,52);
+                var background=hintPanel.GetComponent<Image>();background.color=EchoUIStyle.Ink;background.raycastTarget=false;
                 var label=new GameObject("Text",typeof(RectTransform),typeof(Text));label.transform.SetParent(hintPanel.transform,false);
                 var labelRect=(RectTransform)label.transform;labelRect.anchorMin=Vector2.zero;labelRect.anchorMax=Vector2.one;labelRect.offsetMin=new Vector2(8,4);labelRect.offsetMax=new Vector2(-8,-4);
-                hintText=label.GetComponent<Text>();hintText.font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");hintText.fontSize=18;hintText.alignment=TextAnchor.MiddleCenter;hintText.color=new Color(1,.86f,.63f);hintText.raycastTarget=false;
+                hintText=label.GetComponent<Text>();hintText.font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");hintText.fontSize=18;hintText.alignment=TextAnchor.MiddleCenter;hintText.color=new Color(1,.86f,.63f);hintText.raycastTarget=false;EchoUIStyle.Text(hintText);
             }
             if(hintPanel!=null){hintText.text=text;hintPanel.SetActive(text.Length>0);}
         }
