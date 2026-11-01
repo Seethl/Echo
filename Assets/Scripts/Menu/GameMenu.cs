@@ -112,6 +112,8 @@ namespace Echo.Menu
         private Canvas canvas;
         private EventSystem menuEventSystem;
         private Image background;
+        private RawImage manorBackdrop;
+        private Texture2D menuVeilTexture;
         private GameObject mainPanel;
         private GameObject pausePanel;
         private GameObject settingsPanel;
@@ -259,7 +261,8 @@ namespace Echo.Menu
             mainPanel.SetActive(inMainMenu && !showingSettings && !loading);
             pausePanel.SetActive(paused && !showingSettings && !loading);
             settingsPanel.SetActive(showingSettings && !loading);
-            background.color = new Color(0.025f, 0.035f, 0.032f, inMainMenu ? 1f : 0.92f);
+            if(manorBackdrop!=null)manorBackdrop.gameObject.SetActive(inMainMenu);
+            background.color = new Color(.018f,.025f,.045f,inMainMenu ? .35f : .93f);
             if (visible && !loading)
             {
                 GameObject selected = showingSettings ? volumeSlider.gameObject :
@@ -323,6 +326,7 @@ namespace Echo.Menu
             RestoreModal();
             RestorePause();
             UnlockCursor();
+            if(menuVeilTexture!=null)Destroy(menuVeilTexture);
             instance = null;
         }
 
@@ -351,24 +355,29 @@ namespace Echo.Menu
             scaler.referenceResolution = new Vector2(1280f, 720f);
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 
-            background = MakeImage("Backdrop", canvas.transform, Color.black);
-            Stretch(background.rectTransform);
-            var accent = MakeImage("Accent", canvas.transform, new Color(0.48f, 0.22f, 0.18f));
-            Place(accent.rectTransform, 0f, 260f, 64f, 3f);
-
+            manorBackdrop=new GameObject("Manor Artwork",typeof(RectTransform),typeof(RawImage)).GetComponent<RawImage>();
+            manorBackdrop.transform.SetParent(canvas.transform,false);Stretch(manorBackdrop.rectTransform);
+            manorBackdrop.texture=Resources.Load<Texture2D>("EchoMenuBackdrop");manorBackdrop.uvRect=new Rect(1,0,-1,1);manorBackdrop.raycastTarget=false;
+            background = MakeImage("Backdrop", canvas.transform, Color.black);Stretch(background.rectTransform);
+            var veil=new GameObject("Left reading veil",typeof(RectTransform),typeof(RawImage)).GetComponent<RawImage>();veil.transform.SetParent(manorBackdrop.transform,false);
+            menuVeilTexture=new Texture2D(128,1,TextureFormat.RGBA32,false){wrapMode=TextureWrapMode.Clamp,filterMode=FilterMode.Bilinear};
+            for(int i=0;i<128;i++)menuVeilTexture.SetPixel(i,0,new Color(.015f,.022f,.038f,.94f*(1-Mathf.SmoothStep(0,1,i/127f))));menuVeilTexture.Apply();veil.texture=menuVeilTexture;
+            Stretch(veil.rectTransform);veil.rectTransform.anchorMax=new Vector2(.82f,1);veil.raycastTarget=false;
             mainPanel = MakePanel("Main Menu");
-            MakeText("Title", mainPanel.transform, "E C H O", 62, 210f, 80f);
-            MakeText("Subtitle", mainPanel.transform, "МАЄТОК ПАМ’ЯТАЄ", 16, 153f, 28f);
-            newGameButton = MakeButton(mainPanel.transform, "Нова гра", 83f,
+            Place((RectTransform)mainPanel.transform,-310,0,540,600);
+            MakeText("Title", mainPanel.transform, "E C H O", 78, 205f, 105f);
+            var rule=MakeImage("Title rule",mainPanel.transform,EchoUIStyle.Gold);Place(rule.rectTransform,0,140,62,1);rule.raycastTarget=false;
+            MakeText("Subtitle", mainPanel.transform, "МАЄТОК ПАМ’ЯТАЄ", 15, 115f, 28f);
+            newGameButton = MakeButton(mainPanel.transform, "Нова гра", 38f,
                 StartNewGame);
             // There is no save-game system yet. Settings preferences are not a saved game.
-            continueButton = MakeButton(mainPanel.transform, "Продовжити", 17f, () => ContinueAction?.Invoke());
+            continueButton = MakeButton(mainPanel.transform, "Продовжити", -24f, () => ContinueAction?.Invoke());
             continueButton.interactable = false;
             continueButton.GetComponentInChildren<Text>().color = new Color(0.45f, 0.47f, 0.44f);
-            MakeButton(mainPanel.transform, "Налаштування", -49f, OpenSettings);
-            MakeButton(mainPanel.transform, "Вихід", -115f, Quit);
-            MakeText("Save Status", mainPanel.transform, "Продовження — з контрольної точки в поточному запуску гри.",
-                16, -182f, 50f);
+            MakeButton(mainPanel.transform, "Налаштування", -86f, OpenSettings);
+            MakeButton(mainPanel.transform, "Вихід", -148f, Quit);
+            MakeText("Save Status", mainPanel.transform, "Продовження доступне з контрольної точки\nпід час поточного запуску.",
+                14, -221f, 52f);
 
             pausePanel = MakePanel("Pause Menu");
             MakeText("Title", pausePanel.transform, "ПАУЗА", 46, 180f, 70f);
@@ -418,6 +427,11 @@ namespace Echo.Menu
             var panel = new GameObject(name, typeof(RectTransform));
             panel.transform.SetParent(canvas.transform, false);
             Place((RectTransform)panel.transform, 0f, 0f, 620f, 600f);
+            if(name!="Main Menu")
+            {
+                var plate=MakeImage("Panel Surface",panel.transform,EchoUIStyle.Ink);Stretch(plate.rectTransform);plate.transform.SetAsFirstSibling();plate.raycastTarget=false;
+                var rule=MakeImage("Panel Rule",panel.transform,EchoUIStyle.Gold);Place(rule.rectTransform,0,267,54,1);rule.raycastTarget=false;
+            }
             return panel;
         }
 
@@ -432,21 +446,23 @@ namespace Echo.Menu
             label.alignment = TextAnchor.MiddleCenter;
             label.color = new Color(0.87f, 0.86f, 0.8f);
             label.raycastTarget = false;
+            EchoUIStyle.Text(label);
             return label;
         }
 
         private Button MakeButton(Transform parent, string label, float y, UnityEngine.Events.UnityAction action)
         {
-            var image = MakeImage(label, parent, new Color(0.13f, 0.17f, 0.15f));
+            var image = MakeImage(label, parent, new Color(.11f,.13f,.17f));
             Place(image.rectTransform, 0f, y, 440f, 52f);
             var button = image.gameObject.AddComponent<Button>();
             button.targetGraphic = image;
             var colors = button.colors;
-            colors.highlightedColor = new Color(0.68f, 0.76f, 0.64f);
+            colors.highlightedColor = new Color(1.6f,1.45f,1.2f);
             colors.selectedColor = colors.highlightedColor;
             colors.disabledColor = new Color(0.3f, 0.3f, 0.3f, 0.65f);
             button.colors = colors;
-            var text = MakeText("Label", button.transform, label, 25, 0f, 52f);
+            var edge=MakeImage("Button Rule",button.transform,new Color(.72f,.59f,.36f,.7f));Place(edge.rectTransform,-219,0,2,22);edge.raycastTarget=false;
+            var text = MakeText("Label", button.transform, label, 22, 0f, 52f);
             Stretch(text.rectTransform);
             if (action != null)
                 button.onClick.AddListener(action);
@@ -467,7 +483,7 @@ namespace Echo.Menu
             Stretch(handleArea);
             handleArea.offsetMin = new Vector2(12f, 0f);
             handleArea.offsetMax = new Vector2(-12f, 0f);
-            var handle = MakeImage("Handle", handleArea, new Color(0.74f, 0.77f, 0.64f));
+            var handle = MakeImage("Handle", handleArea, EchoUIStyle.Gold);
             handle.rectTransform.sizeDelta = new Vector2(24f, 32f);
             var slider = root.GetComponent<Slider>();
             slider.handleRect = handle.rectTransform;
@@ -480,11 +496,12 @@ namespace Echo.Menu
 
         private Toggle MakeToggle(Transform parent, string label, float y)
         {
-            var image = MakeImage(label, parent, new Color(0.13f, 0.17f, 0.15f));
+            var image = MakeImage(label, parent, new Color(.11f,.13f,.17f));
             Place(image.rectTransform, 0f, y, 440f, 48f);
             var toggle = image.gameObject.AddComponent<Toggle>();
             toggle.targetGraphic = image;
-            var check = MakeImage("Check", image.transform, new Color(0.74f, 0.77f, 0.64f));
+            var box=MakeImage("Checkbox frame",image.transform,new Color(.25f,.28f,.33f));Place(box.rectTransform,-183,0,26,26);box.raycastTarget=false;
+            var check = MakeImage("Check", image.transform, EchoUIStyle.Gold);
             Place(check.rectTransform, -183f, 0f, 22f, 22f);
             toggle.graphic = check;
             var text = MakeText("Label", image.transform, label, 22, 0f, 48f);

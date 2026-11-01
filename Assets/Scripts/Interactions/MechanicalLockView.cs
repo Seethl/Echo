@@ -48,13 +48,13 @@ namespace Echo.Interactions
             Initialize();
             failureLeft=successLeft=0;selectionFrame.enabled=true;
             for(int i=0;i<3;i++){target[i]=from[i]=keypad.GetDigit(i)*36;pending[i]=0;SetRotation(i,target[i]);}
-            Message("ЛКМ + · ПКМ − · колесо ± · OK");
+            Message("");
         }
         public bool RotateDrum(int i,int direction)
         {
             Initialize();
             if(i<0||i>=3||keypad==null||keypad.IsUnlocked||drums[i]==null||pending[i]!=0||direction==0)return false;
-            failureLeft=0;Message("ЛКМ + · ПКМ − · колесо ± · OK");
+            failureLeft=0;Message("");
             pending[i]=direction>0?1:-1;from[i]=target[i];target[i]+=pending[i]*36;timer[i]=0;
             var clickSource=PrototypeAudio.Source(gameObject);clickSource.ignoreListenerPause=true;
             clickSource.PlayOneShot(PrototypeAudio.Clip(PrototypeAudio.Cue.Click),.28f);return true;
@@ -112,7 +112,7 @@ namespace Echo.Interactions
             if(visualBody!=null)visualBody.localPosition=bodyPosition;
         }
         private void SetRotation(int i,float angle){if(drums[i]!=null)drums[i].localRotation=basis[i]*Quaternion.AngleAxis(angle,Vector3.right);}
-        private void Message(string text){if(statusText!=null)statusText.text=text;}
+        private void Message(string text){if(statusText!=null)statusText.text="";if(!string.IsNullOrEmpty(text)&&player!=null)player.ui.ShowToast(text,3);}
         protected override void OnDestroy(){base.OnDestroy();if(frameMaterial!=null)Destroy(frameMaterial);}
     }
 }

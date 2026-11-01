@@ -28,6 +28,11 @@ namespace Echo.Interactions
         private RawImage panelIllustration;
         private Text completionTitle;
         private Text subtitle;
+        private Image promptPlate,subtitlePlate,toastPlate;
+        private ScrollRect readingScroll;
+        private RectTransform readingViewport;
+        private string laidOutBody;
+
         private GameObject noisePanel;
         private RectTransform playerNoiseFill,ambientNoiseFill;
         private Text playerNoiseLabel,ambientNoiseLabel;
@@ -73,17 +78,21 @@ namespace Echo.Interactions
             scaler.referenceResolution = new Vector2(1280, 720);
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             dot = Label("Aim Dot", root.transform, "•", 24, 0, 30).gameObject;
-            prompt = Label("Prompt", root.transform, "", 23, -65, 45);
-            toast = Label("Toast", root.transform, "", 22, 180, 100);
-            Label("Controls", root.transform, controlsText, 15, -320, 38);
-            hud=Label("Objective and Noise",root.transform,"",19,285,100);
-            subtitle=Label("Radio Subtitles",root.transform,"",20,-210,105);
-            subtitle.rectTransform.sizeDelta=new Vector2(900,105);
+            prompt = Label("Prompt", root.transform, "", 20, 0, 36);
+            Bottom(prompt.rectTransform,142,720,36);promptPlate=EchoUIStyle.Plate("Context plate",root.transform,prompt.rectTransform);
+            toast = Label("Toast", root.transform, "", 19, 210, 64);
+            toastPlate=EchoUIStyle.Plate("Notice plate",root.transform,toast.rectTransform);
+            // Controls remain available through J; no permanent tutorial ribbon.
+            hud=Label("Objective and Noise",root.transform,"",17,0,64);
+            hud.rectTransform.anchorMin=hud.rectTransform.anchorMax=hud.rectTransform.pivot=Vector2.one;
+            hud.rectTransform.anchoredPosition=new Vector2(-28,-25);hud.rectTransform.sizeDelta=new Vector2(510,64);hud.alignment=TextAnchor.UpperRight;
+            subtitle=Label("Radio Subtitles",root.transform,"",20,0,92);
+            Bottom(subtitle.rectTransform,65,900,92);subtitlePlate=EchoUIStyle.Plate("Transmission plate",root.transform,subtitle.rectTransform,true);
             noisePanel=new GameObject("Noise Bars",typeof(RectTransform),typeof(Image));noisePanel.transform.SetParent(root.transform,false);
-            var nr=(RectTransform)noisePanel.transform;nr.anchorMin=nr.anchorMax=new Vector2(0,1);nr.pivot=new Vector2(0,1);nr.anchoredPosition=new Vector2(16,-16);nr.sizeDelta=new Vector2(286,122);
+            var nr=(RectTransform)noisePanel.transform;nr.anchorMin=nr.anchorMax=new Vector2(0,1);nr.pivot=new Vector2(0,1);nr.anchoredPosition=new Vector2(16,-16);nr.sizeDelta=new Vector2(254,102);
             noisePanel.GetComponent<Image>().color=new Color(.025f,.04f,.06f,.94f);noisePanel.GetComponent<Image>().raycastTarget=false;
-            playerNoiseFill=NoiseBar(noisePanel.transform,34,new Color(.95f,.72f,.35f),out playerNoiseLabel);
-            ambientNoiseFill=NoiseBar(noisePanel.transform,-22,new Color(.35f,.78f,.8f),out ambientNoiseLabel);
+            playerNoiseFill=NoiseBar(noisePanel.transform,24,new Color(.95f,.72f,.35f),out playerNoiseLabel);
+            ambientNoiseFill=NoiseBar(noisePanel.transform,-20,new Color(.35f,.78f,.8f),out ambientNoiseLabel);
             SetNoise(0,0,"Тихо","немає");
 
             shade = new GameObject("Modal Shade", typeof(RectTransform), typeof(Image));
@@ -91,9 +100,9 @@ namespace Echo.Interactions
             var shadeRect = (RectTransform)shade.transform;
             shadeRect.anchorMin = Vector2.zero; shadeRect.anchorMax = Vector2.one;
             shadeRect.offsetMin = shadeRect.offsetMax = Vector2.zero;
-            shade.GetComponent<Image>().color = new Color(0.015f, 0.025f, 0.035f, 0.96f);
+            shade.GetComponent<Image>().color = new Color(.012f,.018f,.032f,.91f);
             notePanel = Panel("Note Panel");
-            Label("Title", notePanel.transform, "ЗАПИСКА ДОГЛЯДАЧА", 30, 110, 50);
+            Label("Title", notePanel.transform, "ЗАПИСКА", 30, 110, 50);
             noteText = Label("Note Text", notePanel.transform, "", 25, 15, 140);
             closeButton = Button(notePanel.transform, "Закрити", -115, CloseNote);
             finishPanel = Panel("Completion Panel");
@@ -102,7 +111,11 @@ namespace Echo.Interactions
             Button(finishPanel.transform, "Головне меню", -85, () => GameMenu.ReturnToMainMenu());
             customPanel=Panel("Custom Panel");
             customTitle=Label("Title",customPanel.transform,"",29,200,55);
-            customBody=Label("Body",customPanel.transform,"",22,80,160);
+            customBody=Label("Body",customPanel.transform,"",20,80,160);
+            var viewport=new GameObject("Reading viewport",typeof(RectTransform),typeof(Image),typeof(RectMask2D),typeof(ScrollRect));viewport.transform.SetParent(customPanel.transform,false);
+            readingViewport=(RectTransform)viewport.transform;Place(readingViewport,0,80,650,160);viewport.GetComponent<Image>().color=Color.clear;
+            readingScroll=viewport.GetComponent<ScrollRect>();readingScroll.horizontal=false;readingScroll.movementType=ScrollRect.MovementType.Clamped;readingScroll.scrollSensitivity=24;readingScroll.viewport=readingViewport;
+            customBody.transform.SetParent(viewport.transform,false);readingScroll.content=customBody.rectTransform;
             customPanel.SetActive(false);
             shade.SetActive(false); notePanel.SetActive(false); finishPanel.SetActive(false);
         }
@@ -115,6 +128,13 @@ namespace Echo.Interactions
             if (blocked) prompt.text = "";
             if (Time.unscaledTime >= toastUntil) toast.text = "";
             if(customPanel.activeSelf && liveBody!=null)customBody.text=liveBody();
+            if(customPanel.activeSelf&&laidOutBody!=customBody.text)LayoutReading();
+            hud.gameObject.SetActive(!blocked);
+            promptPlate.gameObject.SetActive(!blocked&&!string.IsNullOrWhiteSpace(prompt.text));
+            toastPlate.gameObject.SetActive(!GameMenu.IsPaused&&!ReadingNote&&!Completed&&!customPanel.activeSelf&&!string.IsNullOrWhiteSpace(toast.text));
+            toast.gameObject.SetActive(toastPlate.gameObject.activeSelf);
+            bool transmission=!GameMenu.IsPaused&&!ReadingNote&&!Completed&&!customPanel.activeSelf&&!string.IsNullOrWhiteSpace(subtitle.text);
+            subtitle.gameObject.SetActive(transmission);subtitlePlate.gameObject.SetActive(transmission);
         }
 
         public bool OpenPanel(UnityEngine.Object owner,string title,Func<string> body,IEnumerable<Choice> choices,bool freezeWorld=true,Action closed=null,bool replace=false,bool canEscape=true,Texture illustration=null)
@@ -124,8 +144,9 @@ namespace Echo.Interactions
             notePanel.SetActive(false);finishPanel.SetActive(false);
             foreach(var button in customButtons){button.gameObject.SetActive(false);Destroy(button.gameObject);}customButtons.Clear();
             customOwner=owner;customTitle.text=title;liveBody=body;customBody.text=body!=null?body():"";
-            customBody.fontSize=illustration!=null?18:22;
-            Place(customBody.rectTransform,0,illustration!=null?-110:80,650,illustration!=null?110:160);
+            customBody.fontSize=illustration!=null?18:20;
+            Place(readingViewport,0,illustration!=null?-110:80,650,illustration!=null?110:160);
+            laidOutBody=null;LayoutReading();readingScroll.verticalNormalizedPosition=1;
             if(panelIllustration==null)
             {
                 panelIllustration=new GameObject("Clue Illustration",typeof(RectTransform),typeof(RawImage)).GetComponent<RawImage>();
@@ -137,11 +158,11 @@ namespace Echo.Interactions
             int index=0;var options=new List<Choice>(choices);bool twoColumns=options.Count>5;
             foreach(var choice in options)
             {
-                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,(illustration!=null?-205:-35)-(twoColumns?index/2:index)*58,()=>action?.Invoke());
+                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,(illustration!=null?-205:-35)-(twoColumns?index/2:index)*48,()=>action?.Invoke());
                 if(twoColumns)
                 {
-                    var rect=(RectTransform)button.transform;rect.anchoredPosition=new Vector2(index%2==0?-175:175,rect.anchoredPosition.y);rect.sizeDelta=new Vector2(330,52);
-                    var caption=button.GetComponentInChildren<Text>();caption.rectTransform.sizeDelta=new Vector2(326,52);caption.fontSize=22;
+                    var rect=(RectTransform)button.transform;rect.anchoredPosition=new Vector2(index%2==0?-175:175,rect.anchoredPosition.y);rect.sizeDelta=new Vector2(330,44);
+                    var caption=button.GetComponentInChildren<Text>();caption.rectTransform.sizeDelta=new Vector2(326,44);caption.fontSize=20;
                 }
                 customButtons.Add(button);index++;
             }
@@ -192,15 +213,17 @@ namespace Echo.Interactions
         {
             var go = new GameObject(name, typeof(RectTransform));
             go.transform.SetParent(canvas.transform, false);
-            Place((RectTransform)go.transform, 0, 0, 700, 360);
+            Place((RectTransform)go.transform, 0, 0, 740, name=="Custom Panel"?640:400);
+            var surface=go.AddComponent<Image>();surface.color=EchoUIStyle.Ink;
+            var line=new GameObject("Panel rule",typeof(RectTransform),typeof(Image));line.transform.SetParent(go.transform,false);Place((RectTransform)line.transform,0,name=="Custom Panel"?285:170,60,1);line.GetComponent<Image>().color=EchoUIStyle.Gold;line.GetComponent<Image>().raycastTarget=false;
             return go;
         }
 
         private RectTransform NoiseBar(Transform parent,float y,Color color,out Text caption)
         {
-            caption=Label("Noise Caption",parent,"",16,y+12,24);caption.rectTransform.sizeDelta=new Vector2(262,24);caption.alignment=TextAnchor.MiddleLeft;
+            caption=Label("Noise Caption",parent,"",13,y+10,22);caption.rectTransform.sizeDelta=new Vector2(224,22);caption.alignment=TextAnchor.MiddleLeft;
             var back=new GameObject("Noise Track",typeof(RectTransform),typeof(Image));back.transform.SetParent(parent,false);
-            Place((RectTransform)back.transform,0,y-10,262,14);back.GetComponent<Image>().color=new Color(.15f,.2f,.26f);back.GetComponent<Image>().raycastTarget=false;
+            Place((RectTransform)back.transform,0,y-10,224,5);back.GetComponent<Image>().color=new Color(.15f,.17f,.21f);back.GetComponent<Image>().raycastTarget=false;
             var fill=new GameObject("Noise Fill",typeof(RectTransform),typeof(Image));fill.transform.SetParent(back.transform,false);
             var rect=(RectTransform)fill.transform;rect.anchorMin=Vector2.zero;rect.anchorMax=new Vector2(0,1);rect.offsetMin=rect.offsetMax=Vector2.zero;
             fill.GetComponent<Image>().color=color;fill.GetComponent<Image>().raycastTarget=false;return rect;
@@ -215,6 +238,7 @@ namespace Echo.Interactions
             text.alignment = TextAnchor.MiddleCenter;
             text.color = new Color(0.9f, 0.9f, 0.84f);
             text.raycastTarget = false;
+            EchoUIStyle.Text(text);
             return text;
         }
 
@@ -222,16 +246,27 @@ namespace Echo.Interactions
         {
             var go = new GameObject(caption, typeof(RectTransform), typeof(Image), typeof(Button));
             go.transform.SetParent(parent, false);
-            Place((RectTransform)go.transform, 0, y, 400, 55);
-            go.GetComponent<Image>().color = new Color(0.17f, 0.23f, 0.22f);
+            Place((RectTransform)go.transform, 0, y, 400, 44);
+            go.GetComponent<Image>().color = new Color(.12f,.14f,.19f);
             var button = go.GetComponent<Button>();
             button.targetGraphic = go.GetComponent<Image>();
-            var label = Label("Label", go.transform, caption, 25, 0, 55);
-            label.rectTransform.sizeDelta = new Vector2(400, 55);
+            var label = Label("Label", go.transform, caption, 21, 0, 44);
+            label.rectTransform.sizeDelta = new Vector2(400, 44);
             button.onClick.AddListener(action);
             return button;
         }
 
+        private void LayoutReading()
+        {
+            laidOutBody=customBody.text;
+            var rect=customBody.rectTransform;rect.anchorMin=new Vector2(0,1);rect.anchorMax=Vector2.one;rect.pivot=new Vector2(.5f,1);
+            rect.sizeDelta=new Vector2(-12,0);rect.sizeDelta=new Vector2(-12,Mathf.Max(readingViewport.rect.height,customBody.preferredHeight+8));rect.anchoredPosition=new Vector2(0,0);
+            customBody.alignment=TextAnchor.UpperLeft;
+        }
+        private static void Bottom(RectTransform rect,float y,float width,float height)
+        {
+            rect.anchorMin=rect.anchorMax=new Vector2(.5f,0);rect.pivot=new Vector2(.5f,.5f);rect.anchoredPosition=new Vector2(0,y);rect.sizeDelta=new Vector2(width,height);
+        }
         private static void Place(RectTransform rect, float x, float y, float width, float height)
         {
             rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
