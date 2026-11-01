@@ -679,6 +679,98 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3446309}
   m_Mesh: {fileID: 4300000, guid: dd78e25d2b72319499511885c08d45ca, type: 2}
+--- !u!1 &3637216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3637217}
+  - component: {fileID: 3637219}
+  - component: {fileID: 3637218}
+  m_Layer: 0
+  m_Name: Imported visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3637217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1254436833}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &3637218
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637216}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7ce3ba96afdeae947af4aae456e7bfe4, type: 2}
+  - {fileID: 2100000, guid: 8957ceb629fd8b54d85d98f8345a421d, type: 2}
+  - {fileID: 2100000, guid: f0a04726f28374247b51badfc50bd78e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &3637219
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637216}
+  m_Mesh: {fileID: -2680069256936596533, guid: 927119a52413b7f4c86636b2385f039d, type: 3}
 --- !u!1 &3821106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1338,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8989539}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3980,7 +4072,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c467da02aef50f241a33498a65b77a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolButton
   puzzle: {fileID: 186282134}
   symbolId: moon
@@ -4040,7 +4132,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbeb092830424b23ae8cbf68253c0e3d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolFeedback
   face: {fileID: 1690547306}
   indicator: {fileID: 1512460103}
@@ -5011,7 +5103,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 963dd6c96206bce43bf0bd79a3362875, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AtmosphereCue
   afterFlag: service.open
   footstepsClip: {fileID: 8300000, guid: 3087e5c420524f94388f9bd1f9cfbd8f, type: 3}
@@ -5920,7 +6012,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -7060,7 +7152,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -7324,7 +7416,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[4]'
   itemId: remedy.bottle
@@ -9075,7 +9167,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -16841,7 +16933,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -25384,7 +25476,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -26114,7 +26206,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[104]'
   itemId: remedy.bottle
@@ -28077,7 +28169,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[108]'
   itemId: remedy.bottle
@@ -32266,7 +32358,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77217c27f92c4e69917d5e4f07debf86, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.MechanismReadout
   display: {fileID: 1172601628}
   winch: {fileID: 0}
@@ -33877,7 +33969,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14882d6c0ed5c08469899ef443f7bd12, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolPuzzle
   solution:
   - wolf
@@ -36340,7 +36432,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -36532,7 +36624,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -36578,7 +36670,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 4
   ukrainianName: "\u041A\u0443\u0445\u043D\u044F"
@@ -38145,7 +38237,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[33]'
   itemId: remedy.bottle
@@ -38702,6 +38794,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217772481}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &217971987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 217971988}
+  m_Layer: 0
+  m_Name: Aligned door leaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &217971988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217971987}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.6211815, y: -0.025792122, z: -0.028571129}
+  m_LocalScale: {x: 129.683, y: 103.16744, z: 31.746069}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1150444138}
+  m_Father: {fileID: 818030215}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &218529893
 GameObject:
   m_ObjectHideFlags: 0
@@ -39728,7 +39852,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -40571,7 +40695,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 2
   footstepSound: {fileID: 0}
@@ -41019,7 +41143,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -41634,7 +41758,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59162526bf6860d449568c4ab5cfc31b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.DoorProgressBinding
   door: {fileID: 236456702}
   openFlag: yard.open
@@ -41648,7 +41772,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.2249999, y: 1.325, z: 0.225}
+  m_Extents: {x: 1.1999999, y: 1.325, z: 0.175}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 0
@@ -41664,12 +41788,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 236456703}
-  openAngle: 100
+  openAngle: 90
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u0417\u0430\u043A\u043B\u0438\u043D\u0435\u043D\u0438\u0439 \u0437\u0430\u0441\u0443\u0432. \u041F\u043E\u0442\u0440\u0456\u0431\u0435\u043D \u043B\u043E\u043C \u0456 \u0442\u0440\u0438 \u043D\u0430\u0442\u0438\u0441\u043A\u0430\u043D\u043D\u044F."
   checkpointId: door.yard
   stayOpen: 1
@@ -41687,7 +41811,7 @@ Transform:
   m_GameObject: {fileID: 236456699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.825, y: 0, z: 28}
+  m_LocalPosition: {x: 28.825, y: 0, z: 27.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -41695,6 +41819,7 @@ Transform:
   - {fileID: 1220341789}
   - {fileID: 916743309}
   - {fileID: 333486766}
+  - {fileID: 1254436833}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &236456704
@@ -41707,7 +41832,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -43319,7 +43444,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[20]'
   itemId: remedy.bottle
@@ -45148,7 +45273,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de41645c11ff7da41a5c81514e985b1c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AmbientCycle
   mode: 0
   period: 16
@@ -45172,7 +45297,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd405e1735f4301429672aa1936400a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseMaskZone
   radius: 7
   strength: 0.75
@@ -45188,7 +45313,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2833aa2289e34eabb6c2edc6464ba19d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.GalleryWindowShutter
   closedFlag: gallery.window.1.closed
   allWindowFlags:
@@ -46548,7 +46673,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 984f224176652fe479cd0e56107b697a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorCheckpoint
   stage: 1
   requiredFlag: hall.open
@@ -46961,7 +47086,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -52455,17 +52580,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: service.card
   title: "\u0421\u041B\u0423\u0416\u0411\u041E\u0412\u0410 \u041A\u0410\u0420\u0422\u041A\u0410"
   text: "\u0421\u043B\u0443\u0436\u0431\u043E\u0432\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0430: {frequency}. \u0417\u0430\u043F\u0430\u0441\u043D\u0438\u0439 \u043A\u043B\u044E\u0447 \u2014 \u0443 \u0448\u0430\u0444\u0446\u0456 \u0431\u0456\u043B\u044F \u0434\u0432\u0435\u0440\u0435\u0439.\nR \u2014 \u043D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u0442\u0438 \u0440\u0430\u0434\u0456\u043E; F \u2014 \u0436\u0438\u0432\u043B\u0435\u043D\u043D\u044F; J \u2014 \u0437\u0430\u043F\u0438\u0441\u0438.\n\u041C\u0435\u0448\u043A\u0430\u043D\u0446\u0435\u0432\u0456 \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u0430 \u0434\u043E\u043F\u043E\u043C\u043E\u0433\u0430. \u0419\u043E\u0433\u043E \u0441\u0442\u0430\u0440\u0456 \u0434\u043E\u0441\u043B\u0456\u0434\u0436\u0435\u043D\u043D\u044F \u0437\u0430\u043B\u0438\u0448\u0438\u043B\u0438\u0441\u044F \u0432 \u0431\u0456\u0431\u043B\u0456\u043E\u0442\u0435\u0446\u0456."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 820
   radioChannel: {fileID: 11400000, guid: c8d7f726d6dd2b44b9c1ccb92479c9db, type: 2}
   illustration: {fileID: 0}
-  onReadFlag:
+  onReadFlag: 
 --- !u!65 &300319062
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54084,13 +54209,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: garden.herbarium
   title: "\u0413\u0415\u0420\u0411\u0410\u0420\u0406\u0419 \u0421\u0410\u0414\u0406\u0412\u041D\u0418\u041A\u0410"
   text: "\u0414\u043B\u044F \u043C\u0456\u043A\u0441\u0442\u0443\u0440\u0438: \u043F\u2019\u044F\u0442\u044C \u0431\u043B\u0456\u0434\u0438\u0445 \u043F\u0435\u043B\u044E\u0441\u0442\u043E\u043A, \u0434\u0432\u0430 \u043B\u0438\u0441\u0442\u043A\u0438 \u043D\u0430\u0432\u043F\u0440\u043E\u0442\u0438 \u043E\u0434\u043D\u0435 \u043E\u0434\u043D\u043E\u0433\u043E. \u041A\u043B\u0443\u043C\u0431\u0430 \u043D\u0430\u0434\u0432\u043E\u0440\u0456.\n\u0421\u0438\u043D\u0456 \u043A\u0432\u0456\u0442\u0438 \u043C\u0430\u044E\u0442\u044C \u0448\u0456\u0441\u0442\u044C \u043F\u0435\u043B\u044E\u0441\u0442\u043E\u043A; \u0436\u043E\u0432\u0442\u0456 \u2014 \u0442\u0440\u0438. \u0412\u043E\u043D\u0438 \u043D\u0435 \u043F\u0456\u0434\u0445\u043E\u0434\u044F\u0442\u044C.\n\u0420\u043E\u0441\u043B\u0438\u043D\u0438 \u043C\u043E\u0436\u043D\u0430 \u043E\u0433\u043B\u044F\u0434\u0430\u0442\u0438; \u043F\u043E\u043C\u0438\u043B\u043A\u0430 \u043D\u0435 \u043F\u0441\u0443\u0454 \u0437\u0456\u0431\u0440\u0430\u043D\u0435."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 0
   radioChannel: {fileID: 0}
   illustration: {fileID: 0}
@@ -61005,7 +61130,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 351f3c63d35aee540933a726e22c7fc3, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPSController
 --- !u!1 &350832257 stripped
 GameObject:
@@ -61022,7 +61147,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41c99413bf25404b87e19a473af41505, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCaught
   onCaught:
     m_PersistentCalls:
@@ -61033,10 +61158,10 @@ MonoBehaviour:
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName:
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   allowKeyboardRestart: 0
@@ -61051,7 +61176,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 596c03ed0481f0d4e98856243f9cc836, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.PlayerInteractor
   viewCamera: {fileID: 350832255}
   ui: {fileID: 1576937825}
@@ -61069,7 +61194,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f975b12c0405b71418a3ff9e8e51805b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseTelemetry
   fallSpeed: 0.45
   ambientDisplayFloor: 0.08
@@ -61083,7 +61208,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff2583b015b02bf4aad6f85e6ab4df67, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Footsteps
   defaultFootstepSound: {fileID: 8300000, guid: 3087e5c420524f94388f9bd1f9cfbd8f, type: 3}
   woodFootstepSound: {fileID: 8300000, guid: 3087e5c420524f94388f9bd1f9cfbd8f, type: 3}
@@ -62074,7 +62199,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 2
   footstepSound: {fileID: 0}
@@ -63309,7 +63434,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 984f224176652fe479cd0e56107b697a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorCheckpoint
   stage: 2
   requiredFlag: grate.open
@@ -68269,7 +68394,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -70793,7 +70918,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 2
   footstepSound: {fileID: 0}
@@ -72711,7 +72836,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -73838,7 +73963,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[0]'
   itemId: remedy.bottle
@@ -76320,7 +76445,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -76475,7 +76600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6514104398968151245, guid: b25978b4c50b1a94ba40fc5d3390bfb8, type: 3}
       propertyPath: radio
-      value:
+      value: 
       objectReference: {fileID: 1450808107}
     - target: {fileID: 6945732744500189281, guid: b25978b4c50b1a94ba40fc5d3390bfb8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76532,7 +76657,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 110a3892e0357d7468bcd049da9c6c56, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Radio.PhysicalRadioView
 --- !u!4 &448836924 stripped
 Transform:
@@ -76695,7 +76820,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Upper room, removable crank and remedy bottles[94]/Useful decor Bottle[12]'
   itemId: remedy.bottle
@@ -78711,7 +78836,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: remedy.study-key
   displayName: "\u043A\u043B\u044E\u0447 \u0432\u0456\u0434 \u0430\u043F\u0442\u0435\u0447\u043D\u043E\u0457 \u0448\u0430\u0444\u043A\u0438"
@@ -79704,7 +79829,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd4bfef8f6874498af593ef7cf64fe, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.FlagInteraction
   prompt: "E \u2014 \u0437\u0430\u043A\u0440\u0438\u0442\u0438 \u0439 \u0437\u0430\u0444\u0456\u043A\u0441\u0443\u0432\u0430\u0442\u0438 \u0432\u0456\u043A\u043E\u043D\u043D\u0438\u0446\u044E"
   setFlag: gallery.quiet
@@ -79712,7 +79837,7 @@ MonoBehaviour:
   missingMessage: "\u0413\u0456\u043B\u043A\u0430 \u043D\u0435 \u0434\u0430\u0454 \u0437\u0430\u043A\u0440\u0438\u0442\u0438 \u0432\u0456\u043A\u043E\u043D\u043D\u0438\u0446\u044E."
   doneMessage: "\u0413\u0443\u0440\u043A\u0456\u0442 \u0441\u0442\u0438\u0445. \u041F\u043E\u0432\u0442\u043E\u0440\u0456\u0442\u044C \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0443 940. \u0422\u0435\u043F\u0435\u0440 \u0447\u0443\u0442\u0438 \u043A\u0440\u043E\u043A\u0438 \u0437 \u0445\u043E\u043B\u0443."
   hideWhenDone: 0
-  requiredKeyId:
+  requiredKeyId: 
   completedVisual: {fileID: 0}
   noiseRadius: 0
   allowedSide: {x: 0, y: 0, z: 0}
@@ -80281,7 +80406,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[110]'
   itemId: remedy.bottle
@@ -83722,7 +83847,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -84091,7 +84216,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 7
   ukrainianName: "\u0412\u0435\u0440\u0445\u043D\u044F \u0433\u0430\u043B\u0435\u0440\u0435\u044F"
@@ -84231,7 +84356,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -84943,7 +85068,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 2
   footstepSound: {fileID: 0}
@@ -85087,6 +85212,98 @@ Transform:
   - {fileID: 648580407}
   m_Father: {fileID: 1639740391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &496209403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 496209404}
+  - component: {fileID: 496209406}
+  - component: {fileID: 496209405}
+  m_Layer: 0
+  m_Name: Imported visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &496209404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496209403}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2128997952}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &496209405
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496209403}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7ce3ba96afdeae947af4aae456e7bfe4, type: 2}
+  - {fileID: 2100000, guid: 8957ceb629fd8b54d85d98f8345a421d, type: 2}
+  - {fileID: 2100000, guid: f0a04726f28374247b51badfc50bd78e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &496209406
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496209403}
+  m_Mesh: {fileID: -2680069256936596533, guid: 927119a52413b7f4c86636b2385f039d, type: 3}
 --- !u!1 &496569298
 GameObject:
   m_ObjectHideFlags: 0
@@ -85195,7 +85412,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 497150405}
   openAngle: 105
@@ -85219,7 +85436,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -86040,7 +86257,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &501939558
@@ -86184,7 +86401,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b27777478aea41069887fe8271b4bc94, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.PlantGathering
   speciesId: moonflower
   requiredSpecies: moonflower
@@ -86651,7 +86868,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de41645c11ff7da41a5c81514e985b1c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AmbientCycle
   mode: 0
   period: 16
@@ -86675,7 +86892,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd405e1735f4301429672aa1936400a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseMaskZone
   radius: 7
   strength: 0.75
@@ -86691,7 +86908,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2833aa2289e34eabb6c2edc6464ba19d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.GalleryWindowShutter
   closedFlag: gallery.window.2.closed
   allWindowFlags:
@@ -87132,7 +87349,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -87216,7 +87433,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[24]'
   itemId: remedy.bottle
@@ -88327,7 +88544,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41c99413bf25404b87e19a473af41506, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCatchPlayer
   target: {fileID: 350832258}
   catchDistance: 1.05
@@ -88346,7 +88563,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41c99413bf25404b87e19a473af41503, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInvestigator
   searchDuration: 9
   destinationSampleRadius: 2
@@ -88408,7 +88625,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41c99413bf25404b87e19a473af41502, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoiseListener
   hearingSensitivity: 1
   onNoiseHeard:
@@ -91940,17 +92157,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: library.card
   title: "\u0421\u041B\u0423\u0416\u0411\u041E\u0412\u0410 \u041A\u0410\u0420\u0422\u041A\u0410"
   text: "\u0424\u043E\u043D\u043E\u0442\u0435\u043A\u0430: {frequency}.\n\u0414\u043E\u0441\u043B\u0443\u0445\u0430\u0439 \u0437\u0432\u0443\u043A\u0438 \u0442\u0432\u0430\u0440\u0438\u043D \u043D\u0430 \u0440\u0430\u0434\u0456\u043E \u0439 \u043F\u043E\u0432\u0442\u043E\u0440\u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A \u043D\u0430 \u0432\u0456\u043D\u0456\u043B\u043E\u0432\u0438\u0445 \u043F\u043B\u0430\u0442\u0456\u0432\u043A\u0430\u0445 \u0441\u0445\u043E\u0432\u0430\u043D\u043A\u0438. \u041A\u043E\u0436\u043D\u0430 \u043F\u043B\u0430\u0442\u0456\u0432\u043A\u0430 \u0442\u0430\u043A\u043E\u0436 \u0432\u0456\u0434\u0442\u0432\u043E\u0440\u044E\u0454 \u0441\u0432\u0456\u0439 \u0437\u0432\u0443\u043A.\nR \u2014 \u043F\u043E\u0432\u0442\u043E\u0440 \u0437\u0430\u043F\u0438\u0441\u0443; J \u2014 \u043F\u043E\u0447\u0443\u0442\u0456 \u043F\u0456\u0434\u043A\u0430\u0437\u043A\u0438."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 1060
   radioChannel: {fileID: 11400000, guid: caf5a438f606ddf4f868be26064f848a, type: 2}
   illustration: {fileID: 0}
-  onReadFlag:
+  onReadFlag: 
 --- !u!65 &536768934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93002,7 +93219,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c467da02aef50f241a33498a65b77a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolButton
   puzzle: {fileID: 186282134}
   symbolId: bird
@@ -93062,7 +93279,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbeb092830424b23ae8cbf68253c0e3d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolFeedback
   face: {fileID: 1150282188}
   indicator: {fileID: 1785555323}
@@ -93385,7 +93602,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 4
   footstepSound: {fileID: 0}
@@ -94989,7 +95206,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -96614,15 +96831,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd4bfef8f6874498af593ef7cf64fe, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.FlagInteraction
   prompt: "E \u2014 \u0437\u043D\u044F\u0442\u0438 \u0437\u0430\u0441\u0443\u0432"
   setFlag: kitchen.shortcut
-  requiredFlag:
-  missingMessage:
+  requiredFlag: 
+  missingMessage: 
   doneMessage: "\u0421\u043A\u043E\u0440\u043E\u0447\u0435\u043D\u043D\u044F \u043C\u0456\u0436 \u043A\u0443\u0445\u043D\u0435\u044E \u0442\u0430 \u0445\u043E\u043B\u043E\u043C \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0435."
   hideWhenDone: 1
-  requiredKeyId:
+  requiredKeyId: 
   completedVisual: {fileID: 0}
   noiseRadius: 0
   allowedSide: {x: 1, y: 0, z: 0}
@@ -98284,7 +98501,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576347788}
-  m_Text:
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1
@@ -98576,7 +98793,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -98900,7 +99117,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[5]'
   itemId: remedy.bottle
@@ -100060,7 +100277,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 3
   ukrainianName: "\u0411\u0456\u0431\u043B\u0456\u043E\u0442\u0435\u043A\u0430"
@@ -107950,8 +108167,8 @@ Transform:
   m_GameObject: {fileID: 628602549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 1.1, z: 0}
-  m_LocalScale: {x: 1.5, y: 2.2, z: 0.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1011925105}
@@ -107963,7 +108180,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628602549}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -108024,8 +108241,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.3039987, y: 1.87875, z: 0.065}
+  m_Center: {x: 0.65199935, y: 0.939375, z: 0}
 --- !u!33 &628602553
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110800,7 +111017,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de41645c11ff7da41a5c81514e985b1c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AmbientCycle
   mode: 0
   period: 16
@@ -110824,7 +111041,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd405e1735f4301429672aa1936400a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseMaskZone
   radius: 12
   strength: 0.9
@@ -111449,7 +111666,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c467da02aef50f241a33498a65b77a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolButton
   puzzle: {fileID: 186282134}
   symbolId: bird
@@ -111510,7 +111727,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbeb092830424b23ae8cbf68253c0e3d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolFeedback
   face: {fileID: 1924042475}
   indicator: {fileID: 379546131}
@@ -111881,6 +112098,38 @@ Transform:
   - {fileID: 1522487908}
   m_Father: {fileID: 2143517410}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &651152145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 651152146}
+  m_Layer: 0
+  m_Name: Aligned door leaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &651152146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651152145}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.67501736, y: -0.020308346, z: -0.018571854}
+  m_LocalScale: {x: 140.92221, y: 81.23304, z: 20.634924}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1159087741}
+  m_Father: {fileID: 2139169625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &651192146
 GameObject:
   m_ObjectHideFlags: 0
@@ -111957,7 +112206,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 651546499}
   openAngle: 90
@@ -111976,7 +112225,7 @@ MonoBehaviour:
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName:
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: service.open
@@ -112015,7 +112264,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -112623,8 +112872,8 @@ Transform:
   m_GameObject: {fileID: 655191798}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.175, y: 1.325, z: 0}
-  m_LocalScale: {x: 2.35, y: 2.65, z: 0.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 236456703}
@@ -112697,8 +112946,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.35, y: 2.65, z: 0.13}
+  m_Center: {x: 1.175, y: 1.325, z: 0}
 --- !u!33 &655191802
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -112829,6 +113078,98 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656636297}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &657618534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657618535}
+  - component: {fileID: 657618537}
+  - component: {fileID: 657618536}
+  m_Layer: 0
+  m_Name: Imported visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657618535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657618534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1987567786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &657618536
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657618534}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7ce3ba96afdeae947af4aae456e7bfe4, type: 2}
+  - {fileID: 2100000, guid: 8957ceb629fd8b54d85d98f8345a421d, type: 2}
+  - {fileID: 2100000, guid: f0a04726f28374247b51badfc50bd78e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &657618537
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657618534}
+  m_Mesh: {fileID: -2680069256936596533, guid: 927119a52413b7f4c86636b2385f039d, type: 3}
 --- !u!1 &657992884
 GameObject:
   m_ObjectHideFlags: 0
@@ -112874,11 +113215,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd4bfef8f6874498af593ef7cf64fe, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.FlagInteraction
   prompt: "E \u2014 \u043F\u0456\u0434\u043F\u0435\u0440\u0442\u0438 \u0441\u0442\u0443\u043B\u043A\u0443 \u043B\u043E\u043C\u043E\u043C"
   setFlag: gates.braced
-  requiredFlag:
+  requiredFlag: 
   missingMessage: "\u041F\u043E\u0442\u0440\u0456\u0431\u0435\u043D \u043B\u043E\u043C \u0456\u0437 \u0437\u0438\u043C\u043E\u0432\u043E\u0433\u043E \u0441\u0430\u0434\u0443. \u0412\u0456\u043D \u0440\u043E\u0437\u0432\u0430\u043D\u0442\u0430\u0436\u0438\u0442\u044C \u043D\u0430\u0442\u044F\u0433\u043D\u0443\u0442\u0438\u0439 \u043B\u0430\u043D\u0446\u044E\u0433."
   doneMessage: "\u0421\u0442\u0443\u043B\u043A\u0443 \u043F\u0456\u0434\u043F\u0435\u0440\u0442\u043E, \u043B\u0430\u043D\u0446\u044E\u0433 \u0440\u043E\u0437\u0432\u0430\u043D\u0442\u0430\u0436\u0435\u043D\u043E. \u0422\u0440\u0438\u043C\u0430\u0439 E \u043D\u0430 \u043B\u0430\u043D\u0446\u044E\u0433\u0443 \u0434\u043B\u044F \u0437\u0440\u0456\u0437\u0443. \u041C\u043E\u0436\u043D\u0430 \u0432\u0456\u0434\u0441\u0442\u0443\u043F\u0438\u0442\u0438 \u043F\u0456\u0441\u043B\u044F \u043A\u043E\u0436\u043D\u043E\u0457 \u0441\u0435\u043A\u0446\u0456\u0457."
   hideWhenDone: 1
@@ -113272,7 +113613,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Caretaker daily life[26]/Storage bottle[7]'
   itemId: remedy.bottle
@@ -113562,7 +113903,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77217c27f92c4e69917d5e4f07debf86, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.MechanismReadout
   display: {fileID: 1415203493}
   winch: {fileID: 788493540}
@@ -114367,7 +114708,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -116649,7 +116990,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -119086,7 +119427,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[77]'
   itemId: remedy.bottle
@@ -123220,7 +123561,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 984f224176652fe479cd0e56107b697a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorCheckpoint
   stage: 3
   requiredFlag: yard.open
@@ -128751,7 +129092,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59162526bf6860d449568c4ab5cfc31b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.DoorProgressBinding
   door: {fileID: 746367230}
   openFlag: gates.open
@@ -128781,12 +129122,12 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 746367231}
   openAngle: 100
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u0412\u043E\u0440\u043E\u0442\u0430 \u0442\u0440\u0438\u043C\u0430\u0454 \u043B\u0430\u043D\u0446\u044E\u0433. \u0411\u043E\u043B\u0442\u043E\u0440\u0456\u0437 \u043B\u0435\u0436\u0438\u0442\u044C \u0443 \u0441\u0430\u0440\u0430\u0457."
   checkpointId: door.gates
   stayOpen: 1
@@ -128824,7 +129165,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -136194,7 +136535,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[103]'
   itemId: remedy.bottle
@@ -136440,7 +136781,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5483962bd99be01499b271c03ca12be0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WinchMechanism
   handleId: tool.winch
   cyclesRequired: 3
@@ -136501,7 +136842,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91a29d49a9c3314abf93bfd0fc89bee, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WinchPresentation
   mechanism: {fileID: 788493540}
   crank: {fileID: 1447540405}
@@ -136884,7 +137225,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -137417,7 +137758,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[17]'
   itemId: remedy.bottle
@@ -137449,7 +137790,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: tool.winch
   displayName: "\u0440\u0443\u043A\u0456\u0432\u2019\u044F \u043B\u0435\u0431\u0456\u0434\u043A\u0438"
@@ -138782,7 +139123,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[1]'
   itemId: remedy.bottle
@@ -139926,7 +140267,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804674475}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -140501,7 +140842,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[15]'
   itemId: remedy.bottle
@@ -140862,7 +141203,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[84]'
   itemId: remedy.bottle
@@ -141715,7 +142056,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 1
   footstepSound: {fileID: 0}
@@ -141917,7 +142258,7 @@ Transform:
   m_GameObject: {fileID: 818030214}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7, y: 4.4, z: 4.52}
+  m_LocalPosition: {x: -1.675, y: 4.41, z: 4.275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -141925,6 +142266,7 @@ Transform:
   - {fileID: 1173298847}
   - {fileID: 8989540}
   - {fileID: 28972466}
+  - {fileID: 217971988}
   m_Father: {fileID: 1999272899}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &818030216
@@ -141937,12 +142279,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 818030215}
-  openAngle: -90
+  openAngle: 90
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u041F\u043E\u0442\u0440\u0456\u0431\u0435\u043D \u0441\u043B\u0443\u0436\u0431\u043E\u0432\u0438\u0439 \u043A\u043B\u044E\u0447"
   checkpointId: door.study
   stayOpen: 0
@@ -141961,7 +142303,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -143099,7 +143441,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b27777478aea41069887fe8271b4bc94, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.PlantGathering
   speciesId: yellow-bell
   requiredSpecies: moonflower
@@ -144411,7 +144753,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -144864,7 +145206,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -150738,7 +151080,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &875731308
@@ -151099,7 +151441,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[3]/Model - PF_DecorBottle[0]'
   itemId: remedy.bottle
@@ -155266,7 +155608,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c467da02aef50f241a33498a65b77a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolButton
   puzzle: {fileID: 186282134}
   symbolId: monkey
@@ -155327,7 +155669,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbeb092830424b23ae8cbf68253c0e3d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolFeedback
   face: {fileID: 28076103}
   indicator: {fileID: 1761404763}
@@ -155450,15 +155792,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd4bfef8f6874498af593ef7cf64fe, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.FlagInteraction
   prompt: "E \u2014 \u0432\u0438\u0439\u043D\u044F\u0442\u0438 \u0433\u0456\u043B\u043A\u0443"
   setFlag: gallery.branch
-  requiredFlag:
-  missingMessage:
+  requiredFlag: 
+  missingMessage: 
   doneMessage: "\u0413\u0456\u043B\u043A\u0443 \u043F\u0440\u0438\u0431\u0440\u0430\u043D\u043E. \u0422\u0435\u043F\u0435\u0440 \u0432\u0456\u043A\u043E\u043D\u043D\u0438\u0446\u044E \u043C\u043E\u0436\u043D\u0430 \u0437\u0430\u0444\u0456\u043A\u0441\u0443\u0432\u0430\u0442\u0438."
   hideWhenDone: 1
-  requiredKeyId:
+  requiredKeyId: 
   completedVisual: {fileID: 0}
   noiseRadius: 0
   allowedSide: {x: 0, y: 0, z: 0}
@@ -157363,7 +157705,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916743308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -157604,7 +157946,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Grand hall lived-in groups[28]/Storage bottle[1]/Model - PF_DecorBottle[0]'
   itemId: remedy.bottle
@@ -158181,7 +158523,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c467da02aef50f241a33498a65b77a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolButton
   puzzle: {fileID: 186282134}
   symbolId: tree
@@ -158241,7 +158583,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbeb092830424b23ae8cbf68253c0e3d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolFeedback
   face: {fileID: 232625400}
   indicator: {fileID: 181333001}
@@ -161014,7 +161356,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927001437}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -161221,7 +161563,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[107]'
   itemId: remedy.bottle
@@ -166172,7 +166514,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 1
   footstepSound: {fileID: 0}
@@ -166299,7 +166641,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957308034}
-  m_Text:
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1
@@ -166518,7 +166860,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[101]'
   itemId: remedy.bottle
@@ -168060,7 +168402,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 6
   ukrainianName: "\u0417\u0430\u0434\u043D\u0456\u0439 \u0434\u0432\u0456\u0440"
@@ -169145,7 +169487,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[7]'
   itemId: remedy.bottle
@@ -176224,7 +176566,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -176449,12 +176791,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 1011925105}
   openAngle: 90
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u041F\u043E\u0442\u0440\u0456\u0431\u0435\u043D \u0441\u043B\u0443\u0436\u0431\u043E\u0432\u0438\u0439 \u043A\u043B\u044E\u0447"
   checkpointId: cupboard.service
   stayOpen: 0
@@ -176472,7 +176814,7 @@ Transform:
   m_GameObject: {fileID: 1011925103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.75, y: 0, z: -5.52}
+  m_LocalPosition: {x: -12.651999, y: 0.252, z: -5.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -176480,6 +176822,7 @@ Transform:
   - {fileID: 1224531722}
   - {fileID: 1487283830}
   - {fileID: 1598966156}
+  - {fileID: 1987567786}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1011925106
@@ -176492,7 +176835,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: bb16cc6c5b63dbf46b50b0c6809cc67e, type: 3}
   closingClip: {fileID: 8300000, guid: e40713e6596e2fb4a99708c202fa5ac8, type: 3}
@@ -177328,7 +177671,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: manor.service-passage
   displayName: "\u0441\u043B\u0443\u0436\u0431\u043E\u0432\u0438\u0439 \u043A\u043B\u044E\u0447"
@@ -178090,7 +178433,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &1021640358
@@ -190066,7 +190409,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77217c27f92c4e69917d5e4f07debf86, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.MechanismReadout
   display: {fileID: 576347790}
   winch: {fileID: 0}
@@ -191830,7 +192173,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[12]'
   itemId: remedy.bottle
@@ -194348,7 +194691,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[65]'
   itemId: remedy.bottle
@@ -195333,7 +195676,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Caretaker daily life[26]/Storage bottle[7]/Model - PF_DecorBottle[0]'
   itemId: remedy.bottle
@@ -196117,7 +196460,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1109788869}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -196691,7 +197034,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 3
   footstepSound: {fileID: 0}
@@ -201537,7 +201880,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c467da02aef50f241a33498a65b77a24, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolButton
   puzzle: {fileID: 186282134}
   symbolId: wolf
@@ -201598,7 +201941,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbeb092830424b23ae8cbf68253c0e3d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolFeedback
   face: {fileID: 2070547418}
   indicator: {fileID: 133398344}
@@ -203131,6 +203474,98 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150357469}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1150444137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150444138}
+  - component: {fileID: 1150444140}
+  - component: {fileID: 1150444139}
+  m_Layer: 0
+  m_Name: Imported visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1150444138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150444137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 217971988}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1150444139
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150444137}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7ce3ba96afdeae947af4aae456e7bfe4, type: 2}
+  - {fileID: 2100000, guid: 8957ceb629fd8b54d85d98f8345a421d, type: 2}
+  - {fileID: 2100000, guid: f0a04726f28374247b51badfc50bd78e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1150444140
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150444137}
+  m_Mesh: {fileID: -2680069256936596533, guid: 927119a52413b7f4c86636b2385f039d, type: 3}
 --- !u!1 &1150452169
 GameObject:
   m_ObjectHideFlags: 0
@@ -204550,6 +204985,98 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157835630}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1159087740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1159087741}
+  - component: {fileID: 1159087743}
+  - component: {fileID: 1159087742}
+  m_Layer: 0
+  m_Name: Imported visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1159087741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159087740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 651152146}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1159087742
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159087740}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7ce3ba96afdeae947af4aae456e7bfe4, type: 2}
+  - {fileID: 2100000, guid: 8957ceb629fd8b54d85d98f8345a421d, type: 2}
+  - {fileID: 2100000, guid: f0a04726f28374247b51badfc50bd78e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1159087743
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159087740}
+  m_Mesh: {fileID: -2680069256936596533, guid: 927119a52413b7f4c86636b2385f039d, type: 3}
 --- !u!1 &1159742190
 GameObject:
   m_ObjectHideFlags: 0
@@ -204745,7 +205272,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de41645c11ff7da41a5c81514e985b1c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AmbientCycle
   mode: 0
   period: 16
@@ -204769,7 +205296,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd405e1735f4301429672aa1936400a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseMaskZone
   radius: 7
   strength: 0.75
@@ -204785,7 +205312,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2833aa2289e34eabb6c2edc6464ba19d, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.GalleryWindowShutter
   closedFlag: gallery.window.3.closed
   allWindowFlags:
@@ -204974,7 +205501,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[3]'
   itemId: remedy.bottle
@@ -205852,7 +206379,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172601626}
-  m_Text:
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1
@@ -206340,7 +206867,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173298846}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -214480,7 +215007,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220341788}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -214977,7 +215504,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[72]'
   itemId: remedy.bottle
@@ -215447,7 +215974,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224531721}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -216250,7 +216777,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -216966,7 +217493,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -217610,7 +218137,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a612e57634674edbbda94e4d16d674a2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyDelivery
   resident: {fileID: 513620359}
   approachPoint: {fileID: 1125689675}
@@ -218922,7 +219449,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -219320,7 +219847,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[116]'
   itemId: remedy.bottle
@@ -220550,7 +221077,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd90e84f10c2495489363706494e73ec, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SlidingPicture
   panel: {fileID: 1940833163}
   closedPosition: {x: 0, y: 0, z: 0}
@@ -220867,6 +221394,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253767978}
   m_Mesh: {fileID: 4262283117094057581, guid: a2ec7d21fd9f8994493d10e6c0b3a5e4, type: 3}
+--- !u!1 &1254436832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1254436833}
+  m_Layer: 0
+  m_Name: Aligned door leaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1254436833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254436832}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.0813179, y: -0.02997744, z: -0.0371418}
+  m_LocalScale: {x: 225.74448, y: 119.90953, z: 41.269848}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3637217}
+  m_Father: {fileID: 236456703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1254632402
 GameObject:
   m_ObjectHideFlags: 0
@@ -223079,7 +223638,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Grand hall lived-in groups[28]/Storage bottle[1]'
   itemId: remedy.bottle
@@ -225544,7 +226103,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[7]'
   itemId: remedy.bottle
@@ -228112,11 +228671,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e757c9ef59d572d4ab1b7655b93d13ae, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorProgress
   player: {fileID: 350832259}
   treatmentRoute: 1
-  statusSuffix:
+  statusSuffix: 
   libraryOrientationSeconds: 25
 --- !u!4 &1292210337
 Transform:
@@ -232152,7 +232711,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322104432}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -234373,7 +234932,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -235002,7 +235561,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 0
   ukrainianName: "\u041A\u0456\u043C\u043D\u0430\u0442\u0430 \u0434\u043E\u0433\u043B\u044F\u0434\u0430\u0447\u0430"
@@ -237600,7 +238159,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67b489270e823e0438dc0016fb40b7da, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.EpisodeExit
   completionMessage: "\u0412\u0438 \u0437\u0430\u043B\u0438\u0448\u0438\u043B\u0438 \u043C\u0430\u0454\u0442\u043E\u043A"
 --- !u!54 &1352400717
@@ -238410,7 +238969,7 @@ Transform:
   m_GameObject: {fileID: 1355670289}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.54999995, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -242975,7 +243534,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 5
   footstepSound: {fileID: 0}
@@ -246785,7 +247344,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415203491}
-  m_Text:
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.07
   m_LineSpacing: 1
@@ -249708,7 +250267,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: tool.crowbar
   displayName: "\u043B\u043E\u043C"
@@ -251083,7 +251642,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 093e44806937e5945aedff24d10636fc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorNavigation
   worldBounds:
     m_Center: {x: 9, y: 3, z: 18}
@@ -252098,7 +252657,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 2
   footstepSound: {fileID: 0}
@@ -252190,7 +252749,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de41645c11ff7da41a5c81514e985b1c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AmbientCycle
   mode: 2
   period: 16
@@ -252214,7 +252773,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd405e1735f4301429672aa1936400a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseMaskZone
   radius: 12
   strength: 0
@@ -252994,7 +253553,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21981cbe946e84e4b9949d965442c431, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Radio.PortableRadio
   channels:
   - {fileID: 11400000, guid: c8d7f726d6dd2b44b9c1ccb92479c9db, type: 2}
@@ -253046,7 +253605,7 @@ Transform:
   m_GameObject: {fileID: 1450808106}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.5, y: 1.17, z: -9.4}
+  m_LocalPosition: {x: -17.5, y: 1.0415, z: -9.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -256884,7 +257443,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &1475706061
@@ -259149,7 +259708,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487283829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -259632,7 +260191,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[78]'
   itemId: remedy.bottle
@@ -260533,7 +261092,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 1
   priority: 5
@@ -268249,7 +268808,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[114]'
   itemId: remedy.bottle
@@ -269062,7 +269621,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[40]'
   itemId: remedy.bottle
@@ -269111,7 +269670,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 4
   footstepSound: {fileID: 0}
@@ -273618,7 +274177,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 1
   footstepSound: {fileID: 0}
@@ -274289,7 +274848,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b4111659119f5144833e257fd545aed, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.InteractionUI
   controlsText: "WASD \u2014 \u0440\u0443\u0445 \xB7 Ctrl \u2014 \u0442\u0438\u0445\u043E \xB7 E \u2014 \u0434\u0456\u044F \xB7 R \u2014 \u0440\u0430\u0434\u0456\u043E \xB7 F \u2014 \u0436\u0438\u0432\u043B\u0435\u043D\u043D\u044F \xB7 J \u2014 \u0437\u0430\u043F\u0438\u0441\u0438 \xB7 Escape \u2014 \u043D\u0430\u0437\u0430\u0434 / \u043F\u0430\u0443\u0437\u0430"
 --- !u!4 &1576937826
@@ -277858,7 +278417,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598966155}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -281511,7 +282070,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 1
   footstepSound: {fileID: 0}
@@ -285981,7 +286540,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &1645522472
@@ -288418,7 +288977,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[119]'
   itemId: remedy.bottle
@@ -290803,7 +291362,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &1673670490
@@ -290834,7 +291393,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f539d4cd723e94fad612d2383743a6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ToolBarrier
   toolId: tool.crowbar
   counterId: yard.hits
@@ -290847,7 +291406,7 @@ MonoBehaviour:
   actionClip: {fileID: 0}
   finalClip: {fileID: 0}
   holdSeconds: 0
-  requiredFlag:
+  requiredFlag: 
   preparationMessage: "\u0421\u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u043F\u0456\u0434\u0433\u043E\u0442\u0443\u0439\u0442\u0435 \u043C\u0435\u0445\u0430\u043D\u0456\u0437\u043C."
 --- !u!65 &1673670492
 BoxCollider:
@@ -291230,7 +291789,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 659420798490840064, guid: afe2bcd4ec446e74a91961900dc4d17d, type: 3}
       propertyPath: keypad
-      value:
+      value: 
       objectReference: {fileID: 2064082409}
     - target: {fileID: 2563866387727451149, guid: afe2bcd4ec446e74a91961900dc4d17d, type: 3}
       propertyPath: m_Name
@@ -291291,7 +291850,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae84335794d5a5f49a2ab3a732b726d0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.MechanicalLockView
 --- !u!4 &1676156015 stripped
 Transform:
@@ -291733,7 +292292,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[49]'
   itemId: remedy.bottle
@@ -292150,7 +292709,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a665ccc246174a43b26fc1a46d274d83, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.SymbolReset
   puzzle: {fileID: 186282134}
 --- !u!23 &1680934027
@@ -293805,7 +294364,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -296377,7 +296936,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59162526bf6860d449568c4ab5cfc31b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.DoorProgressBinding
   door: {fileID: 1708321455}
   openFlag: kitchen.shortcut
@@ -296391,7 +296950,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.2249999, y: 1.325, z: 0.225}
+  m_Extents: {x: 1.1999999, y: 1.325, z: 0.175}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 0
@@ -296407,12 +296966,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 1708321456}
-  openAngle: 100
+  openAngle: 90
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u0417\u0430\u0441\u0443\u0432 \u0437 \u0431\u043E\u043A\u0443 \u043A\u0443\u0445\u043D\u0456."
   checkpointId: door.shortcut
   stayOpen: 1
@@ -296430,7 +296989,7 @@ Transform:
   m_GameObject: {fileID: 1708321452}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 24, y: 0, z: 5.175}
+  m_LocalPosition: {x: 23.87, y: 0, z: 5.175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -296438,6 +296997,7 @@ Transform:
   - {fileID: 2123067412}
   - {fileID: 927001438}
   - {fileID: 349404230}
+  - {fileID: 2128997952}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1708321457
@@ -296450,7 +297010,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -296957,17 +297517,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: gallery.card
   title: "\u0421\u041B\u0423\u0416\u0411\u041E\u0412\u0410 \u041A\u0410\u0420\u0422\u041A\u0410"
   text: "\u0421\u043B\u0443\u0436\u0431\u043E\u0432\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0430: 940. \u0413\u0443\u0440\u043A\u0456\u0442 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0438\u0445 \u0432\u0456\u043A\u043E\u043D\u043D\u0438\u0446\u044C \u0437\u0430\u0433\u043B\u0443\u0448\u0430\u0454 \u0446\u0438\u0444\u0440\u0438.\n\u0417\u0430\u0447\u0438\u043D\u0438 \u0432\u0441\u0456 \u0442\u0440\u0438 \u0432\u0456\u043A\u043D\u0430 \u0432 \u0433\u0430\u043B\u0435\u0440\u0435\u0457 \u0442\u0430 \u0437\u043D\u043E\u0432\u0443 \u043F\u043E\u0441\u043B\u0443\u0445\u0430\u0439 \u0440\u0430\u0434\u0456\u043E. R \u2014 \u043D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u0442\u0438; F \u2014 \u0436\u0438\u0432\u043B\u0435\u043D\u043D\u044F; J \u2014 \u0437\u0430\u043F\u0438\u0441\u0438."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 940
   radioChannel: {fileID: 11400000, guid: 8ee00270776942e45afc6495dc10981e, type: 2}
   illustration: {fileID: 0}
-  onReadFlag:
+  onReadFlag: 
 --- !u!65 &1710337077
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -298156,8 +298716,8 @@ Transform:
   m_GameObject: {fileID: 1720375934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 1.05, z: 0}
-  m_LocalScale: {x: 1.7, y: 2.1, z: 0.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2139169625}
@@ -298169,7 +298729,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720375934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -298230,8 +298790,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.4670001, y: 1.7952498, z: 0.065}
+  m_Center: {x: 0.73350006, y: 0.8976249, z: 0}
 --- !u!33 &1720375938
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -299605,7 +300165,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: remedy.flower
   displayName: "\u0431\u043B\u0456\u0434\u0430 \u0441\u0430\u0434\u043E\u0432\u0430 \u043A\u0432\u0456\u0442\u043A\u0430"
@@ -300125,7 +300685,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f539d4cd723e94fad612d2383743a6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ToolBarrier
   toolId: tool.cutters
   counterId: gates.cuts
@@ -300384,7 +300944,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &1733226595
@@ -302023,13 +302583,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: remedy.recipe
   title: "\u0420\u0415\u0426\u0415\u041F\u0422 \u041C\u0406\u041A\u0421\u0422\u0423\u0420\u0418"
   text: "\u041E\u0441\u043D\u043E\u0432\u0430 \u2014 \u0443 \u0448\u0430\u0444\u0446\u0456 \u043D\u0430 \u043A\u0443\u0445\u043D\u0456; \u043A\u043B\u044E\u0447 \u2014 \u043D\u0430\u0433\u043E\u0440\u0456.\n\u041A\u0432\u0456\u0442\u043A\u0430: \u043F\u2019\u044F\u0442\u044C \u0431\u043B\u0456\u0434\u0438\u0445 \u043F\u0435\u043B\u044E\u0441\u0442\u043E\u043A, \u0441\u0443\u043F\u0440\u043E\u0442\u0438\u0432\u043D\u0456 \u043B\u0438\u0441\u0442\u043A\u0438. \u041A\u043B\u0443\u043C\u0431\u0438 \u043D\u0430\u0434\u0432\u043E\u0440\u0456; \u0433\u0435\u0440\u0431\u0430\u0440\u0456\u0439 \u2014 \u0443 \u0441\u0430\u0434\u0456\u0432\u043D\u0438\u0447\u0456\u0439.\n\u041D\u0430\u043B\u0438\u0439 \u043E\u0441\u043D\u043E\u0432\u0443, \u0434\u043E\u0434\u0430\u0439 \u043A\u0432\u0456\u0442\u043A\u0443, \u0440\u043E\u0437\u043C\u0456\u0448\u0430\u0439 \u0441\u0440\u0456\u0431\u043D\u043E\u044E \u043B\u043E\u0436\u0435\u0447\u043A\u043E\u044E \u0437 \u0445\u043E\u043B\u0443.\n\u0417\u0430\u043B\u0438\u0448 \u0443 \u0439\u043E\u0433\u043E \u0447\u0430\u0448\u0446\u0456 \u0442\u0430 \u0432\u0456\u0434\u0456\u0439\u0434\u0438.\n\u0413\u043E\u0442\u043E\u0432\u0456 \u043B\u0456\u043A\u0438 \u043F\u0435\u0440\u0435\u043B\u0438\u0439 \u0443 \u0447\u0438\u0441\u0442\u0443 \u043F\u043E\u0440\u043E\u0436\u043D\u044E \u043F\u043B\u044F\u0448\u0435\u0447\u043A\u0443, \u043F\u043E\u0442\u0456\u043C \u2014 \u0443 \u0439\u043E\u0433\u043E \u0447\u0430\u0448\u043A\u0443 \u0432 \u0445\u043E\u043B\u0456."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 0
   radioChannel: {fileID: 0}
   illustration: {fileID: 0}
@@ -303340,17 +303900,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: study.photo
   title: "\u0421\u0422\u0410\u0420\u0410 \u0424\u041E\u0422\u041E\u0413\u0420\u0410\u0424\u0406\u042F"
   text: "\u041D\u0430 \u0441\u0442\u0430\u0440\u043E\u043C\u0443 \u0444\u043E\u0442\u043E \u043A\u0430\u0440\u0442\u0438\u043D\u0430 \u0437 \u043C\u0456\u0441\u044F\u0446\u0435\u043C \u0432\u0456\u0434\u0441\u0443\u043D\u0443\u0442\u0430 \u0432\u0456\u0434 \u0442\u0435\u043C\u043D\u043E\u0457 \u043D\u0456\u0448\u0456. \u0417\u0430\u0440\u0430\u0437 \u0432\u043E\u043D\u0430 \u0437\u0430\u043A\u0440\u0438\u0432\u0430\u0454 \u0446\u0435 \u043C\u0456\u0441\u0446\u0435.\n\u0422\u0443\u0442 \u0431\u0435\u0437\u043F\u0435\u0447\u043D\u043E. \u0414\u0432\u0435\u0440\u0456 \u043C\u043E\u0436\u043D\u0430 \u0437\u0430\u0447\u0438\u043D\u0438\u0442\u0438."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 0
   radioChannel: {fileID: 0}
   illustration: {fileID: 2800000, guid: afe86aee5561bdc4d91571c1d4fd0ae3, type: 3}
-  onReadFlag:
+  onReadFlag: 
 --- !u!23 &1756210522
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -303571,7 +304131,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 2
   ukrainianName: "\u0426\u0435\u043D\u0442\u0440\u0430\u043B\u044C\u043D\u0438\u0439 \u0445\u043E\u043B"
@@ -304329,8 +304889,8 @@ Transform:
   m_GameObject: {fileID: 1760370443}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 1.15, z: 0}
-  m_LocalScale: {x: 1.4, y: 2.3, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 818030215}
@@ -304403,8 +304963,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.35, y: 2.28, z: 0.1}
+  m_Center: {x: 0.675, y: 1.14, z: 0}
 --- !u!33 &1760370447
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -307034,17 +307594,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e072b02efc18ccb4db44478f6463a435, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ClueNote
   clueId: winch.instructions
   title: "\u0421\u041B\u0423\u0416\u0411\u041E\u0412\u0410 \u041A\u0410\u0420\u0422\u041A\u0410"
   text: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438 \u0440\u0443\u043A\u0456\u0432\u2019\u044F. \u0423\u0442\u0440\u0438\u043C\u0443\u0439 Space \u0434\u043E \u043F\u043E\u0434\u0432\u0456\u0439\u043D\u043E\u0433\u043E \u043A\u043B\u0430\u0446\u0430\u043D\u043D\u044F. \u0412\u0456\u0434\u043F\u0443\u0441\u0442\u0438, \u0449\u043E\u0431 \u0441\u0442\u043E\u043F\u043E\u0440 \u0441\u0456\u0432 \u0443 \u043F\u0430\u0437.\n\u041F\u043E\u0442\u0440\u0456\u0431\u043D\u0456 \u0442\u0440\u0438 \u0446\u0438\u043A\u043B\u0438; \u0432\u0456\u043A\u043D\u043E \u0440\u0435\u0430\u043A\u0446\u0456\u0457 \u2014 1,5 \u0441\u0435\u043A\u0443\u043D\u0434\u0438. \u0412\u0436\u0435 \u0437\u0430\u0444\u0456\u043A\u0441\u043E\u0432\u0430\u043D\u0456 \u0441\u0442\u0443\u043F\u0435\u043D\u0456 \u043D\u0435 \u0432\u0442\u0440\u0430\u0447\u0430\u044E\u0442\u044C\u0441\u044F. Escape \u2014 \u0432\u0456\u0434\u0456\u0439\u0442\u0438."
-  fullTextFlag:
-  fullText:
+  fullTextFlag: 
+  fullText: 
   frequency: 0
   radioChannel: {fileID: 0}
   illustration: {fileID: 0}
-  onReadFlag:
+  onReadFlag: 
 --- !u!65 &1778529310
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -308099,7 +308659,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: remedy.base
   displayName: "\u043E\u0441\u043D\u043E\u0432\u0430 \u043C\u0456\u043A\u0441\u0442\u0443\u0440\u0438"
@@ -308392,7 +308952,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[94]'
   itemId: remedy.bottle
@@ -311689,7 +312249,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[29]'
   itemId: remedy.bottle
@@ -312078,7 +312638,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 1
   footstepSound: {fileID: 0}
@@ -317327,7 +317887,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b27777478aea41069887fe8271b4bc94, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.PlantGathering
   speciesId: blue-star
   requiredSpecies: moonflower
@@ -319697,7 +320257,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2ff915fa7ed4b1fa3b25deb7c6d588c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.TreatmentWorkbench
   itemIds:
   - remedy.base
@@ -321314,8 +321874,8 @@ Transform:
   m_GameObject: {fileID: 1861677650}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.175, y: 1.325, z: 0}
-  m_LocalScale: {x: 2.35, y: 2.65, z: 0.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1708321456}
@@ -321388,8 +321948,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.35, y: 2.65, z: 0.13}
+  m_Center: {x: 1.175, y: 1.325, z: 0}
 --- !u!33 &1861677654
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -322401,7 +322961,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 1
   ukrainianName: "\u0413\u0430\u043B\u0435\u0440\u0435\u044F"
@@ -323760,7 +324320,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Upper room, removable crank and remedy bottles[94]/Kitchen empty bottle[15]'
   itemId: remedy.bottle
@@ -327293,7 +327853,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de41645c11ff7da41a5c81514e985b1c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.AmbientCycle
   mode: 1
   period: 16
@@ -327317,7 +327877,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd405e1735f4301429672aa1936400a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.NoiseMaskZone
   radius: 12
   strength: 0.95
@@ -331504,7 +332064,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 5
   ukrainianName: "\u0417\u0438\u043C\u043E\u0432\u0438\u0439 \u0441\u0430\u0434"
@@ -332484,7 +333044,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[59]'
   itemId: remedy.bottle
@@ -334337,7 +334897,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[69]'
   itemId: remedy.bottle
@@ -336259,7 +336819,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Study belongings[45]/Storage bottle[3]/Model - PF_DecorBottle[0]'
   itemId: remedy.bottle
@@ -338724,7 +339284,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Gallery furnishings[27]/Storage bottle[1]'
   itemId: remedy.bottle
@@ -341058,7 +341618,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
@@ -342134,7 +342694,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -343866,7 +344426,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -344661,7 +345221,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: remedy.spoon
   displayName: "\u0441\u0440\u0456\u0431\u043D\u0430 \u043B\u043E\u0436\u0435\u0447\u043A\u0430"
@@ -345080,6 +345640,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1987551659}
   m_Mesh: {fileID: 4262283117094057581, guid: a2ec7d21fd9f8994493d10e6c0b3a5e4, type: 3}
+--- !u!1 &1987567785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987567786}
+  m_Layer: 0
+  m_Name: Aligned door leaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1987567786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987567785}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.6000147, y: -0.0212529, z: -0.018571854}
+  m_LocalScale: {x: 125.264046, y: 85.01133, z: 20.634924}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 657618535}
+  m_Father: {fileID: 1011925105}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1988004876
 GameObject:
   m_ObjectHideFlags: 0
@@ -346671,7 +347263,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27fdba17437f0ea418b2f0cc0b9597e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.ManorZone
   area: 8
   ukrainianName: "\u0416\u0438\u0442\u043B\u043E\u0432\u0430 \u043A\u0456\u043C\u043D\u0430\u0442\u0430"
@@ -359169,7 +359761,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[7]/Model - PF_DecorBottle[0]'
   itemId: remedy.bottle
@@ -361014,7 +361606,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 3
   footstepSound: {fileID: 0}
@@ -361361,7 +361953,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4623bb353c4f4b54ab522379d2c486f2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.KeypadLock
   code: 417
   useRunCode: 1
@@ -363978,7 +364570,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Study belongings[45]/Storage bottle[3]'
   itemId: remedy.bottle
@@ -365381,7 +365973,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204cc83d924f9fc4f9a8fa5382f86951, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.KeyPickup
   keyId: tool.cutters
   displayName: "\u0431\u043E\u043B\u0442\u043E\u0440\u0456\u0437"
@@ -365491,7 +366083,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[100]'
   itemId: remedy.bottle
@@ -366256,7 +366848,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 0
@@ -366428,7 +367020,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59162526bf6860d449568c4ab5cfc31b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.DoorProgressBinding
   door: {fileID: 2093816606}
   openFlag: hall.open
@@ -366458,12 +367050,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 2093816607}
   openAngle: 90
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u041C\u0435\u0445\u0430\u043D\u0456\u0447\u043D\u0438\u0439 \u0437\u0430\u043C\u043E\u043A. \u041A\u043E\u0434\u043E\u0432\u0438\u0439 \u043C\u0435\u0445\u0430\u043D\u0456\u0437\u043C \u0440\u043E\u0437\u0442\u0430\u0448\u043E\u0432\u0430\u043D\u043E \u043F\u043E\u0440\u0443\u0447."
   checkpointId: door.hall
   stayOpen: 1
@@ -366506,7 +367098,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: 0fe9f1fd1e252d047a4f88ddb4fd92aa, type: 3}
   closingClip: {fileID: 8300000, guid: de8501dd37c5a5a46bc2c8ec9cf8f3fa, type: 3}
@@ -370540,7 +371132,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77217c27f92c4e69917d5e4f07debf86, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.MechanismReadout
   display: {fileID: 957308036}
   winch: {fileID: 0}
@@ -372373,7 +372965,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4800cdf878342958370efbbac070ea1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.WorldLabelVisibility
   distance: 3.8
 --- !u!1 &2113109453
@@ -373557,7 +374149,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Manor visual repair and lived-in rooms v2[85]/Kitchen work and supplies[34]/Storage bottle[5]/Model - PF_DecorBottle[0]'
   itemId: remedy.bottle
@@ -373849,7 +374441,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babbd6a7f1b8ce845b1f75c8b7ee84d4, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceType
   kind: 2
   footstepSound: {fileID: 0}
@@ -374337,7 +374929,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123067411}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -375664,6 +376256,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128501821}
   m_Mesh: {fileID: 5510326822105671546, guid: aa0d328737ed6ca4e99c24133e7ddd64, type: 3}
+--- !u!1 &2128997951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2128997952}
+  m_Layer: 0
+  m_Name: Aligned door leaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2128997952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128997951}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.0813161, y: -0.02997744, z: -0.037143826}
+  m_LocalScale: {x: 225.74448, y: 119.90953, z: 41.269848}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 496209404}
+  m_Father: {fileID: 1708321456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2129486869
 GameObject:
   m_ObjectHideFlags: 0
@@ -377836,7 +378460,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59162526bf6860d449568c4ab5cfc31b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.DoorProgressBinding
   door: {fileID: 2139169624}
   openFlag: library.cache
@@ -377850,12 +378474,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7994e5c6270d44cad7daaa43e15b42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Interactions.HingedDoor
   hinge: {fileID: 2139169625}
-  openAngle: 100
+  openAngle: 90
   degreesPerSecond: 140
-  requiredKeyId:
+  requiredKeyId: 
   missingKeyMessage: "\u0422\u0440\u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u0438 \u043A\u0435\u0440\u0443\u044E\u0442\u044C \u0441\u0445\u043E\u0432\u0430\u043D\u043A\u043E\u044E."
   checkpointId: cache.library
   stayOpen: 1
@@ -377873,11 +378497,12 @@ Transform:
   m_GameObject: {fileID: 2139169622}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.15, y: 0, z: 20.02}
+  m_LocalPosition: {x: 5.2665, y: 0.2408, z: 20.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1720375935}
+  - {fileID: 651152146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2139169626
@@ -377890,7 +378515,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e3590bb2d704940b826a8b978f764b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Audio.HingedDoorAudio
   openingClip: {fileID: 8300000, guid: bb16cc6c5b63dbf46b50b0c6809cc67e, type: 3}
   closingClip: {fileID: 8300000, guid: e40713e6596e2fb4a99708c202fa5ac8, type: 3}
@@ -379391,7 +380016,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a77bc7ff299594aa1f2b410be95d15, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echo.Manor.RemedyBottle
   bottleId: 'remedy.bottle.Lived-in manor and animal vinyl revision[89]/Seeded shelf contents and paper clusters[6]/Scattered shelf Bottle[35]'
   itemId: remedy.bottle

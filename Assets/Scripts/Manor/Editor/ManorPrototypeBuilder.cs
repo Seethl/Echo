@@ -163,6 +163,7 @@ namespace Echo.Manor.Editor
             if(!routeOnly)ManorMechanismModels.Apply();
             if(!routeOnly)ManorRadioVoice.Apply();
             if(!routeOnly)ManorNextDetails.Apply();
+            if(!routeOnly)ManorPlacementRepair.Apply();
             if(!routeOnly)ManorResidentModel.Apply();
             if(!routeOnly)ManorAmbienceSetup.Apply();
             var flow=AssetDatabase.LoadAssetAtPath<GameFlowSettings>("Assets/Resources/EchoGameFlow.asset");
