@@ -6,6 +6,8 @@ namespace Echo.Audio
     public sealed class NoiseTelemetry:MonoBehaviour
     {
         public float fallSpeed=.45f;
+        [Tooltip("Quiet environmental floor for the HUD only; never changes enemy hearing or sound cover.")]
+        [Range(0,1)] public float ambientDisplayFloor=.08f;
         public float PlayerLevel {get;private set;}
         public float AmbientLevel {get;private set;}
         public string SourceLabel {get;private set;}="Тихо";
@@ -38,10 +40,11 @@ namespace Echo.Audio
             if(Time.timeScale<=0)return;
             PlayerLevel=Mathf.MoveTowards(PlayerLevel,0,Time.deltaTime*fallSpeed);
             if(PlayerLevel<.01f)SourceLabel="Тихо";
-            float target=NoiseMaskZone.CoverAt(transform.position);
+            float cover=NoiseMaskZone.CoverAt(transform.position);
+            float target=Mathf.Max(ambientDisplayFloor,cover);
             AmbientLevel=Mathf.MoveTowards(AmbientLevel,target,Time.deltaTime*(target>AmbientLevel?3:fallSpeed));
             var player=GetComponent<Echo.Interactions.PlayerInteractor>();
-            if(player!=null&&player.ui!=null)player.ui.SetNoise(PlayerLevel,AmbientLevel,SourceLabel,NoiseMaskZone.DescriptionAt(transform.position));
+            if(player!=null&&player.ui!=null)player.ui.SetNoise(PlayerLevel,AmbientLevel,SourceLabel,cover>ambientDisplayFloor?NoiseMaskZone.DescriptionAt(transform.position):"тихий фон");
         }
     }
 }

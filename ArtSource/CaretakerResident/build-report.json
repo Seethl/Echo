@@ -1,0 +1,27 @@
+{
+  "restoredPolygons": 1001,
+  "unmappedPolygons": 0,
+  "restoredMeshPieces": 68,
+  "runtimeSkinnedMeshes": 1,
+  "bones": 65,
+  "height": 1.95,
+  "scale": 2.7245727698294684,
+  "actions": {
+    "ResidentWalk": {
+      "frames": 43,
+      "removedHorizontalTravelMetres": 0.6974120213559656
+    },
+    "ResidentDrink": {
+      "frames": 267,
+      "removedHorizontalTravelMetres": 0.0066075756012129675
+    },
+    "ResidentAttack": {
+      "frames": 80,
+      "removedHorizontalTravelMetres": 0.04819150258811755
+    }
+  },
+  "runtimeBones": 17,
+  "runtimeRig": "authored",
+  "retarget": "world rotation deltas, fixed limb lengths",
+  "referenceBones": 65
+}

@@ -12,6 +12,12 @@ public sealed class EnemyPresentation : MonoBehaviour
     [Min(0)] public float animationDamping=.12f;
     [Header("Optional Animator parameters (missing parameters are ignored)")]
     public string speedParameter="Speed",suspicionParameter="Suspicion",stateParameter="State";
+    public GameObject drinkingProp;
+    public string attackParameter="IsAttacking",drinkingParameter="IsDrinking";
+    public bool IsAttacking {get;private set;}
+    public bool IsDrinking {get;private set;}
+    public void SetAttacking(bool value){IsAttacking=value;}
+    public void SetDrinking(bool value){IsDrinking=value;}
     public string chaseParameter="IsChasing",searchParameter="IsSearching";
     [Header("Optional recorded audio; no new synthetic fallback for these cues")]
     public AudioClip heardNoiseClip,searchClip,calmClip;
@@ -31,7 +37,7 @@ public sealed class EnemyPresentation : MonoBehaviour
     private int lastStep=-1;
     private Animator cachedAnimator;
     private RuntimeAnimatorController cachedController;
-    private bool hasSpeed,hasSuspicion,hasState,hasChase,hasSearch;
+    private bool hasSpeed,hasSuspicion,hasState,hasChase,hasSearch,hasAttack,hasDrinking;
     private float nextAnimatorLookup;
 
     private void OnEnable()
@@ -50,6 +56,7 @@ public sealed class EnemyPresentation : MonoBehaviour
     {
         if(animator==null)animator=GetComponentInChildren<Animator>();
         cachedAnimator=animator;cachedController=animator!=null?animator.runtimeAnimatorController:null;
+        hasAttack=Has(attackParameter,AnimatorControllerParameterType.Bool);hasDrinking=Has(drinkingParameter,AnimatorControllerParameterType.Bool);
         hasSpeed=Has(speedParameter,AnimatorControllerParameterType.Float);
         hasSuspicion=Has(suspicionParameter,AnimatorControllerParameterType.Float);
         hasState=Has(stateParameter,AnimatorControllerParameterType.Int);
@@ -65,7 +72,10 @@ public sealed class EnemyPresentation : MonoBehaviour
     }
     private void ApplyAnimator()
     {
+        if(drinkingProp!=null&&drinkingProp.activeSelf!=IsDrinking)drinkingProp.SetActive(IsDrinking);
         if(animator==null||cachedController==null||brain==null)return;
+        if(hasAttack)animator.SetBool(attackParameter,IsAttacking);
+        if(hasDrinking)animator.SetBool(drinkingParameter,IsDrinking);
         if(hasSpeed)animator.SetFloat(speedParameter,brain.Movement01,animationDamping,Time.deltaTime);
         if(hasSuspicion)animator.SetFloat(suspicionParameter,brain.Suspicion01,animationDamping,Time.deltaTime);
         if(hasState)animator.SetInteger(stateParameter,(int)brain.CurrentState);

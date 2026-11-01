@@ -1,0 +1,14 @@
+{
+  "source": "igor ambient.wav",
+  "sourceSHA256": "723288895a58a02a0f7ebeb497cc425a534d8981c05290dc221f981c6a628231",
+  "runtimeSHA256": "41dfb11fc5f8fa1722bb30898b172f33a85a95b7c78322429a787b241efb28c8",
+  "rate": 48000,
+  "channels": 2,
+  "sourceSeconds": 159.20033333333333,
+  "loopSeconds": 157.70033333333333,
+  "crossfadeSeconds": 1.5,
+  "gain": 1.3895867690712906,
+  "rms": 0.0788227042408998,
+  "peak": 0.9,
+  "boundaryStep": 0.00046647505065259415
+}

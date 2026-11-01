@@ -1,0 +1,14 @@
+{
+  "caretaker.blend": "ed02f5a90bba5e9ba026f071de75e3335bc1f883197e75f4bbbcfc768d167c4b",
+  "caretaker.fbx": "7b722840c24b24b91a31db02124702904f15b306ab9d20dd9a331f59386cb8fd",
+  "caretaker.glb": "121b17ac09f2e4be8eddf93eacda4bca209ee4afc1f82cccb6ce3be7f3f63a59",
+  "caretaker.mtl": "8f499d7d6a6638365e84c4cfaaf404bcd8bec35cd63b4124235cc91469c253d4",
+  "caretaker.obj": "abfb37bd63ad9ffbe91cb05a11b36b79a7429510f30b8adbb069e9a83223e1d3",
+  "caretaker_front.png": "ff64df9f1b1416c93a0ff9f598b99925abb1c5bb9040bdf347a30544923b0d39",
+  "caretaker_preview.png": "b21df524050ed3e32bc2980d6d2925cd9dac05ebadb8791812216516042852cb",
+  "create_caretaker.py": "7ee5602f518ec0867b369c627e89ee42a835656f67f2f2b71316ff316ca8e51b",
+  "README.txt": "ffdea6698a429e3e653b3b6d8c538ebd89cc034fea223159d6f486539091b5d7",
+  "animation/Drinking.fbx": "3fb407d83b8ba8467bb981a93d1edd12a6c1e2b0c886005b97481165288d5ebb",
+  "animation/Walking.fbx": "2d78eb8f5e9180533213a8faa17e3f343d6aaa63dd2b4f267410eebecd6b3d62",
+  "animation/Zombie Attack.fbx": "6379920f516e234c4f204dc9f78415f0e383c71d21c45f9fc4867d359138deb0"
+}

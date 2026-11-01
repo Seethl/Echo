@@ -90,6 +90,7 @@ namespace Echo.Interactions
             Bottom(subtitle.rectTransform,65,900,92);subtitlePlate=EchoUIStyle.Plate("Transmission plate",root.transform,subtitle.rectTransform,true);
             noisePanel=new GameObject("Noise Bars",typeof(RectTransform),typeof(Image));noisePanel.transform.SetParent(root.transform,false);
             var nr=(RectTransform)noisePanel.transform;nr.anchorMin=nr.anchorMax=new Vector2(0,1);nr.pivot=new Vector2(0,1);nr.anchoredPosition=new Vector2(16,-16);nr.sizeDelta=new Vector2(254,102);
+            nr.localScale=Vector3.one*1.25f;
             noisePanel.GetComponent<Image>().color=new Color(.025f,.04f,.06f,.94f);noisePanel.GetComponent<Image>().raycastTarget=false;
             playerNoiseFill=NoiseBar(noisePanel.transform,24,new Color(.95f,.72f,.35f),out playerNoiseLabel);
             ambientNoiseFill=NoiseBar(noisePanel.transform,-20,new Color(.35f,.78f,.8f),out ambientNoiseLabel);

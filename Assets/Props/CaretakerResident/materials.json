@@ -1,0 +1,154 @@
+{
+  "items": [
+    {
+      "source": "01 | weathered umber wool",
+      "name": "Resident_01_weathered_umber_wool",
+      "color": [
+        0.10499999672174454,
+        0.08100000023841858,
+        0.0430000014603138
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "02 | lit wool facets",
+      "name": "Resident_02_lit_wool_facets",
+      "color": [
+        0.14000000059604645,
+        0.10999999940395355,
+        0.06199999898672104
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "03 | worn wool shadows",
+      "name": "Resident_03_worn_wool_shadows",
+      "color": [
+        0.07500000298023224,
+        0.054999999701976776,
+        0.027000000700354576
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "04 | dark coat lining",
+      "name": "Resident_04_dark_coat_lining",
+      "color": [
+        0.07500000298023224,
+        0.04800000041723251,
+        0.03200000151991844
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "05 | oxblood shirt",
+      "name": "Resident_05_oxblood_shirt",
+      "color": [
+        0.11500000208616257,
+        0.035999998450279236,
+        0.02800000086426735
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "06 | faded oxblood",
+      "name": "Resident_06_faded_oxblood",
+      "color": [
+        0.15000000596046448,
+        0.052000001072883606,
+        0.03799999877810478
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "07 | brown trousers",
+      "name": "Resident_07_brown_trousers",
+      "color": [
+        0.10499999672174454,
+        0.04800000041723251,
+        0.032999999821186066
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "08 | distressed leather",
+      "name": "Resident_08_distressed_leather",
+      "color": [
+        0.052000001072883606,
+        0.032999999821186066,
+        0.02500000037252903
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "09 | rubber soles",
+      "name": "Resident_09_rubber_soles",
+      "color": [
+        0.02500000037252903,
+        0.020999999716877937,
+        0.017999999225139618
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "10 | waxen skin",
+      "name": "Resident_10_waxen_skin",
+      "color": [
+        0.5199999809265137,
+        0.36500000953674316,
+        0.23499999940395355
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "11 | bone highlights",
+      "name": "Resident_11_bone_highlights",
+      "color": [
+        0.6299999952316284,
+        0.4650000035762787,
+        0.3199999928474426
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "12 | gaunt shadows",
+      "name": "Resident_12_gaunt_shadows",
+      "color": [
+        0.3499999940395355,
+        0.22599999606609344,
+        0.14499999582767487
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "13 | recessed sockets",
+      "name": "Resident_13_recessed_sockets",
+      "color": [
+        0.032999999821186066,
+        0.02199999988079071,
+        0.017999999225139618
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "14 | mouth crease",
+      "name": "Resident_14_mouth_crease",
+      "color": [
+        0.10499999672174454,
+        0.052000001072883606,
+        0.03500000014901161
+      ],
+      "roughness": 0.8500000238418579
+    },
+    {
+      "source": "15 | tarnished buttons",
+      "name": "Resident_15_tarnished_buttons",
+      "color": [
+        0.0949999988079071,
+        0.07100000232458115,
+        0.041999999433755875
+      ],
+      "roughness": 0.5
+    }
+  ]
+}

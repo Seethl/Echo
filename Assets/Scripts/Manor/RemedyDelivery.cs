@@ -36,6 +36,8 @@ namespace Echo.Manor
         }
         private void Update()
         {
+            var presentation=resident!=null?resident.GetComponent<EnemyPresentation>():null;
+            if(presentation!=null)presentation.SetDrinking(false);
             var progress = ManorProgress.Active;
             if (progress == null) return;
             bool served = progress.Has(servedFlag);
@@ -54,6 +56,7 @@ namespace Echo.Manor
             // Stay by the cup while drinking, rather than starting the investigator search loop.
             // A brief renewal lets sight or leaving the interaction release movement.
             resident.HoldForInteraction(.2f);
+            if(presentation!=null)presentation.SetDrinking(true);
             drinking += Time.deltaTime;
             if (drinking < drinkingSeconds) return;
             if (!player.ui.ShowCompletion("Мешканець заспокоївся. Ліки подіяли.")) return;
