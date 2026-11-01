@@ -18,6 +18,7 @@ namespace Echo.Manor
         private PlayerInteractor actor;
         public bool Closed => ManorProgress.Active != null && ManorProgress.Active.Has(closedFlag);
         public bool IsMoving => closing;
+        public float OpenAmount => openness;
         public override string Prompt => "E — закрити й зафіксувати віконниці";
         public override bool CanInteract(PlayerInteractor player) => base.CanInteract(player) && !Closed && !closing;
         private void Start() { openness = Closed ? 0 : 1; ApplyPose(); }

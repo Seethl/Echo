@@ -96,6 +96,7 @@ namespace Echo.Radio
                 if(lastRecording!=text||Time.time>=nextRecordingSignal)
                 {
                     AudioClip clip=channel.voiceClip;
+                    if(clip==null&&!interrupted&&channel.payload==RadioChannel.Payload.GalleryCode&&ManorProgress.Active!=null)clip=channel.CodeRecording(ManorProgress.Active.GalleryCode);
                     if(clip==null&&!interrupted&&channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null)clip=libraryPuzzle.TransmissionClip;
                     float playback=channel.payload==RadioChannel.Payload.LibrarySounds&&libraryPuzzle!=null?libraryPuzzle.radioPlaybackVolume:.65f;
                     PrototypeAudio.Play(gameObject,PrototypeAudio.Cue.DoubleClick,playback,clip);

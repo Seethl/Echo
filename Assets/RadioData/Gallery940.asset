@@ -21,3 +21,14 @@ MonoBehaviour:
   clearAfterFlag: gallery.quiet
   interruptedTranscript: "\u0421\u043B\u0443\u0436\u0431\u043E\u0432\u0438\u0439 \u0437\u0430\u043C\u043E\u043A \u043D\u0430 \u043F\u043E\u0442\u043E\u0447\u043D\u0443 \u0437\u043C\u0456\u043D\u0443\u2026 [\u0433\u0443\u0440\u043A\u0456\u0442 \u0437\u0430\u0433\u043B\u0443\u0448\u0430\u0454 \u0446\u0438\u0444\u0440\u0438]. \u0417\u0430\u0447\u0438\u043D\u0456\u0442\u044C \u0443\u0441\u0456 \u0432\u0456\u043A\u043E\u043D\u043D\u0438\u0446\u0456 \u0439 \u043F\u043E\u0432\u0442\u043E\u0440\u0456\u0442\u044C \u0437\u0430\u043F\u0438\u0441."
   voiceClip: {fileID: 0}
+  digitClips:
+  - {fileID: 8300000, guid: f90999e6784ece54abac9a678a4d93c0, type: 3}
+  - {fileID: 8300000, guid: 30b2861dc4489a448b573f0e60b06f98, type: 3}
+  - {fileID: 8300000, guid: 72e2834332da22448ad3b39c580c3f4b, type: 3}
+  - {fileID: 8300000, guid: f86491aa401aab442a1480d4317acf5b, type: 3}
+  - {fileID: 8300000, guid: 7beccda49ae1aab4ca64f098f3720006, type: 3}
+  - {fileID: 8300000, guid: 63f7744ae8f62994393296afc5d87e77, type: 3}
+  - {fileID: 8300000, guid: bd4ed504ab1268f479352f2570c21d1f, type: 3}
+  - {fileID: 8300000, guid: fa3cb7df2ff58444c9ab7b1d9b972c9e, type: 3}
+  - {fileID: 8300000, guid: 6220b87439ef36d409721091f0bc94ff, type: 3}
+  - {fileID: 8300000, guid: ff653d5023c18074eb4f49d0deaea9b5, type: 3}
