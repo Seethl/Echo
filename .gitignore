@@ -14,6 +14,7 @@
 
 # Local asset validation project and Blender backup files
 /work/manor_surfaces/UnityCheck/
+/work/visual-release/
 *.blend1
 *.blend2
 

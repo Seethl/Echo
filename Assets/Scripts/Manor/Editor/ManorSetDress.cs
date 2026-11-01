@@ -18,12 +18,13 @@ namespace Echo.Manor.Editor
             // Sample the wood grain inside a panel of the existing atlas, excluding plaster and mouldings.
             timber.SetTextureScale("_BaseMap",new Vector2(.16f,.17f));timber.SetTextureOffset("_BaseMap",new Vector2(.045f,.13f));
             plaster = AssetDatabase.LoadAssetAtPath<Material>("Assets/Props/ManorWall/M_ManorWall.mat");
-            stone = Material("Muted tile", new Color(.43f,.45f,.43f), "Tile_CheckerBoard_Albedo");
+            stone = Material("Muted tile", new Color(.85f,.85f,.80f), "ManorStoneFloor_BaseColor");
+            stone.SetTextureScale("_BaseMap",new Vector2(.24f,.24f));stone.SetTextureOffset("_BaseMap",new Vector2(.005f,.005f));
             burgundy = Material("Burgundy rug", new Color(.21f,.045f,.052f));
             gold = Material("Dull brass", new Color(.39f,.29f,.13f), null, .55f);
             silver = Material("Silver utensils", new Color(.62f,.66f,.68f), null, .8f);
             linen = Material("Linen and pages", new Color(.61f,.57f,.46f));
-            leaf = Material("Garden leaves", new Color(.11f,.23f,.12f), "Tile_Grass");
+            leaf = Material("Garden leaves", new Color(.60f,.72f,.55f), "Tile_Grass");
             bloom = Material("Pale garden petals", new Color(.7f,.56f,.84f));
             dark = Material("Dark iron", new Color(.065f,.075f,.08f), null, .5f);
         }

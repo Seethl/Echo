@@ -20,11 +20,11 @@ MonoBehaviour:
   yardLightScale: 1
   candleBloom: 0.28
   candleColor: {r: 1, g: 0.75, b: 0.36, a: 1}
-  ambient: {r: 0.068, g: 0.073, b: 0.105, a: 1}
+  ambient: {r: 0.29, g: 0.31, b: 0.37, a: 1}
   moon: {r: 0.68, g: 0.73, b: 1, a: 1}
-  moonIntensity: 0.38
+  moonIntensity: 0.55
   haze: {r: 0.065, g: 0.07, b: 0.11, a: 1}
-  hazeDensity: 0.021
+  hazeDensity: 0.014
   galleryWindowIntensity: 28
   caretakerWindowIntensity: 14
   lanternIntensity: 1.4

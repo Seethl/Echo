@@ -291,9 +291,18 @@ namespace Echo.Manor.Editor
         {var go=new GameObject(name,typeof(MeshFilter),typeof(MeshRenderer));go.transform.SetParent(parent,true);go.transform.position=p;go.transform.localScale=size;go.GetComponent<MeshFilter>().sharedMesh=LeafMesh();go.GetComponent<Renderer>().sharedMaterial=mat;}
         private static Mesh LeafMesh()
         {
-            if(leafMesh!=null)return leafMesh;string path=MaterialsFolder+"/Low poly foliage.asset";leafMesh=AssetDatabase.LoadAssetAtPath<Mesh>(path);if(leafMesh!=null)return leafMesh;
+            if(leafMesh!=null){EnsureFoliageUVs(leafMesh);return leafMesh;}string path=MaterialsFolder+"/Low poly foliage.asset";leafMesh=AssetDatabase.LoadAssetAtPath<Mesh>(path);if(leafMesh!=null){EnsureFoliageUVs(leafMesh);return leafMesh;}
             var points=new[]{Vector3.up*.5f,Vector3.down*.5f,Vector3.left*.5f,Vector3.right*.5f,Vector3.forward*.5f,Vector3.back*.5f};int[] indices={0,4,3,0,2,4,0,5,2,0,3,5,1,3,4,1,4,2,1,2,5,1,5,3};var v=indices.Select(i=>points[i]).ToArray();
-            leafMesh=new Mesh{name="Low poly foliage"};leafMesh.vertices=v;leafMesh.triangles=Enumerable.Range(0,v.Length).ToArray();leafMesh.RecalculateNormals();leafMesh.RecalculateBounds();AssetDatabase.CreateAsset(leafMesh,path);return leafMesh;
+            leafMesh=new Mesh{name="Low poly foliage"};leafMesh.vertices=v;leafMesh.triangles=Enumerable.Range(0,v.Length).ToArray();leafMesh.RecalculateNormals();leafMesh.RecalculateBounds();EnsureFoliageUVs(leafMesh);AssetDatabase.CreateAsset(leafMesh,path);return leafMesh;
+        }
+
+        internal static void EnsureFoliageUVs(Mesh mesh)
+        {
+            if(mesh.uv.Length==mesh.vertexCount)return;
+            // Every octahedron face has separate vertices, so each leaf face can use the full texture.
+            var uv=new Vector2[mesh.vertexCount];
+            for(int i=0;i<uv.Length;i+=3){uv[i]=new Vector2(.5f,1);uv[i+1]=Vector2.zero;uv[i+2]=Vector2.right;}
+            mesh.uv=uv;EditorUtility.SetDirty(mesh);
         }
     }
 }

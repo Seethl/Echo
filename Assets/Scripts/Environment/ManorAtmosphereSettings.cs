@@ -15,11 +15,12 @@ namespace Echo.Environment
         [Header("Common base and first rooms")]
         [Range(0,1)] public float candleBloom=.28f;
         public Color candleColor=new Color(1,.75f,.36f);
-        public Color ambient = new Color(.105f,.12f,.145f);
+        // Ambient colors are authored in sRGB; very small values crush indirect light in linear rendering.
+        public Color ambient = new Color(.29f,.31f,.37f);
         public Color moon = new Color(.77f,.82f,.93f);
         [Range(0,2)] public float moonIntensity=.55f;
         public Color haze = new Color(.12f,.14f,.17f);
-        [Range(0,.06f)] public float hazeDensity=.018f;
+        [Range(0,.06f)] public float hazeDensity=.014f;
         [Min(0)] public float galleryWindowIntensity=28;
         [Min(0)] public float caretakerWindowIntensity=14;
         [Range(0,3)] public float lanternIntensity=1.3f;
