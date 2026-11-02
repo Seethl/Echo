@@ -270,7 +270,7 @@ namespace Echo.Manor.Editor
                 }
             }
             MoonWindow(g,new Vector3(37.86f,2.3f,18.5f),-90);MoonWindow(g,new Vector3(37.86f,2.3f,22),-90);MoonWindow(g,new Vector3(37.86f,2.3f,25.5f),-90);
-            MoonWindow(g,new Vector3(23.84f,3.1f,-8.5f),-90);MoonWindow(g,new Vector3(23.84f,3.1f,3.8f),-90);
+            MoonWindow(g,new Vector3(23.84f,3.1f,-8.5f),-90);MoonWindow(g,new Vector3(23.84f,3.1f,.5f),-90);
             MoonWindow(g,new Vector3(-19.84f,2.2f,-8.2f),90);
             var glassRoof=Material("Conservatory dark glass roof",new Color(.10f,.16f,.19f));
             GameObject.Find("Ceiling Conservatory").GetComponent<Renderer>().sharedMaterial=glassRoof;

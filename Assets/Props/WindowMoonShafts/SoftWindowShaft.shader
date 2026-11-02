@@ -30,6 +30,8 @@ Shader "Echo/SoftWindowShaft"
     half4 _Tint;
     float _Density,_Opacity,_Spread,_Exposure;
     float4 _Drift,_PaneLengths;
+    float _UseWindowProjection;
+    float4x4 _WindowWorldToCookie;
    CBUFFER_END
    struct Attributes {float4 positionOS:POSITION;UNITY_VERTEX_INPUT_INSTANCE_ID};
    struct Varyings {float4 positionCS:SV_POSITION;float3 positionWS:TEXCOORD0;UNITY_VERTEX_INPUT_INSTANCE_ID UNITY_VERTEX_OUTPUT_STEREO};
@@ -59,13 +61,21 @@ Shader "Echo/SoftWindowShaft"
     float surfaceDistance=dot(surfaceWS-cameraWS,directionWS);
     end=min(end,surfaceDistance-.025);
     if(end<=begin)return 0;
-    float stepLength=(end-begin)/12;float total=0;
-    [unroll]for(int s=0;s<12;s++)
+    int stepCount=_UseWindowProjection>.5?32:12;
+    float stepLength=(end-begin)/stepCount;float total=0;
+    [loop]for(int s=0;s<stepCount;s++)
     {
      float t=begin+(s+.5)*stepLength;float3 p=ro+rd*t;
      float2 q=(p.xy-_Drift.xy*p.z)/(lerp(1,_Spread,p.z)*.5);
      float edge=(1-smoothstep(.55,1,abs(q.x)))*(1-smoothstep(.55,1,abs(q.y)));
-     float mullions=smoothstep(.025,.12,abs(q.x))*smoothstep(.025,.12,abs(q.y));
+     float2 bands=q;
+     if(_UseWindowProjection>.5)
+     {
+      float3 projected=mul(_WindowWorldToCookie,float4(cameraWS+directionWS*t,1)).xyz;
+      bands=projected.xy/max(.001,projected.z);
+      edge*=step(.001,projected.z)*(1-smoothstep(.85,.94,abs(bands.x)))*(1-smoothstep(.85,.94,abs(bands.y)));
+     }
+     float mullions=smoothstep(.025,.12,abs(bands.x))*smoothstep(.025,.12,abs(bands.y));
      float limit=q.y<0?(q.x<0?_PaneLengths.x:_PaneLengths.y):(q.x<0?_PaneLengths.z:_PaneLengths.w);
      float clipFade=1-smoothstep(max(0,limit-.065),max(.001,limit),p.z);
      float along=smoothstep(0,.055,p.z)*(1-smoothstep(.55,1,p.z));

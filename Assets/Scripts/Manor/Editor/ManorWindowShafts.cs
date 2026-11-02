@@ -30,6 +30,7 @@ namespace Echo.Manor.Editor
             }
             foreach(var camera in Object.FindObjectsByType<Camera>())
             {var data=camera.GetUniversalAdditionalCameraData();data.requiresDepthTexture=true;EditorUtility.SetDirty(data);if(PrefabUtility.IsPartOfPrefabInstance(data))PrefabUtility.RecordPrefabInstancePropertyModifications(data);}
+            ManorWindowAndNotePolish.AlignStudyBeam();
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
         static void Make(Transform root,Material material,Vector3 p,Vector3 inward,GalleryWindowShutter shutter,float length,float drop,float inset)

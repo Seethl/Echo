@@ -29,7 +29,7 @@ namespace Echo.Manor.Editor
                 if(light.name.EndsWith("moon bounce"))light.enabled=false;
 
             Window(root,"Hall south window",new Vector3(23.55f,3.1f,-8.5f),new Vector3(15,.15f,-5),32*settings.hallLightScale,16,48,settings);
-            Window(root,"Hall north window",new Vector3(23.55f,3.1f,3.8f),new Vector3(15,.2f,1),30*settings.hallLightScale,16,52,settings);
+            Window(root,"Hall north window",new Vector3(23.55f,3.1f,.5f),new Vector3(15,.2f,-2.3f),30*settings.hallLightScale,16,52,settings);
             Beam(root,"Hall stair reflected light",new Vector3(6,5.2f,2),new Vector3(6,.4f,5),5*settings.hallLightScale,8,90,settings);
             Window(root,"Library east window",new Vector3(23.55f,2.5f,16),new Vector3(16,.1f,14),26*settings.libraryLightScale,13,58,settings);
             Beam(root,"Library cache reflected light",new Vector3(7,3,19),new Vector3(6,1,20.5f),3*settings.libraryLightScale,5,82,settings);
