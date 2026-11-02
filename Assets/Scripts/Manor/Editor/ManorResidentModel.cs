@@ -82,7 +82,7 @@ namespace Echo.Manor.Editor
             if(controller!=null)
             {
                 var available=AssetDatabase.LoadAllAssetsAtPath(Folder+"SM_CaretakerResident.fbx").OfType<AnimationClip>().ToArray();
-                foreach(var child in controller.layers[0].stateMachine.states)child.state.motion=available.Single(c=>c.name=="Resident"+child.state.name);
+                foreach(var child in controller.layers[0].stateMachine.states){var clip=available.FirstOrDefault(c=>c.name=="Resident"+child.state.name);if(clip!=null)child.state.motion=clip;}
                 EditorUtility.SetDirty(controller);return controller;
             }
             controller=AnimatorController.CreateAnimatorControllerAtPath(path);

@@ -35,9 +35,10 @@ public class EnemyInvestigator:MonoBehaviour
     private float deadline,nextSense,lastSeen,suspicion,nextRepath,lastNoiseTime=-100,currentNoiseStrength,nextStep,waitUntil,nextSearchMove;
     private int patrolIndex=-1,searchIndex;
     private Vector3 searchCenter;
-    private float reactUntil,interactionHoldUntil;
+    private float reactUntil,interactionHoldUntil,doorHoldUntil;
     // A short, renewable locomotion hold; sight and pursuit remain active.
     public void HoldForInteraction(float seconds)=>interactionHoldUntil=Mathf.Max(interactionHoldUntil,Time.time+Mathf.Max(0,seconds));
+    public void HoldForDoor(float seconds)=>doorHoldUntil=Mathf.Max(doorHoldUntil,Time.time+Mathf.Max(0,seconds));
     private EnemyPresentation presentation;
     private static readonly Vector3[] searchOffsets={Vector3.right*2,Vector3.left*2,Vector3.forward*2,Vector3.back*1.5f};
     private void Awake()
@@ -118,7 +119,7 @@ public class EnemyInvestigator:MonoBehaviour
             else if(CurrentState==State.Suspicious&&Time.time-lastSeen>.45f)
             {if(Go(LastKnownPosition)){Change(State.Investigating);deadline=Time.time+investigationTimeout;}else BeginSearch();}
         }
-        if(Time.time<interactionHoldUntil&&!SeesPlayer&&CurrentState!=State.Chasing)
+        if(Time.time<doorHoldUntil||(Time.time<interactionHoldUntil&&!SeesPlayer&&CurrentState!=State.Chasing))
         {agent.isStopped=true;return;}
         if(CurrentState==State.Investigating&&Time.time<reactUntil)
         {

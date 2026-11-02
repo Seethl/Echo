@@ -11,6 +11,10 @@ namespace Echo.Interactions
         public float zoomSeconds=.35f,closeupFov=42;
         public bool freezeWorld=true;
         public bool IsOpen {get;private set;}
+        public static PropCloseupView Active {get;private set;}
+        public virtual bool UsesFooter=>false;
+        protected virtual string IdleHint=>"";
+        private Rect savedCameraRect;
         protected PlayerInteractor player;
         private Camera viewCamera;
         private Vector3 savedLocalPosition,startPosition;
@@ -33,7 +37,9 @@ namespace Echo.Interactions
             // A lock's drums sit closer than the FPS camera's normal near plane.
             // ScreenPointToRay otherwise starts inside them and hits the case.
             viewCamera.nearClipPlane=Mathf.Min(savedNearClip,.01f);
-            elapsed=0;IsOpen=true;heldControl=-1;
+            savedCameraRect=viewCamera.rect;
+            if(UsesFooter)viewCamera.rect=new Rect(savedCameraRect.x,savedCameraRect.y+savedCameraRect.height*.26f,savedCameraRect.width,savedCameraRect.height*.74f);
+            elapsed=0;IsOpen=true;Active=this;heldControl=-1;SetHovered(null);
             OnOpened();return true;
         }
         protected virtual void OnOpened(){}
@@ -50,19 +56,21 @@ namespace Echo.Interactions
                 hovered=control;
                 if(hovered!=null)hovered.SetHighlighted(true);
             }
-            string text=control!=null?ControlHint(control.controlId):"";
+            string text=UsesFooter&&player!=null&&player.ui!=null&&!string.IsNullOrWhiteSpace(player.ui.CurrentToast)?player.ui.CurrentToast:control!=null?ControlHint(control.controlId):IdleHint;
             if(hintPanel==null&&text.Length>0)
             {
                 var canvas=new GameObject("Prop hover hint",typeof(Canvas),typeof(CanvasScaler));
                 canvas.transform.SetParent(transform,false);
                 canvas.GetComponent<Canvas>().renderMode=RenderMode.ScreenSpaceOverlay;
-                canvas.GetComponent<Canvas>().sortingOrder=950;
+                canvas.GetComponent<Canvas>().sortingOrder=UsesFooter?850:950;
                 var scaler=canvas.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(1280,720);
                 hintPanel=new GameObject("Hint",typeof(RectTransform),typeof(Image));hintPanel.transform.SetParent(canvas.transform,false);
                 var rect=(RectTransform)hintPanel.transform;rect.anchorMin=rect.anchorMax=new Vector2(.5f,1);rect.pivot=new Vector2(.5f,1);rect.anchoredPosition=new Vector2(0,-28);rect.sizeDelta=new Vector2(660,52);
+                if(UsesFooter){rect.anchorMin=new Vector2(0,0);rect.anchorMax=new Vector2(1,.26f);rect.pivot=new Vector2(.5f,0);rect.offsetMin=rect.offsetMax=Vector2.zero;}
                 var background=hintPanel.GetComponent<Image>();background.color=EchoUIStyle.Ink;background.raycastTarget=false;
                 var label=new GameObject("Text",typeof(RectTransform),typeof(Text));label.transform.SetParent(hintPanel.transform,false);
                 var labelRect=(RectTransform)label.transform;labelRect.anchorMin=Vector2.zero;labelRect.anchorMax=Vector2.one;labelRect.offsetMin=new Vector2(8,4);labelRect.offsetMax=new Vector2(-8,-4);
+                if(UsesFooter){labelRect.anchorMax=new Vector2(1,0);labelRect.offsetMin=new Vector2(12,4);labelRect.offsetMax=new Vector2(-12,52);}
                 hintText=label.GetComponent<Text>();hintText.font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");hintText.fontSize=18;hintText.alignment=TextAnchor.MiddleCenter;hintText.color=new Color(1,.86f,.63f);hintText.raycastTarget=false;EchoUIStyle.Text(hintText);
             }
             if(hintPanel!=null){hintText.text=text;hintPanel.SetActive(text.Length>0);}
@@ -117,8 +125,8 @@ namespace Echo.Interactions
         public void Close()
         {
             if(!IsOpen)return;
-            IsOpen=false;heldControl=-1;SetHovered(null);
-            if(viewCamera!=null){viewCamera.transform.localPosition=savedLocalPosition;viewCamera.transform.localRotation=savedLocalRotation;viewCamera.fieldOfView=savedFov;viewCamera.nearClipPlane=savedNearClip;}
+            IsOpen=false;if(Active==this)Active=null;heldControl=-1;SetHovered(null);if(hintPanel!=null)hintPanel.SetActive(false);
+            if(viewCamera!=null){viewCamera.transform.localPosition=savedLocalPosition;viewCamera.transform.localRotation=savedLocalRotation;viewCamera.fieldOfView=savedFov;viewCamera.nearClipPlane=savedNearClip;viewCamera.rect=savedCameraRect;}
             OnClosed();GameMenu.CloseModal(this);player=null;
         }
         private void OnDisable(){Close();}

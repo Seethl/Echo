@@ -7,6 +7,16 @@ namespace Echo.Manor
     {
         public HingedDoor door;
         public string openFlag;
-        private void Update(){if(ManorProgress.Active!=null&&ManorProgress.Active.Has(openFlag))door.UnlockAndOpen();}
+        private bool applied;
+        private void Start()
+        {
+            // A restored closed door is an intentional checkpoint state.
+            applied=door!=null&&door.HasRestoredState&&ManorProgress.Active!=null&&ManorProgress.Active.Has(openFlag);
+        }
+        private void Update()
+        {
+            if(applied||door==null||ManorProgress.Active==null||!ManorProgress.Active.Has(openFlag))return;
+            applied=true;door.UnlockAndOpen();
+        }
     }
 }

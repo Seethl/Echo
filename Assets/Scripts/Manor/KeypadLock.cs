@@ -12,12 +12,14 @@ namespace Echo.Manor
         public MechanicalLockView physicalView;
         private bool unlocked;
         public bool IsUnlocked=>unlocked||(ManorProgress.Active!=null&&!string.IsNullOrEmpty(unlockFlag)&&ManorProgress.Active.Has(unlockFlag));
-        public override bool CanInteract(PlayerInteractor player)=>base.CanInteract(player)&&(physicalView==null||!IsUnlocked);
+        private HingedDoor Door=>GetComponentInParent<HingedDoor>();
+        public override bool CanInteract(PlayerInteractor player)=>base.CanInteract(player)&&(!IsUnlocked||Door!=null);
         private readonly int[] digits=new int[3];
         private string feedback="Три механічні коліщатка. Код міститься в службовому записі.";
-        public override string Prompt=>"E — ввести код";
+        public override string Prompt=>IsUnlocked&&Door!=null?Door.Prompt:"E — ввести код";
         public override void Interact(PlayerInteractor player)
         {
+            if(IsUnlocked){Door?.Interact(player);return;}
             if(physicalView!=null){physicalView.Open(player);return;}
             player.ui.OpenPanel(this,"МЕХАНІЧНИЙ ЗАМОК",()=>string.Join(" — ",digits)+"\n"+feedback,new[]{
                 new InteractionUI.Choice("Перша цифра +1",()=>digits[0]=(digits[0]+1)%10),

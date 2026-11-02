@@ -69,10 +69,11 @@ public class FPSController : MonoBehaviour
         // Ðóõ
         Vector2 input = Vector2.zero;
 
-        if (Keyboard.current.wKey.isPressed) input.y += 1;
-        if (Keyboard.current.sKey.isPressed) input.y -= 1;
-        if (Keyboard.current.dKey.isPressed) input.x += 1;
-        if (Keyboard.current.aKey.isPressed) input.x -= 1;
+        bool inventoryArrows=Keyboard.current.leftAltKey.isPressed||Keyboard.current.rightAltKey.isPressed;
+        if (Keyboard.current.wKey.isPressed||(!inventoryArrows&&Keyboard.current.upArrowKey.isPressed)) input.y += 1;
+        if (Keyboard.current.sKey.isPressed||(!inventoryArrows&&Keyboard.current.downArrowKey.isPressed)) input.y -= 1;
+        if (Keyboard.current.dKey.isPressed||(!inventoryArrows&&Keyboard.current.rightArrowKey.isPressed)) input.x += 1;
+        if (Keyboard.current.aKey.isPressed||(!inventoryArrows&&Keyboard.current.leftArrowKey.isPressed)) input.x -= 1;
 
         input = Vector2.ClampMagnitude(input, 1f);
 

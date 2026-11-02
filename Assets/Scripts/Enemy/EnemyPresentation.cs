@@ -16,6 +16,15 @@ public sealed class EnemyPresentation : MonoBehaviour
     public string attackParameter="IsAttacking",drinkingParameter="IsDrinking";
     public bool IsAttacking {get;private set;}
     public bool IsDrinking {get;private set;}
+    private float doorUntil;
+    public bool IsUsingDoor=>Time.time<doorUntil;
+    public void PlayDoorMotion(bool closing,float duration)
+    {
+        doorUntil=Time.time+duration;
+        if(animator==null)return;
+        string state=closing?"DoorClose":"DoorOpen";
+        if(animator.HasState(0,Animator.StringToHash(state)))animator.CrossFadeInFixedTime(state,.12f,0);
+    }
     public void SetAttacking(bool value){IsAttacking=value;}
     public void SetDrinking(bool value){IsDrinking=value;}
     public string chaseParameter="IsChasing",searchParameter="IsSearching";
@@ -76,7 +85,7 @@ public sealed class EnemyPresentation : MonoBehaviour
         if(animator==null||cachedController==null||brain==null)return;
         if(hasAttack)animator.SetBool(attackParameter,IsAttacking);
         if(hasDrinking)animator.SetBool(drinkingParameter,IsDrinking);
-        if(hasSpeed)animator.SetFloat(speedParameter,brain.Movement01,animationDamping,Time.deltaTime);
+        if(hasSpeed)animator.SetFloat(speedParameter,IsUsingDoor?0:brain.Movement01,animationDamping,Time.deltaTime);
         if(hasSuspicion)animator.SetFloat(suspicionParameter,brain.Suspicion01,animationDamping,Time.deltaTime);
         if(hasState)animator.SetInteger(stateParameter,(int)brain.CurrentState);
         if(hasChase)animator.SetBool(chaseParameter,brain.CurrentState==EnemyInvestigator.State.Chasing);

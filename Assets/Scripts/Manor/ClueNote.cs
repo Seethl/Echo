@@ -23,7 +23,7 @@ namespace Echo.Manor
             progress.AddClue(clueId,content);
             if(!string.IsNullOrEmpty(onReadFlag))progress.Set(onReadFlag);
             if(tunedFrequency>0)progress.Set("frequency."+tunedFrequency);
-            player.ui.OpenPanel(this,title,()=>content,new[]{new InteractionUI.Choice("Закрити",()=>player.ui.ClosePanel())},illustration:illustration);
+            player.ui.OpenPanel(this,title,()=>content,new[]{new InteractionUI.Choice("Закрити",()=>player.ui.ClosePanel())},illustration:illustration,paper:true);
         }
     }
 }

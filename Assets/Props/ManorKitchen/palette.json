@@ -1,0 +1,104 @@
+{
+  "materials": [
+    {
+      "name": "Kitchen_Enamel",
+      "color": [
+        0.46,
+        0.48,
+        0.39
+      ],
+      "metallic": 0,
+      "roughness": 0.82
+    },
+    {
+      "name": "Kitchen_Rust",
+      "color": [
+        0.19,
+        0.075,
+        0.035
+      ],
+      "metallic": 0,
+      "roughness": 0.94
+    },
+    {
+      "name": "Kitchen_Iron",
+      "color": [
+        0.055,
+        0.065,
+        0.06
+      ],
+      "metallic": 0.35,
+      "roughness": 0.75
+    },
+    {
+      "name": "Kitchen_Zinc",
+      "color": [
+        0.28,
+        0.32,
+        0.31
+      ],
+      "metallic": 0.45,
+      "roughness": 0.65
+    },
+    {
+      "name": "Kitchen_Wood",
+      "color": [
+        0.14,
+        0.075,
+        0.035
+      ],
+      "metallic": 0,
+      "roughness": 0.9
+    },
+    {
+      "name": "Kitchen_Ceramic",
+      "color": [
+        0.63,
+        0.57,
+        0.43
+      ],
+      "metallic": 0,
+      "roughness": 0.65
+    },
+    {
+      "name": "Kitchen_Paper",
+      "color": [
+        0.53,
+        0.4,
+        0.22
+      ],
+      "metallic": 0,
+      "roughness": 0.95
+    },
+    {
+      "name": "Kitchen_Green",
+      "color": [
+        0.14,
+        0.23,
+        0.12
+      ],
+      "metallic": 0,
+      "roughness": 0.9
+    },
+    {
+      "name": "Kitchen_Red",
+      "color": [
+        0.32,
+        0.085,
+        0.045
+      ],
+      "metallic": 0,
+      "roughness": 0.9
+    },
+    {
+      "name": "Kitchen_Blue",
+      "color": [
+        0.12,
+        0.19,
+        0.22
+      ],
+      "metallic": 0,
+      "roughness": 0.85
+    }
+  ]
+}

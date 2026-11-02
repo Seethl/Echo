@@ -10,7 +10,7 @@ namespace Echo.Interactions
     [DefaultExecutionOrder(-9500)]
     public sealed class InteractionUI : MonoBehaviour
     {
-        public string controlsText = "WASD — рух · Ctrl — тихо · E — дія · R — радіо · F — живлення · Q — поставити · J — журнал / допомога · Escape — назад/пауза";
+        public string controlsText = "Коліщатко / Alt+↑↓ — предмети · WASD / стрілки — рух · Ctrl — тихо · E — дія · R — радіо · F — живлення · Q — поставити · J — журнал / допомога · Escape — назад/пауза";
         private Canvas canvas;
         private Text prompt;
         private Text toast;
@@ -33,6 +33,7 @@ namespace Echo.Interactions
         private RectTransform readingViewport;
         private string laidOutBody;
 
+        private GameObject objectiveCard;
         private GameObject noisePanel;
         private RectTransform playerNoiseFill,ambientNoiseFill;
         private Text playerNoiseLabel,ambientNoiseLabel;
@@ -53,7 +54,7 @@ namespace Echo.Interactions
         private Func<string> liveBody;
         private Action onCustomClose;
         public bool IsCustomOpen(UnityEngine.Object owner) => customPanel!=null && customPanel.activeSelf && customOwner==owner;
-        public void SetHUD(string value) { if(hud!=null)hud.text=value; }
+        public void SetHUD(string value) { if(hud!=null)hud.text=(value??"").Replace("Ціль: ",""); }
         public sealed class Choice
         {
             public string Caption; public Action Action;
@@ -80,12 +81,15 @@ namespace Echo.Interactions
             dot = Label("Aim Dot", root.transform, "•", 24, 0, 30).gameObject;
             prompt = Label("Prompt", root.transform, "", 20, 0, 36);
             Bottom(prompt.rectTransform,142,720,36);promptPlate=EchoUIStyle.Plate("Context plate",root.transform,prompt.rectTransform);
-            toast = Label("Toast", root.transform, "", 19, 210, 64);
+            toast = Label("Toast", root.transform, "", 19, 160, 64);
             toastPlate=EchoUIStyle.Plate("Notice plate",root.transform,toast.rectTransform);
             // Controls remain available through J; no permanent tutorial ribbon.
-            hud=Label("Objective and Noise",root.transform,"",17,0,64);
-            hud.rectTransform.anchorMin=hud.rectTransform.anchorMax=hud.rectTransform.pivot=Vector2.one;
-            hud.rectTransform.anchoredPosition=new Vector2(-28,-25);hud.rectTransform.sizeDelta=new Vector2(510,64);hud.alignment=TextAnchor.UpperRight;
+            hud=Label("Objective and Noise",root.transform,"",18,0,54);
+            objectiveCard=new GameObject("Objective Card",typeof(RectTransform),typeof(Image));objectiveCard.transform.SetParent(root.transform,false);
+            var objectiveRect=(RectTransform)objectiveCard.transform;objectiveRect.anchorMin=objectiveRect.anchorMax=objectiveRect.pivot=Vector2.one;objectiveRect.anchoredPosition=new Vector2(-20,-18);objectiveRect.sizeDelta=new Vector2(390,94);objectiveCard.GetComponent<Image>().color=new Color(.025f,.037f,.048f,.90f);objectiveCard.GetComponent<Image>().raycastTarget=false;
+            hud.transform.SetParent(objectiveCard.transform,false);hud.rectTransform.anchorMin=hud.rectTransform.anchorMax=hud.rectTransform.pivot=new Vector2(0,1);hud.rectTransform.anchoredPosition=new Vector2(18,-33);hud.rectTransform.sizeDelta=new Vector2(352,54);hud.alignment=TextAnchor.UpperLeft;
+            var caption=Label("Objective heading",objectiveCard.transform,"ПОТОЧНА МЕТА",11,0,20);caption.color=EchoUIStyle.Gold;caption.alignment=TextAnchor.UpperLeft;caption.rectTransform.anchorMin=caption.rectTransform.anchorMax=caption.rectTransform.pivot=new Vector2(0,1);caption.rectTransform.anchoredPosition=new Vector2(18,-12);caption.rectTransform.sizeDelta=new Vector2(350,20);
+            var rule=new GameObject("Objective accent",typeof(RectTransform),typeof(Image));rule.transform.SetParent(objectiveCard.transform,false);var ruleRect=(RectTransform)rule.transform;ruleRect.anchorMin=new Vector2(0,0);ruleRect.anchorMax=new Vector2(0,1);ruleRect.offsetMin=new Vector2(0,10);ruleRect.offsetMax=new Vector2(2,-10);rule.GetComponent<Image>().color=EchoUIStyle.Gold;rule.GetComponent<Image>().raycastTarget=false;
             subtitle=Label("Radio Subtitles",root.transform,"",20,0,92);
             Bottom(subtitle.rectTransform,65,900,92);subtitlePlate=EchoUIStyle.Plate("Transmission plate",root.transform,subtitle.rectTransform,true);
             noisePanel=new GameObject("Noise Bars",typeof(RectTransform),typeof(Image));noisePanel.transform.SetParent(root.transform,false);
@@ -130,23 +134,26 @@ namespace Echo.Interactions
             if (Time.unscaledTime >= toastUntil) toast.text = "";
             if(customPanel.activeSelf && liveBody!=null)customBody.text=liveBody();
             if(customPanel.activeSelf&&laidOutBody!=customBody.text)LayoutReading();
-            hud.gameObject.SetActive(!blocked);
+            objectiveCard.SetActive(!blocked&&!string.IsNullOrWhiteSpace(hud.text));
             promptPlate.gameObject.SetActive(!blocked&&!string.IsNullOrWhiteSpace(prompt.text));
-            toastPlate.gameObject.SetActive(!GameMenu.IsPaused&&!ReadingNote&&!Completed&&!customPanel.activeSelf&&!string.IsNullOrWhiteSpace(toast.text));
+            toastPlate.gameObject.SetActive(!(PropCloseupView.Active!=null&&PropCloseupView.Active.UsesFooter)&&!GameMenu.IsPaused&&!ReadingNote&&!Completed&&!customPanel.activeSelf&&!string.IsNullOrWhiteSpace(toast.text));
             toast.gameObject.SetActive(toastPlate.gameObject.activeSelf);
+            float subtitleY=PropCloseupView.Active!=null&&PropCloseupView.Active.UsesFooter?119:65;
+            subtitle.rectTransform.anchoredPosition=new Vector2(0,subtitleY);subtitlePlate.rectTransform.anchoredPosition=new Vector2(0,subtitleY);
             bool transmission=!GameMenu.IsPaused&&!ReadingNote&&!Completed&&!customPanel.activeSelf&&!string.IsNullOrWhiteSpace(subtitle.text);
             subtitle.gameObject.SetActive(transmission);subtitlePlate.gameObject.SetActive(transmission);
         }
 
-        public bool OpenPanel(UnityEngine.Object owner,string title,Func<string> body,IEnumerable<Choice> choices,bool freezeWorld=true,Action closed=null,bool replace=false,bool canEscape=true,Texture illustration=null)
+        public bool OpenPanel(UnityEngine.Object owner,string title,Func<string> body,IEnumerable<Choice> choices,bool freezeWorld=true,Action closed=null,bool replace=false,bool canEscape=true,Texture illustration=null,bool paper=false)
         {
             if(!GameMenu.TryOpenModal(this,canEscape?ClosePanel:(Action)null,freezeWorld,replace))return false;
             onCustomClose?.Invoke();onCustomClose=closed;
             notePanel.SetActive(false);finishPanel.SetActive(false);
             foreach(var button in customButtons){button.gameObject.SetActive(false);Destroy(button.gameObject);}customButtons.Clear();
             customOwner=owner;customTitle.text=title;liveBody=body;customBody.text=body!=null?body():"";
-            customBody.fontSize=illustration!=null?18:20;
-            Place(readingViewport,0,illustration!=null?-110:80,650,illustration!=null?110:160);
+            customBody.fontSize=paper?27:illustration!=null?18:20;
+            Place(customTitle.rectTransform,0,paper?240:200,650,55);
+            Place(readingViewport,0,illustration!=null?(paper?-135:-110):paper?35:80,650,illustration!=null?(paper?145:110):paper?320:160);
             laidOutBody=null;LayoutReading();readingScroll.verticalNormalizedPosition=1;
             if(panelIllustration==null)
             {
@@ -159,7 +166,7 @@ namespace Echo.Interactions
             int index=0;var options=new List<Choice>(choices);bool twoColumns=options.Count>5;
             foreach(var choice in options)
             {
-                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,(illustration!=null?-205:-35)-(twoColumns?index/2:index)*48,()=>action?.Invoke());
+                var action=choice.Action;var button=Button(customPanel.transform,choice.Caption,(paper?-258:illustration!=null?-205:-35)-(twoColumns?index/2:index)*48,()=>action?.Invoke());
                 if(twoColumns)
                 {
                     var rect=(RectTransform)button.transform;rect.anchoredPosition=new Vector2(index%2==0?-175:175,rect.anchoredPosition.y);rect.sizeDelta=new Vector2(330,44);
@@ -167,6 +174,7 @@ namespace Echo.Interactions
                 }
                 customButtons.Add(button);index++;
             }
+            DocumentStyle(customPanel,paper);LayoutReading();readingScroll.verticalNormalizedPosition=1;
             if(customButtons.Count>0 && EventSystem.current!=null)EventSystem.current.SetSelectedGameObject(customButtons[0].gameObject);
             return true;
         }
@@ -187,6 +195,7 @@ namespace Echo.Interactions
         public void ShowNote(string content)
         {
             if (!GameMenu.TryOpenModal(this, CloseNote)) return;
+            DocumentStyle(notePanel,true);
             noteText.text = content;
             shade.SetActive(true); notePanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
@@ -255,6 +264,24 @@ namespace Echo.Interactions
             label.rectTransform.sizeDelta = new Vector2(400, 44);
             button.onClick.AddListener(action);
             return button;
+        }
+
+                private void DocumentStyle(GameObject surface,bool paper)
+        {
+            var image=surface.GetComponent<Image>();
+            image.sprite=paper?Resources.Load<Sprite>("EchoWritingBoard"):null;
+            image.type=paper?Image.Type.Sliced:Image.Type.Simple;
+            image.color=paper?Color.white:EchoUIStyle.Ink;
+            shade.GetComponent<Image>().color=new Color(.012f,.018f,.032f,paper?.62f:.91f);
+            foreach(var text in surface.GetComponentsInChildren<Text>(true))
+            {
+                text.color=paper?new Color(.08f,.055f,.025f):EchoUIStyle.Paper;
+                text.lineSpacing=paper?1.1f:1.15f;
+                if(text==customBody||text==noteText){text.font=paper?(Resources.Load<Font>("EchoHandwriting")??font):font;if(text==noteText)text.fontSize=paper?27:25;}
+                var shadow=text.GetComponent<Shadow>();if(shadow!=null)shadow.enabled=!paper;
+            }
+            foreach(var button in surface.GetComponentsInChildren<Button>(true))
+                button.GetComponent<Image>().color=paper?new Color(.77f,.66f,.46f):new Color(.12f,.14f,.19f);
         }
 
         private void LayoutReading()

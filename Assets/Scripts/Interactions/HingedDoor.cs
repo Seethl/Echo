@@ -13,6 +13,11 @@ namespace Echo.Interactions
         public string missingKeyMessage = "Потрібен службовий ключ";
         public string checkpointId;
         public bool stayOpen;
+        [Tooltip("Room passage handled by the resident; cupboards and tutorial doors stay excluded.")]
+        public bool residentPassage;
+        public bool ResidentCanTraverse=>residentPassage&&!IsLocked;
+        public bool PassageFullyOpen=>IsOpen&&!IsMoving;
+        private Echo.Manor.ResidentDoorway residentDoorway;
         public bool initiallyLocked;
         public UnityEngine.Events.UnityEvent onOpened = new UnityEngine.Events.UnityEvent();
         public UnityEngine.AI.NavMeshObstacle navigationBlocker;
@@ -20,6 +25,7 @@ namespace Echo.Interactions
         public bool IsOpen { get; private set; }
         public bool IsLocked { get; private set; }
         public bool IsMoving => !Mathf.Approximately(angle, IsOpen ? openAngle : 0f);
+        public bool HasRestoredState {get;private set;}
         private Quaternion closedRotation;
         private float angle;
 
@@ -41,6 +47,7 @@ namespace Echo.Interactions
                 player.ui.ShowToast(missingKeyMessage);
                 return;
             }
+            if(!IsLocked&&IsOpen&&residentPassage){if(residentDoorway==null)residentDoorway=Echo.Manor.ResidentDoorway.For(this);if(residentDoorway!=null&&residentDoorway.IsOccupied()){player.ui.ShowToast("У проході хтось стоїть");return;}}
             IsLocked = false;
             IsOpen = stayOpen || !IsOpen;
             NoiseSystem.Emit(transform.position+Vector3.up,4,gameObject,NoiseSystem.Kind.Interaction,1,player.gameObject);
@@ -50,20 +57,33 @@ namespace Echo.Interactions
         }
 
         public void UnlockAndOpen() { IsLocked=false; IsOpen=true; }
+        public bool OpenForResident()
+        {
+            if(!isActiveAndEnabled||!ResidentCanTraverse)return false;
+            if(!IsOpen){IsOpen=true;onOpened.Invoke();}return true;
+        }
+        public bool CloseForResident()
+        {
+            if(!isActiveAndEnabled||!ResidentCanTraverse)return false;
+            if(residentDoorway==null)residentDoorway=Echo.Manor.ResidentDoorway.For(this);
+            if(residentDoorway!=null&&residentDoorway.IsOccupied())return false;
+            IsOpen=false;return true;
+        }
         [System.Serializable] private struct Saved { public bool open,locked; }
         public string CaptureState() => JsonUtility.ToJson(new Saved {open=IsOpen,locked=IsLocked});
         public void RestoreState(string state)
         {
+            HasRestoredState=true;
             var saved=JsonUtility.FromJson<Saved>(state);IsOpen=saved.open;IsLocked=saved.locked;
             angle=IsOpen?openAngle:0;hinge.localRotation=closedRotation*Quaternion.Euler(0,angle,0);
-            if(navigationBlocker!=null)navigationBlocker.enabled=!IsOpen;
+            if(navigationBlocker!=null)navigationBlocker.enabled=!ResidentCanTraverse&&!IsOpen;
         }
 
         private void Update()
         {
             angle = Mathf.MoveTowards(angle, IsOpen ? openAngle : 0f, degreesPerSecond * Time.deltaTime);
             hinge.localRotation = closedRotation * Quaternion.Euler(0f, angle, 0f);
-            if(navigationBlocker!=null)navigationBlocker.enabled=Mathf.Abs(angle)<75f;
+            if(navigationBlocker!=null)navigationBlocker.enabled=!ResidentCanTraverse&&Mathf.Abs(angle)<75f;
         }
     }
 }

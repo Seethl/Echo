@@ -1,0 +1,108 @@
+{
+  "materials": [
+    {
+      "name": "Garden_Bark",
+      "color": [
+        0.12,
+        0.065,
+        0.035
+      ]
+    },
+    {
+      "name": "Garden_Leaf",
+      "color": [
+        0.11,
+        0.22,
+        0.075
+      ]
+    },
+    {
+      "name": "Garden_LeafLight",
+      "color": [
+        0.23,
+        0.34,
+        0.11
+      ]
+    },
+    {
+      "name": "Garden_Sage",
+      "color": [
+        0.22,
+        0.3,
+        0.22
+      ]
+    },
+    {
+      "name": "Garden_Ivory",
+      "color": [
+        0.84,
+        0.8,
+        0.67
+      ]
+    },
+    {
+      "name": "Garden_Gold",
+      "color": [
+        0.78,
+        0.43,
+        0.035
+      ]
+    },
+    {
+      "name": "Garden_Purple",
+      "color": [
+        0.28,
+        0.1,
+        0.45
+      ]
+    },
+    {
+      "name": "Garden_Red",
+      "color": [
+        0.57,
+        0.065,
+        0.04
+      ]
+    },
+    {
+      "name": "Garden_Pink",
+      "color": [
+        0.62,
+        0.24,
+        0.32
+      ]
+    },
+    {
+      "name": "Garden_Clay",
+      "color": [
+        0.3,
+        0.13,
+        0.065
+      ]
+    },
+    {
+      "name": "Garden_Wicker",
+      "color": [
+        0.28,
+        0.17,
+        0.075
+      ]
+    },
+    {
+      "name": "Garden_BookGreen",
+      "color": [
+        0.065,
+        0.14,
+        0.105
+      ]
+    },
+    {
+      "name": "Garden_BookRed",
+      "color": [
+        0.22,
+        0.045,
+        0.035
+      ]
+    }
+  ]
+}

@@ -4,6 +4,8 @@ namespace Echo.Radio
 {
     public sealed class PhysicalRadioView : PropCloseupView
     {
+        public override bool UsesFooter=>true;
+        protected override string IdleHint=>"Наведи на ручку: ЛКМ + / ПКМ − або колесо миші · Escape — назад";
         public PortableRadio radio;
         public Transform tuningKnob,volumeKnob,needle;
         public TextMesh readout;
@@ -71,7 +73,7 @@ namespace Echo.Radio
         }
         protected override void OnOpened()
         {
-            if(player!=null&&player.ui!=null)player.ui.ShowToast("На ручці: затисни ЛКМ + / ПКМ − або крути колесо миші · ESC назад",6);
+            // Controls use the reserved footer, leaving the radio unobstructed.
             controls=radio.GetComponentsInChildren<Collider>();colliderStates=new bool[controls.Length];
             for(int i=0;i<controls.Length;i++)
             {

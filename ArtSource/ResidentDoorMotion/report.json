@@ -1,0 +1,10 @@
+{
+  "source": "Opening Door Inwards.fbx",
+  "frames": 192,
+  "fps": 30,
+  "closing": "reversed opening motion",
+  "rigBones": 17,
+  "rootMotion": false,
+  "modelAndPalette": "unchanged original caretaker",
+  "handIK": false
+}
