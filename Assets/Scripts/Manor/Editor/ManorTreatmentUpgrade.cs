@@ -311,7 +311,12 @@ namespace Echo.Manor.Editor
         private static void Rail(Vector3 p,float length,bool horizontal)
         {
             Box("Balcony handrail",root,p+Vector3.up*1.1f,horizontal?new Vector3(length,.09f,.09f):new Vector3(.09f,.09f,length),timber);
-            for(float v=-length/2;v<=length/2;v+=.5f)Box("Balcony baluster",root,p+new Vector3(horizontal?v:0,.55f,horizontal?0:v),new Vector3(.07f,1.1f,.07f),timber);
+            for(float v=-length/2;v<=length/2;v+=.5f)
+            {
+                var position=p+new Vector3(horizontal?v:0,.55f,horizontal?0:v);
+                if(root.GetComponentsInChildren<Transform>().Any(t=>t.name=="Balcony baluster"&&(t.position-position).sqrMagnitude<.000001f))continue;
+                Box("Balcony baluster",root,position,new Vector3(.07f,1.1f,.07f),timber);
+            }
             // A continuous rail collider prevents falling through the decorative balusters.
             var guard=Box("Balcony guard collider",root,p+Vector3.up*.55f,horizontal?new Vector3(length,1.1f,.08f):new Vector3(.08f,1.1f,length),timber);guard.GetComponent<Renderer>().enabled=false;
         }
