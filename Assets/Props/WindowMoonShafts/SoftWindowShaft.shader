@@ -9,6 +9,7 @@ Shader "Echo/SoftWindowShaft"
   _Drift("End offset",Vector)=(0,-1,0,0)
   _Exposure("Window openness",Range(0,1))=1
   _PaneLengths("Pane occlusion",Vector)=(1,1,1,1)
+  [HideInInspector] _CookieMask("Window aperture",2D)="white" {}
  }
  SubShader
  {
@@ -26,11 +27,13 @@ Shader "Echo/SoftWindowShaft"
    #pragma multi_compile_instancing
    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+   TEXTURE2D(_CookieMask);
+   SAMPLER(sampler_CookieMask);
    CBUFFER_START(UnityPerMaterial)
     half4 _Tint;
     float _Density,_Opacity,_Spread,_Exposure;
     float4 _Drift,_PaneLengths;
-    float _UseWindowProjection;
+    float _UseWindowProjection,_UseCookieMask;
     float4x4 _WindowWorldToCookie;
    CBUFFER_END
    struct Attributes {float4 positionOS:POSITION;UNITY_VERTEX_INPUT_INSTANCE_ID};
@@ -72,11 +75,30 @@ Shader "Echo/SoftWindowShaft"
      if(_UseWindowProjection>.5)
      {
       float3 projected=mul(_WindowWorldToCookie,float4(cameraWS+directionWS*t,1)).xyz;
-      bands=projected.xy/max(.001,projected.z);
-      edge*=step(.001,projected.z)*(1-smoothstep(.85,.94,abs(bands.x)))*(1-smoothstep(.85,.94,abs(bands.y)));
+      float2 projectedBands = projected.xy / max(.001, projected.z);
+      if (_UseCookieMask > .5)
+      {
+       // Start across the actual aperture, then rejoin the projected floor pattern.
+       float floorBlend = smoothstep(.22, .88, p.z);
+       bands = lerp(q, projectedBands, floorBlend);
+      }
+      else
+      {
+       bands = projectedBands;
+       edge *= step(.001, projected.z) * (1-smoothstep(.85,.94,abs(bands.x))) * (1-smoothstep(.85,.94,abs(bands.y)));
+      }
      }
      float mullions=smoothstep(.025,.12,abs(bands.x))*smoothstep(.025,.12,abs(bands.y));
+     if (_UseCookieMask > .5)
+      mullions = SAMPLE_TEXTURE2D_LOD(_CookieMask, sampler_CookieMask, saturate(bands * .5 + .5), 0).r;
      float limit=q.y<0?(q.x<0?_PaneLengths.x:_PaneLengths.y):(q.x<0?_PaneLengths.z:_PaneLengths.w);
+     if (_UseCookieMask > .5)
+     {
+      // Avoid a hard horizontal seam between neighbouring arch occlusion samples.
+      float2 blend = smoothstep(-.16, .16, q);
+      limit = lerp(lerp(_PaneLengths.x, _PaneLengths.y, blend.x),
+                   lerp(_PaneLengths.z, _PaneLengths.w, blend.x), blend.y);
+     }
      float clipFade=1-smoothstep(max(0,limit-.065),max(.001,limit),p.z);
      float along=smoothstep(0,.055,p.z)*(1-smoothstep(.55,1,p.z));
      float drift=.94+.06*sin(dot(cameraWS+directionWS*t,float3(.65,1.7,.41))+_Time.y*.07);

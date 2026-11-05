@@ -17,6 +17,8 @@ namespace Echo.Environment
         public Light windowLight;
         [Tooltip("Use the actual spotlight-cookie projection for aligned light/shadow bands.")]
         public bool alignWithWindowCookie;
+        [Tooltip("Use the spotlight cookie as the haze silhouette.")]
+        public bool useWindowCookieMask;
         [Min(.1f)]public float occlusionInterval=.3f;
         public float Exposure{get;private set;}
         public Vector4 PaneLengths{get;private set;}=Vector4.one;
@@ -38,6 +40,10 @@ namespace Echo.Environment
             {UpdateOcclusion();nextOcclusion=Time.time+Mathf.Max(.1f,occlusionInterval);}
             bool projected=alignWithWindowCookie&&windowLight!=null;block.SetFloat("_UseWindowProjection",projected?1:0);
             if(projected){float tangent=Mathf.Tan(windowLight.spotAngle*.5f*Mathf.Deg2Rad);block.SetMatrix("_WindowWorldToCookie",Matrix4x4.Scale(new Vector3(1/tangent,1/tangent,1))*windowLight.transform.worldToLocalMatrix);}
+            bool masked = projected && useWindowCookieMask && windowLight.cookie != null;
+            block.SetFloat("_UseCookieMask", masked ? 1 : 0);
+            if (masked)
+                block.SetTexture("_CookieMask", windowLight.cookie);
             block.SetColor(Tint,tint);block.SetFloat(Density,density);block.SetFloat(Opacity,opacity);block.SetFloat(Spread,spread);block.SetVector(Drift,new Vector4(sideDrift/width,-drop/height,0,0));block.SetFloat(Open,Exposure);block.SetVector(Limits,PaneLengths);display.SetPropertyBlock(block);
         }
         public void UpdateOcclusion()

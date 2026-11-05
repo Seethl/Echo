@@ -61,6 +61,7 @@ namespace Echo.Manor.Editor
                 if(PrefabUtility.IsPartOfPrefabInstance(data))PrefabUtility.RecordPrefabInstancePropertyModifications(data);
             }
             SoftGlow(root,settings);
+            ManorWindowDress.AlignHallShafts();
             EditorUtility.SetDirty(settings);
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }

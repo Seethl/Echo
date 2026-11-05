@@ -25,12 +25,18 @@ namespace Echo.Manor.Editor
             var windows=Object.FindObjectsByType<Transform>().Where(t=>t.name=="Moonlit window"||t.name=="Moonlit window placeholder").ToArray();
             foreach(var window in windows)
             {
+                if (window.Find(ManorWindowDress.ArchName) != null)
+                {
+                    Make(owner.transform, material, window.position, window.forward, null, 6.2f, 2.8f, .16f);
+                    continue;
+                }
                 var glass=window.GetComponentsInChildren<Renderer>().FirstOrDefault(r=>r.enabled&&r.name.ToLowerInvariant().Contains("glass"));if(glass==null)continue;
                 var p=glass.bounds.center;float floor=p.y>5?4.4f:0;float length=p.x<0?4.7f:p.z>14?5.8f:6.2f;Make(owner.transform,material,p,window.forward,null,length,p.y-floor-.3f,.16f);
             }
             foreach(var camera in Object.FindObjectsByType<Camera>())
             {var data=camera.GetUniversalAdditionalCameraData();data.requiresDepthTexture=true;EditorUtility.SetDirty(data);if(PrefabUtility.IsPartOfPrefabInstance(data))PrefabUtility.RecordPrefabInstancePropertyModifications(data);}
             ManorWindowAndNotePolish.AlignStudyBeam();
+            ManorWindowDress.AlignHallShafts();
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
         static void Make(Transform root,Material material,Vector3 p,Vector3 inward,GalleryWindowShutter shutter,float length,float drop,float inset)

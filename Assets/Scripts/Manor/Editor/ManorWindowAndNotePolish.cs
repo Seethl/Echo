@@ -37,6 +37,7 @@ namespace Echo.Manor.Editor
         {
             if(EditorSceneManager.GetActiveScene().path!=ManorPrototypeBuilder.ScenePath)throw new System.InvalidOperationException("Open ManorPrototype first");
             CorrectHallWindow();AlignStudyBeam();
+            ManorWindowDress.AlignHallShafts();
             var importer=(TextureImporter)AssetImporter.GetAtPath(Folder+"/MusiciansNote.png");importer.sRGBTexture=true;importer.wrapMode=TextureWrapMode.Clamp;importer.npotScale=TextureImporterNPOTScale.None;importer.maxTextureSize=1024;importer.SaveAndReimport();
             var material=AssetDatabase.LoadAssetAtPath<Material>(Folder+"/Musicians note ink.mat");if(material==null){material=new Material(Shader.Find("Universal Render Pipeline/Lit"));AssetDatabase.CreateAsset(material,Folder+"/Musicians note ink.mat");}
             material.SetTexture("_BaseMap",AssetDatabase.LoadAssetAtPath<Texture2D>(Folder+"/MusiciansNote.png"));material.SetColor("_BaseColor",Color.white);material.SetFloat("_Metallic",0);material.SetFloat("_Smoothness",0);EditorUtility.SetDirty(material);

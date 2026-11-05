@@ -29,6 +29,7 @@ namespace Echo.Manor.Editor
             GroundRadio();
             // Leave the existing gameplay roots, keys, events and checkpoint IDs intact.
             Cabinet("Service Cupboard", "Service Cupboard Door");
+            ManorPlacementFinish.MountCupboardHinges();
             Cabinet("Library Cache", "Library Cache Door");
             AlignDoor("Study Door", new Vector3(-1.675f, 4.41f, 4.275f), 1.35f, 2.28f, .10f, 90);
             ClearUpperDoorSwing();
